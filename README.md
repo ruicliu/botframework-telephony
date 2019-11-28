@@ -1,64 +1,35 @@
----
-page_type: sample
-languages:
-- csharp
-products:
-- dotnet
-description: "Add 150 character max description"
-urlFragment: "update-this-to-unique-url-stub"
----
+# Microsoft Bot Framework IVR
 
-# Official Microsoft Sample
+Telphony Channel in Microsoft Bot Framework is the Microsoft technology for enabling PSTN calling capabilites in a Bot. Telephony Channel allows you to build an IVR by leveraging Microsoft Teams Calling capabilities, along with the full power of Microsoft Azure Bot Framework and Microsoft Speech Services.
 
-<!-- 
-Guidelines on README format: https://review.docs.microsoft.com/help/onboard/admin/samples/concepts/readme-template?branch=master
+ ![](images/telephonychannel.png)
 
-Guidance on onboarding samples to docs.microsoft.com/samples: https://review.docs.microsoft.com/help/onboard/admin/samples/process/onboarding?branch=master
+Please note:  this is a Beta (preview) version of software, and as with any preview software, there may be initial risks and limitations you run into, such as a need to integrate with your existing IVR, etc.  We are actively working on and supporting this product and are here to help you in case you run into any issues.  Reach us at ms-ivr-preview@microsoft.com.
 
-Taxonomies for products and languages: https://review.docs.microsoft.com/new-hope/information-architecture/metadata/taxonomies?branch=master
--->
+## Requirements
+* **IVR Private Preview Approval** - To get started, your Tenant/Organization needs to be approved for a Private Preview of the Microsoft Intelligent Call Center / IVR project.  Send the e-mail to ms-ivr-preview@microsoft.com with following information
+  * Tenant/Organization name
+  * Azure account e-mail that should be whitelisted,
+  * Description of the bot. 
+  
+  Once approved for privare preview, your customer will see Telephony channel in their bot settings. 
+* **Office 365 License** - A minimum of Office 365 E3 + calling plan or an E5 plan is required 
+* **Azure Subscription**
 
-Give a short description for your sample here. What does it do and why is it important?
+# Enabling IVR 
 
-## Contents
+After ensureing these requirements, overall setup should take roughly an hour to enable a basic IVR bot callable using a phone number.
 
-Outline the file contents of the repository. It helps users navigate the codebase, build configuration and any related assets.
+The following are the high-level steps needed you to enable IVR support in your bot:
 
-| File/folder       | Description                                |
-|-------------------|--------------------------------------------|
-| `src`             | Sample source code.                        |
-| `.gitignore`      | Define what to ignore at commit time.      |
-| `CHANGELOG.md`    | List of changes to the sample.             |
-| `CONTRIBUTING.md` | Guidelines for contributing to the sample. |
-| `README.md`       | This README file.                          |
-| `LICENSE`         | The license for the sample.                |
+* [Provision a new phone number for your bot in Office 365](AcquirePhoneNumber.md)
+   * [Acquire a phone number](AcquirePhoneNumber.md#Acquire-a-phone-number)
+   * [Create a resource account](AcquirePhoneNumber.md#Create-a-resource-account)
+   * [Assign license](AcquirePhoneNumber.md#Assign-license)
+   * [Bind the phone number](AcquirePhoneNumber.md#Bind-the-phone-number)
+* [Create a new bot](CreateBot.md)
+* [Enable Telephony Channel](EnableTelephony.md)
+   * [Create a Speech Services resource](EnableTelephony.md#Create-a-Speech-Services-resource)
+   * [Enable Telephony Channel in the bot](EnableTelephony.md#Enable-Telephony-Channel-in-the-bot)
 
-## Prerequisites
-
-Outline the required components and tools that a user might need to have on their machine in order to run the sample. This can be anything from frameworks, SDKs, OS versions or IDE releases.
-
-## Setup
-
-Explain how to prepare the sample once the user clones or downloads the repository. The section should outline every step necessary to install dependencies and set up any settings (for example, API keys and output folders).
-
-## Runnning the sample
-
-Outline step-by-step instructions to execute the sample and see its output. Include steps for executing the sample from the IDE, starting specific services in the Azure portal or anything related to the overall launch of the code.
-
-## Key concepts
-
-Provide users with more context on the tools and services used in the sample. Explain some of the code that is being used and how services interact with each other.
-
-## Contributing
-
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+Once setup you should be able to simply dial the acquired phone number using any PSTN or mobile phone (subjected to cellular plan on the source phone) 
