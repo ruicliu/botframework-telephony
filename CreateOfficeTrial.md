@@ -6,3 +6,38 @@ NOTE: If you are a part of Private Preview program, feel free to reach out to yo
 
 First, start by opening a new InPrivate window in your browser to avoid being signed in to existing Microsoft services. Go to https://aka.ms/ivr1:
 
+![](images/office-trial/a001.open.in.incognito.window.png)
+
+In the window that opens, you need to select the "E5" plan (right-most column). Under the "Buy now" button, click on **Try for free**.
+
+![](images/office-trial/a001.try.for.free.png)
+
+You need to register for the trial. Provide your e-mail address where you want to receive the confirmation, and click **Next**:
+
+![](images/office-trial/a002.enter.email.png)
+
+If you use an e-mail address that does not already have an account, you can click **Create new account**:
+
+![](images/office-trial/a003.create.new.account.png)
+
+Fill out your name and contact information.  Click **Next**:
+
+![](images/office-trial/a004.tell.us.about.yourself.png)
+
+Verify you are not a robot by getting a text message or a call.  Press **Send verification code**:
+
+![](images/office-trial/a005.verify.you.are.a.human.png)
+
+
+![](images/office-trial/a001.open.in.incognito.window.png)
+![](images/office-trial/a001.open.in.incognito.window.png)
+![](images/office-trial/a001.open.in.incognito.window.png)
+![](images/office-trial/a001.open.in.incognito.window.png)
+![](images/office-trial/a001.open.in.incognito.window.png)
+![](images/office-trial/a001.open.in.incognito.window.png)
+![](images/office-trial/a001.open.in.incognito.window.png)
+![](images/office-trial/a001.open.in.incognito.window.png)
+![](images/office-trial/a001.open.in.incognito.window.png)
+![](images/office-trial/a001.open.in.incognito.window.png)
+![](images/office-trial/a001.open.in.incognito.window.png)
+![](images/office-trial/a001.open.in.incognito.window.png)
