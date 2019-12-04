@@ -4,7 +4,7 @@ Telphony Channel in Microsoft Bot Framework is the Microsoft technology for enab
 
  ![](images/telephonychannel.png)
 
-Please note:  this is a Beta (preview) version of software, and as with any preview software, there may be initial risks and limitations you run into, such as a need to integrate with your existing IVR, etc.  We are actively working on and supporting this product and are here to help you in case you run into any issues.  Reach us at ms-ivr-preview@microsoft.com.
+Please note:  This is a Beta (preview) version of software, and as with any preview software, there may be initial risks and limitations you run into, such as a need to integrate with your existing IVR, etc.  We are actively working on and supporting this product and are here to help you in case you run into any issues.  Reach us at ms-ivr-preview@microsoft.com.
 
 ## Requirements
 * **IVR Private Preview Approval** - To get started, your Tenant/Organization needs to be approved for a Private Preview of the Microsoft Intelligent Call Center / IVR project.  Send the e-mail to ms-ivr-preview [AT] microsoft.com with following information
@@ -14,7 +14,7 @@ Please note:  this is a Beta (preview) version of software, and as with any prev
   
   Once approved for privare preview, your customer will see Telephony channel in their bot settings. 
 * **Office 365 License** - A minimum of Office 365 E3 + calling plan or an E5 plan is required 
-* **Azure Subscription**
+* **Azure Subscription** - You will need a valid Azure subscription. You can [signup](https://signup.azure.com/) here for a new Azure subscription if needed
 
 # Enabling IVR 
 
@@ -28,7 +28,6 @@ The following are the high-level steps needed you to enable IVR support in your 
    * [Create a resource account](AcquirePhoneNumber.md#Create-a-resource-account)
    * [Assign license](AcquirePhoneNumber.md#Assign-license)
    * [Bind the phone number](AcquirePhoneNumber.md#Bind-the-phone-number)
-* [Create a new bot](CreateBot.md)
 * [Enable Telephony Channel](EnableTelephony.md)
    * [Create a Speech Services resource](EnableTelephony.md#Create-a-Speech-Services-resource)
    * [Enable Telephony Channel in the bot](EnableTelephony.md#Enable-Telephony-Channel-in-the-bot)
