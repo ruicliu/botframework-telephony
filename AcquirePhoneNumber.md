@@ -28,10 +28,12 @@ Please note:
 [Office Admin Center](https://www.office.com/?auth=2&login_hint={0}&from=AdminCenterEmail)
 2. Please make sure you are logging in with Office 365 license admin credentials for your company - or the trial account credentials you create above!
 
-# Steps
+# Summary
 
 Overall setup can be broken down into following stages:
-| Step                                                   | Admin permission needed |
+
+
+| Stage                                                   | Admin permission needed |
 | ------------- | ------------- |
 | [Acquire a phone number](#Acquire-a-phone-number)      | Global Adminstrator or Microsoft Teams Admin|
 | [Create a resource account](#Create-a-resource-account)| Global Adminstrator or Microsoft Teams Admin|
