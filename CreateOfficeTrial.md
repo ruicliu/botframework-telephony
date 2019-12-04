@@ -52,13 +52,26 @@ If you have additional tenant admins (for example, colleagues who may be working
 
 ![](images/office-trial/a011.add.additional.developers.and.colleagues.png)
 
-Skip creating teams - click **Next**: 
+Skip creating teams - click **Next** (you can also exit the rest of the wizard if you do not want to see the following screens):
 
 ![](images/office-trial/a012.skip.creation.of.teams.png)
 
-
+Skip installing Office apps - click **Next**:
 
 ![](images/office-trial/a013.skip.office.apps.png)
+
+You're done setting up your account.  Click **Go to the Admin center** to use your account:
+
 ![](images/office-trial/a014.go.to.admin.center.png)
+
+Welcome to your trial Office 365 tenant.  This is where you will create users and phone numbers in the following steps.  In the left navigation menu, expand **Users** and click on **Active users**:
+
 ![](images/office-trial/a015.view.active.users.png)
+
+Observe that you have successfully created a new tenant with login and password who has Office 365 E5 license, which allows you to provision phone numbers: 
+
 ![](images/office-trial/a016.only.one.user.created.png)
+
+You are done with this step.  
+
+**Next step**: [Acquire a phone number for your bot](AcquirePhoneNumber.md)
