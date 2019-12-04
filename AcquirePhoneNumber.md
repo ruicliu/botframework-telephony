@@ -86,7 +86,7 @@ Acquiring a phone number would require performing the following tasks in the fol
 
 ### Step 1 - Go to [Resource Account portal](https://aka.ms/ivr3) > Org-wide settings > Resource Accounts
 
-Navigate to [https://aka.ms/ivr3](https://aka.ms/ivr3). If you were not logged in for a while, you may not get to the Resource Accounts page right away, and would land on the Teams portal home page. In that case, navigate to [https://aka.ms/ivr2](https://aka.ms/ivr2) again in the browser address bar. 
+Navigate to [https://aka.ms/ivr3](https://aka.ms/ivr3). If you were not logged in for a while, you may not get to the Resource Accounts page right away, and would land on the Teams portal home page. In that case, navigate to [https://aka.ms/ivr3](https://aka.ms/ivr3) again in the browser address bar. 
 
 Click on **Add** to add a new resource account.  Creating a resource accounts is just like adding a new user to your company - just non-human (a conference rooms, a bot, a toll-free 1-800-Contoso line, etc).
 
