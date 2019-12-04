@@ -126,9 +126,9 @@ You have created a phone number, provisioned an identity for a future bot that w
 ![](images/assignedLicense.png)
 
 ## Bind the phone number
-This is the last and most important part of the Phone number aquistion process where you would need to bind the acquired phone number backed with a resource account with assigned license. 
+This is the last and most important part of the phone number aquistion process where you would need to bind the acquired phone number backed with a resource account with assigned license. 
 
-Here are the steps needed to complete the Phone number acquistion process
+Here are the steps needed to complete the Phone number acquistion process:
 1. Download and install the [Skype for Business Online Connector module](https://www.microsoft.com/download/details.aspx?id=39366), and then restart your computer if prompted.
 
 2. Connect using a Skype for Business Online administrator account with multifactor authentication
