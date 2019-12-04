@@ -172,6 +172,8 @@ Here are the steps needed to complete the Phone number acquistion process:
 
 **Note:**
 
-Last command `Set-CsOnlineVoiceApplicationInstance` may fail with `CmdletInvocationException` due to longer delays in syncing the application instance (issued in previous command `Sync-CsOnlineApplicationInstance`). Please retry after few minutes if you run into this.
+In case any of these commands fail, or if you get the second, additional small log in prompt, please close PowerShell window and try the PowerShell scripts again.
+
+In particular, last command `Set-CsOnlineVoiceApplicationInstance` may fail with `CmdletInvocationException` due to longer delays in syncing the application instance (issued in previous command `Sync-CsOnlineApplicationInstance`). Please retry after few minutes if you run into this.
 
 **Next step**:  [Create a new Azure Web App Bot](CreateBot.md)
