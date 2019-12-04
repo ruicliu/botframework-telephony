@@ -32,16 +32,33 @@ Next, this is where you will create your Tenant. All user logins you will use in
 
 ![](images/office-trial/a006.create.a.tenant.name.png)
 
+If the tenant name is available, you can click **Next** to use it:
+
+![](images/office-trial/a007.create.selected.tenant.png)
+
+Now, create a username and password. Click **Sign up**:
+
+![](images/office-trial/a008.create.login.and.password.png)
+
+If everything went successfully, your account is now created. Write down the sign-in page for future use and note the user ID.  Now is the time to set up your new account.  Click **Go to setup**:
+
+![](images/office-trial/a009.note.signin.page.and.userID.png)
+
+This is the account set up phase.  Since it is a trial account, you can select option 2 to use the existing tenant name that you selected previously.  Select option 2 and press **Next**:
+
+![](images/office-trial/a010.select.option.2.png)
+
+If you have additional tenant admins (for example, colleagues who may be working on the IVR with you), you can add them here.  Do not add too many, as you'd want to use some of the allowed 25 lines for your future bot / IVR:
+
+![](images/office-trial/a011.add.additional.developers.and.colleagues.png)
+
+Skip creating teams - click **Next**: 
+
+![](images/office-trial/a012.skip.creation.of.teams.png)
 
 
-![](images/office-trial/a001.open.in.incognito.window.png)
-![](images/office-trial/a001.open.in.incognito.window.png)
-![](images/office-trial/a001.open.in.incognito.window.png)
-![](images/office-trial/a001.open.in.incognito.window.png)
-![](images/office-trial/a001.open.in.incognito.window.png)
-![](images/office-trial/a001.open.in.incognito.window.png)
-![](images/office-trial/a001.open.in.incognito.window.png)
-![](images/office-trial/a001.open.in.incognito.window.png)
-![](images/office-trial/a001.open.in.incognito.window.png)
-![](images/office-trial/a001.open.in.incognito.window.png)
-![](images/office-trial/a001.open.in.incognito.window.png)
+
+![](images/office-trial/a013.skip.office.apps.png)
+![](images/office-trial/a014.go.to.admin.center.png)
+![](images/office-trial/a015.view.active.users.png)
+![](images/office-trial/a016.only.one.user.created.png)
