@@ -35,7 +35,7 @@ Overall setup can be broken down into following stages:
 | -------------------------------------------------------| ----------- |
 | [Acquire a phone number](#Acquire-a-phone-number)      | Global Adminstrator or Microsoft Teams Admin|
 | [Create a resource account](#Create-a-resource-account)| Global Adminstrator or Microsoft Teams Admin|
-| [Assign license](#Assign-license)                      | Global Adminstrator or User/License Admin
+| [Assign license](#Assign-license)                      | Global Adminstrator or User/License Admin|
 | [Bind the phone number](#Bind-the-phone-number)        | Global Adminstrator or Microsoft Teams Admin|
 
 ## Acquire a phone number
@@ -160,6 +160,6 @@ Here are the steps needed to complete the Phone number acquistion process
 
 **Note:**
 
-Last command `Set-CsOnlineVoiceApplicationInstance` may fail with `CmdletInvocationException` due to longer delays in syncing the application instance issues in previous command `Sync-CsOnlineApplicationInstance`. Please retry after few minutes if you run into this.
+Last command `Set-CsOnlineVoiceApplicationInstance` may fail with `CmdletInvocationException` due to longer delays in syncing the application instance (issued in previous command `Sync-CsOnlineApplicationInstance`). Please retry after few minutes if you run into this.
 
 In the next step, we will bind the created bot with the phone number acquired in this guide.
