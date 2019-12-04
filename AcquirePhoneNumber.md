@@ -121,7 +121,7 @@ Check an **Office 365 E5 license** - this license includes phone lines.
 ![](images/selecLicense.png)
 
 ## Success!
-You have created a phone number, provisioned an identity for a future bot that will be answering phone lines, and activated a phone line by assigning a license to it.  This is very similar to how you provision phone numbers with other telephony providers like Twilio and similar. The phone line is now yours. It is not current serviced by any bot, so let's now bind the phone line to a bot.
+You have created a phone number, provisioned an identity for a future bot that will be answering phone lines, and assigned a license to it.  You now have both pieces: a phone number and a licensed account that can answer phone lines.  However, the resource account is not assigned to answer this phone line yet. Let's bind the phone number to the resource account next.
 
 ![](images/assignedLicense.png)
 
