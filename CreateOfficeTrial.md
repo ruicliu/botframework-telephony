@@ -28,8 +28,12 @@ Verify you are not a robot by getting a text message or a call.  Press **Send ve
 
 ![](images/office-trial/a005.verify.you.are.a.human.png)
 
+Next, this is where you will create your Tenant. All user logins you will use in this tenant will end up looking like user@TENANT.onmicrosoft.com in this trial.  You will be able to use a custom domain later.  Press **Check availability**:
 
-![](images/office-trial/a001.open.in.incognito.window.png)
+![](images/office-trial/a006.create.a.tenant.name.png)
+
+
+
 ![](images/office-trial/a001.open.in.incognito.window.png)
 ![](images/office-trial/a001.open.in.incognito.window.png)
 ![](images/office-trial/a001.open.in.incognito.window.png)
