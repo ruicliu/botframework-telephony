@@ -32,7 +32,7 @@ Please note:
 
 Overall setup can be broken down into following stages:
 | Step                                                   | Admin permission needed |
-| -------------------------------------------------------| ----------- |
+| ------------- | ------------- |
 | [Acquire a phone number](#Acquire-a-phone-number)      | Global Adminstrator or Microsoft Teams Admin|
 | [Create a resource account](#Create-a-resource-account)| Global Adminstrator or Microsoft Teams Admin|
 | [Assign license](#Assign-license)                      | Global Adminstrator or User/License Admin|
