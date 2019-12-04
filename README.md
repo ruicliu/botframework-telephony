@@ -28,6 +28,7 @@ The following are the high-level steps needed you to enable IVR support in your 
    * [Create a resource account](AcquirePhoneNumber.md#Create-a-resource-account)
    * [Assign license](AcquirePhoneNumber.md#Assign-license)
    * [Bind the phone number](AcquirePhoneNumber.md#Bind-the-phone-number)
+* [Create a new Azure Web App Bot](CreateBot.md)
 * [Enable Telephony Channel](EnableTelephony.md)
    * [Create a Speech Services resource](EnableTelephony.md#Create-a-Speech-Services-resource)
    * [Enable Telephony Channel in the bot](EnableTelephony.md#Enable-Telephony-Channel-in-the-bot)
