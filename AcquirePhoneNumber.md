@@ -151,7 +151,8 @@ Here are the steps needed to complete the Phone number acquistion process:
 3. Run the following command to complete the binding
    ```
       # Replace
-      #  - resourceusername with user name chosen during Create a resource account > Add a new Resource Account domainname with the domain name for the Office 365 account. 
+      #  - resourceusername with user name chosen during Create a resource account > Add a new Resource Account 
+      #       domainname with the domain name for the Office 365 account. 
       #       e.g. "telephonyuser123@contoso.onmicrosoft.com"
       #  - $phoneNumber is one of the phone number acquired above
 
@@ -170,4 +171,4 @@ Here are the steps needed to complete the Phone number acquistion process:
 
 Last command `Set-CsOnlineVoiceApplicationInstance` may fail with `CmdletInvocationException` due to longer delays in syncing the application instance (issued in previous command `Sync-CsOnlineApplicationInstance`). Please retry after few minutes if you run into this.
 
-In the next step, we will bind the created bot with the phone number acquired in this guide.
+**Next step**:  [Create a new Azure Web App Bot](CreateBot.md)
