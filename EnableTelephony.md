@@ -15,7 +15,7 @@ Follow these instructions to create a Speech resource:
 4. You'll be prompted to provide some information:
    * Give your resource a **Name** (Say **TelephonyChannelSpeech**)
    * For **Subscription**, choose the appropriate subscription
-   * For **Location**, choose the appropriate region.Ideally, this should be same as Bot's Azure region for best latencies. Please note that Currently Telephony Channel is only supported in following Azure regions:
+   * For **Location**, choose the appropriate region.Ideally, this should be same as Bot's Azure region for best latencies. Please note that currently Telephony Channel is only supported in following Azure regions:
         * West US
         * West US 2
         * East US
@@ -40,7 +40,9 @@ Once we have created a speech resource, we are ready to use it and configure it 
 2. Configure the channel with following information
     * Telephony number - Acquired previously in [Provision a new phone number for your bot in Office 365](AcquirePhoneNumber.md)
     * Cognitive Service Subscription Key - Acquired while [creating the Speech Resource](#Step-1---Create-a-Speech-Services-resource)
+    * Location for the chosen for the Cognitive Service Speech Resource 
+        * Format: WestUS, WestUS2, EastUS, EastUS2, WestEurope, NorthEurupe,SouthEastAsia
 
- ![](images/telephonychannel.png)
+ ![](images/configureChannel.jpg)
 
 3. Save
