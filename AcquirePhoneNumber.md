@@ -154,7 +154,8 @@ Here are the steps needed to complete the Phone number acquistion process:
       #  - resourceusername with user name chosen during Create a resource account > Add a new Resource Account 
       #       domainname with the domain name for the Office 365 account. 
       #       e.g. "telephonyuser123@contoso.onmicrosoft.com"
-      #  - <PHONENUMBER> is one of the phone number acquired above
+      #  - <PHONENUMBER> is one of the phone number acquired above. Format:  +12345678910 (no spaces, dashes 
+      #        or parenthesis; start with +).
       #
       #  Keep "ApplicationId daca305a..." intact - do not change that line
 
