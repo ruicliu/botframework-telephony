@@ -49,7 +49,8 @@ We will use the second option (a service phone number allocated to a resource ac
 Acquiring a phone number would require performing the following tasks in the following order:
 
 ### Step 1 - Go to [Skype for Business admin center](https://aka.ms/ivr2) > Voice
-Click "+" to create a new Service number.
+
+Navigate to [https://aka.ms/ivr2](https://aka.ms/ivr2). Click "+" to create a new Service number.
 
 ![](images/newServiceNumber.png)
 
@@ -85,28 +86,33 @@ Acquiring a phone number would require performing the following tasks in the fol
 
 ### Step 1 - Go to [Resource Account portal](https://aka.ms/ivr3) > Org-wide settings > Resource Accounts
 
-Click on Add to add a new resource account.  Creating a resource accounts is just like adding a new user to your company - just non-human (a conference rooms, a bot, a toll-free 1-800-Contoso line, etc).
+Navigate to [https://aka.ms/ivr3](https://aka.ms/ivr3). If you were not logged in for a while, you may not get to the Resource Accounts page right away, and would land on the Teams portal home page. In that case, navigate to [https://aka.ms/ivr2](https://aka.ms/ivr2) again in the browser address bar. 
+
+Click on **Add** to add a new resource account.  Creating a resource accounts is just like adding a new user to your company - just non-human (a conference rooms, a bot, a toll-free 1-800-Contoso line, etc).
 
 ![](images/resourceAccounts.png)
 
 ### Step 3 - Add a new Resource Account 
-Fill out the Display name of your bot, give it a username, and set the Resource Account Type = Auto Attendant.  Click Save at the bottom.
+Fill out the Display name of your bot, give it a username, and set the Resource Account Type = Auto Attendant.  Click **Save** at the bottom.
   * Note down the chosen resource name and domain name. This will be needed later in the [Binding stage](#Bind-the-phone-number)
 
 ![](images/addResourceAccount.png)
 
 
 ## Success!
-You now have a phone number, and the calls coming into this phone number can be routed to some entity - in this case, a resource account, identified by a login.   Next, we will assign one of your licenses to this account for the line to become active and have a dialtone.
+You now have a phone number, and the calls coming into this phone number can be routed to some entity - in this case, a resource account, identified by a login.   Next, we will assign one of your licenses to this account.
 ![](images/successResourceAccount.png)
 
 ## Assign license
-If you are using an Office 365 E5 trial, your account comes with a pack of 25 licenses - ie, 25 live phone numbers anywhere in the world -  If you have a regular Office 365 account, you can use those licenses to license this resource account.   Let's license the resource account to enable the resource account to act on this phone number.
+If you are using an Office 365 E5 trial, your account comes with a pack of 25 licenses - i.e., 25 live phone numbers anywhere in the world.  If you have a regular Office 365 account, you can use those licenses to license this resource account.   Let's license the resource account to make the resource account active.
 
 Assigning license to a resource account  would require performing the following tasks in the following order:
 
 ### Step 1 - Go to [Microsoft 365 admin center](https://aka.ms/ivr4) > Users > Active Users
-The resource account you created should appear on the list.  Note that at the moment, Licenses column states "Unlicensed".  Let's activate this account so that it can pick up the phone by assigning an active license to it.  Click on the account name:
+
+Navigate to [https://aka.ms/ivr4](https://aka.ms/ivr4). 
+
+The resource account you created should appear on the list.  Note that at the moment, Licenses column states "Unlicensed."  Let's activate this account so that it can pick up the phone by assigning an active license to it.  Click on the account name:
 
 ### Step 2 - Activate License
 
@@ -129,7 +135,7 @@ You have created a phone number, provisioned an identity for a future bot that w
 This is the last and most important part of the phone number aquistion process where you would need to bind the acquired phone number backed with a resource account with assigned license. 
 
 Here are the steps needed to complete the Phone number acquistion process:
-1. Download and install the [Skype for Business Online Connector module](https://www.microsoft.com/download/details.aspx?id=39366), and then restart your computer if prompted.
+1. Download and install the [Skype for Business Online Connector module](https://aka.ms/ivr5), and then restart your computer if prompted.
 
 2. Connect using a Skype for Business Online administrator account with multifactor authentication
    *  Open a Windows PowerShell command prompt and run the following commands:
