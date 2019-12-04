@@ -154,7 +154,9 @@ Here are the steps needed to complete the Phone number acquistion process:
       #  - resourceusername with user name chosen during Create a resource account > Add a new Resource Account 
       #       domainname with the domain name for the Office 365 account. 
       #       e.g. "telephonyuser123@contoso.onmicrosoft.com"
-      #  - $phoneNumber is one of the phone number acquired above
+      #  - <PHONENUMBER> is one of the phone number acquired above
+      #
+      #  Keep "ApplicationId daca305a..." intact - do not change that line
 
       $appInstance = Set-CsOnlineApplicationInstance `
           -Identity resourceusername@domainname.onmicrosoft.com `
@@ -163,7 +165,7 @@ Here are the steps needed to complete the Phone number acquistion process:
       Sync-CsOnlineApplicationInstance -ObjectId $appInstance.ObjectId
       Set-CsOnlineVoiceApplicationInstance `
          -Identity $appInstance.UserPrincipalName `
-         -TelephoneNumber $phoneNumber
+         -TelephoneNumber <PHONENUMBER>
 
    ```
 
