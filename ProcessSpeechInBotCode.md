@@ -24,6 +24,7 @@ protected override async Task OnConversationUpdateActivityAsync
   //   channels like Skype, Facebook Messenger, Web Chat, etc
   // second paramter of MessageFactory.Text is the equivalent message that should be 
   //   read aloud with speech-only scenario, such as an IVR
+  
   await turnContext.SendActivityAsync(MessageFactory.Text(displayText, spokenEquivalent), 
       cancellationToken);
 }
