@@ -1,6 +1,6 @@
 # Processing Speech inside the Bot
 
-With Microsoft Bot Framework, you can use over 80 different locales / voice fonts to interact with your customers:  see [language and region support for the speech service](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support).
+With Microsoft Bot Framework, you can use over 80 different locales / voice fonts to interact with your customers:  [language and region support for the speech service](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support).
 
 ## Making your bot speak
 To ensure your bot can speak, all you need is to populate the 'Speak' field in the response activities.
