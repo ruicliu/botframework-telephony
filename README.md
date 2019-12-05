@@ -29,13 +29,9 @@ The following are the high-level steps needed you to enable IVR support in your 
 
 * [Optional: create a new Office 365 account trial](CreateOfficeTrial.md)
 * [Step 1: Provision a new phone number for your bot in Office 365](AcquirePhoneNumber.md)
-   * [Acquire a phone number](AcquirePhoneNumber.md#Acquire-a-phone-number)
-   * [Create a resource account](AcquirePhoneNumber.md#Create-a-resource-account)
-   * [Assign license](AcquirePhoneNumber.md#Assign-license)
-   * [Bind the phone number](AcquirePhoneNumber.md#Bind-the-phone-number)
 * [Step 2: Create a new Azure Web App Bot](CreateBot.md)
 * [Step 3: Enable your bot to speak and understand voice](CreateSpeechResource.md)
-   * [Enabling Speech inside the bot](ProcessSpeechInBotCode.md)
 * [Step 4: Enable Telephony Channel](EnableTelephony.md)
+* [Step 5: Process speech inside of the bot](ProcessSpeechInBotCode.md)
 
 Once setup you should be able to simply dial the acquired phone number using any PSTN or mobile phone (subjected to cellular plan on the source phone).
