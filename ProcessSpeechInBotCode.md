@@ -1,4 +1,4 @@
-# Processing Speech inside the Bot
+# Processing speech inside the bot
 
 With Microsoft Bot Framework, you can use over 80 different locales / voice fonts to interact with your customers:  [language and region support for the speech service](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support).
 
