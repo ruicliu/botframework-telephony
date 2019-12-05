@@ -29,3 +29,5 @@ Configure the channel with following information:
 ![](images/create-a-bot/c017-fill-out-settings-click-save.png)
 
 Click **Save**.
+
+**Next step**:  [Process speech inside of the bot](ProcessSpeechInBotCode.md)
