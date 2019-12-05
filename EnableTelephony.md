@@ -18,11 +18,12 @@ For you to see Telephony as one of the options, your Azure account needs to be w
 ![](images/create-a-bot/c016-click-on-telephony.png)
 
 Configure the channel with following information:
-    * Telephony number - Acquired previously in [Provision a new phone number for your bot in Office 365](AcquirePhoneNumber.md)
-    * Cognitive Service Subscription Key - Acquired while [creating the Speech Resource](#Step-1---Create-a-Speech-Services-resource)
-    * Location for the chosen for the Cognitive Service Speech Resource 
-        * Format: WestUS, WestUS2, EastUS, EastUS2, WestEurope, NorthEurupe,SouthEastAsia
+
+* Telephony number - Acquired previously in [Provision a new phone number for your bot in Office 365](AcquirePhoneNumber.md)
     * Please note the format of the phone number (+12345678910) is important
+* Cognitive Service Subscription Key - Acquired while [creating the Speech Resource](#Step-1---Create-a-Speech-Services-resource)
+* Location for the chosen for the Cognitive Service Speech Resource 
+    - Format: WestUS, WestUS2, EastUS, EastUS2, WestEurope, NorthEurupe,SouthEastAsia
 
 
 ![](images/create-a-bot/c017-fill-out-settings-click-save.png)

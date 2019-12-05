@@ -35,6 +35,7 @@ The following are the high-level steps needed you to enable IVR support in your 
    * [Bind the phone number](AcquirePhoneNumber.md#Bind-the-phone-number)
 * [Step 2: Create a new Azure Web App Bot](CreateBot.md)
 * [Step 3: Enable your bot to speak and understand voice](CreateSpeechResource.md)
+   * [Enabling Speech inside the bot](ProcessSpeechInBotCode.md)
 * [Step 4: Enable Telephony Channel](EnableTelephony.md)
 
 Once setup you should be able to simply dial the acquired phone number using any PSTN or mobile phone (subjected to cellular plan on the source phone).
