@@ -2,22 +2,30 @@
 
 With Microsoft Bot Framework, you can use over 80 different locales / voice fonts to interact with your customers:  [language and region support for the speech service](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support).
 
+We strongly recommend using [neural voices](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#neural-voices) in IVR for realistically sounding voices.
+
 ## Making your bot speak
 To ensure your bot can speak, all you need is to populate the 'Speak' field in the response activities.
-
 
 ```
 protected override async Task OnConversationUpdateActivityAsync
   (ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
 {
-  var messageText = $@"
+  var displayText = $@"
   
       Welcome to the demo telephony bot. 
       For billing questions, press or say 1. 
       To sign up for the new service, press or say 2.
       Otherwise, just tell me something, and I will repeat it back.";
+      
+  var spokenEquivalent = displayText;
 
-  await turnContext.SendActivityAsync(MessageFactory.Text(messageText, messageText), cancellationToken);
+  // first paramter of MessageFactory.Text is what should be displayed in messaging
+  //   channels like Skype, Facebook Messenger, Web Chat, etc
+  // second paramter of MessageFactory.Text is the equivalent message that should be 
+  //   read aloud with speech-only scenario, such as an IVR
+  await turnContext.SendActivityAsync(MessageFactory.Text(displayText, spokenEquivalent), 
+      cancellationToken);
 }
 ```
 
@@ -39,16 +47,16 @@ private string SimpleConvertToSSML(string text, string voiceId, string locale)
 protected override async Task OnConversationUpdateActivityAsync
   (ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
 {
-  var intromessagetext = $@"
+  var displayText = $@"
   
       Welcome to demo telephony bot. 
       For billing questions, press or say 1. 
       To sign up for the new service, press or say 2.
       Otherwise, just tell me something, and I will repeat it back.";
 
-  var ssml = SimpleConvertToSSML(intromessagetext, "en-US-GuyNeural", "en-us");
+  var spokenTextInSSMLFormat = SimpleConvertToSSML(intromessagetext, "en-US-GuyNeural", "en-us");
 
-  await turnContext.SendActivityAsync(MessageFactory.Text(intromessagetext, ssml), cancellationToken);
+  await turnContext.SendActivityAsync(MessageFactory.Text(displayText, spokenTextInSSMLFormat), cancellationToken);
 }
 
 ```
