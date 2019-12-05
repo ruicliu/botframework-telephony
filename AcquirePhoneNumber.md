@@ -92,12 +92,15 @@ Click on **Add** to add a new resource account.  Creating a resource accounts is
 
 ![](images/resourceAccounts.png)
 
+**Note:**
+
+Creation of a Resource Account is a long-running operation.  It can take 15-20 minutes before you can use the account or assign licenses to it.
+
 ### Step 3 - Add a new Resource Account 
 Fill out the Display name of your bot, give it a username, and set the Resource Account Type = Auto Attendant.  Click **Save** at the bottom.
   * Note down the chosen resource name and domain name. This will be needed later in the [Binding stage](#Bind-the-phone-number)
 
 ![](images/addResourceAccount.png)
-
 
 ## Success!
 You now have a phone number, and the calls coming into this phone number can be routed to some entity - in this case, a resource account, identified by a login.   Next, we will assign one of your licenses to this account.
