@@ -39,4 +39,4 @@ At the top, click **Get publishing profile**.  You can use the publishing settin
 
 ![](images/create-a-bot/c019-click-on-get-publish-profile.png)
 
-**Next step**:  [Enable your bot to speech and understand voice](CreateSpeechResource.md)
+**Next step**:  [Enable your bot to speak and understand voice](CreateSpeechResource.md)
