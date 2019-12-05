@@ -11,10 +11,11 @@ protected override async Task OnConversationUpdateActivityAsync
   (ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
 {
   var messageText = $@"
-    Welcome to the demo telephony bot. 
-    For billing questions, press or say 1. 
-    To sign up for the new service, press or say 2.
-    Otherwise, just tell me something, and I will repeat it back.";
+  
+      Welcome to the demo telephony bot. 
+      For billing questions, press or say 1. 
+      To sign up for the new service, press or say 2.
+      Otherwise, just tell me something, and I will repeat it back.";
 
   await turnContext.SendActivityAsync(MessageFactory.Text(messageText, messageText), cancellationToken);
 }
@@ -22,7 +23,7 @@ protected override async Task OnConversationUpdateActivityAsync
 
 ## Advanced voice and speech control
 
-For more advanced voice control, you can leverage the full power of [Speech Synthesis Markup Language (SSML)](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup) to customize the speech output, including adding regional differences, specifying genders, speaking styles (cheerful, empathetics, etc).
+For more advanced voice control, you can leverage the full power of [Speech Synthesis Markup Language (SSML)](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup) to customize the speech output, including adding regional differences, specifying genders, speaking styles (cheerful, empathetic, etc).
 
 ```
 private string SimpleConvertToSSML(string text, string voiceId, string locale)
@@ -39,10 +40,11 @@ protected override async Task OnConversationUpdateActivityAsync
   (ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
 {
   var intromessagetext = $@"
-    Welcome to demo telephony bot. 
-    For billing questions, press or say 1. 
-    To sign up for the new service, press or say 2.
-    Otherwise, just tell me something, and I will repeat it back.";
+  
+      Welcome to demo telephony bot. 
+      For billing questions, press or say 1. 
+      To sign up for the new service, press or say 2.
+      Otherwise, just tell me something, and I will repeat it back.";
 
   var ssml = SimpleConvertToSSML(intromessagetext, "en-US-GuyNeural", "en-us");
 
