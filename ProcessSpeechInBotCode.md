@@ -9,15 +9,15 @@ To ensure your bot can speak, all you need is to populate the 'Speak' field in t
 ```
 protected override async Task OnConversationUpdateActivityAsync
   (ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
-        {
-            var messageText = $@"
-                        Welcome to the demo telephony bot. 
-                        For billing questions, press or say 1. 
-                        To sign up for the new service, press or say 2.
-                        Otherwise, just tell me something, and I will repeat it back.";
+{
+  var messageText = $@"
+    Welcome to the demo telephony bot. 
+    For billing questions, press or say 1. 
+    To sign up for the new service, press or say 2.
+    Otherwise, just tell me something, and I will repeat it back.";
 
-            await turnContext.SendActivityAsync(MessageFactory.Text(messageText, messageText), cancellationToken);
-        }
+  await turnContext.SendActivityAsync(MessageFactory.Text(messageText, messageText), cancellationToken);
+}
 ```
 
 ## Advanced voice and speech control
@@ -37,18 +37,16 @@ private string SimpleConvertToSSML(string text, string voiceId, string locale)
 
 protected override async Task OnConversationUpdateActivityAsync
   (ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
-        {
-            var intromessagetext = $@"
-                        Welcome to demo telephony bot. 
-                        For billing questions, press or say 1. 
-                        To sign up for the new service, press or say 2.
-                        Otherwise, just tell me something, and I will repeat it back.";
+{
+  var intromessagetext = $@"
+    Welcome to demo telephony bot. 
+    For billing questions, press or say 1. 
+    To sign up for the new service, press or say 2.
+    Otherwise, just tell me something, and I will repeat it back.";
 
-            var ssml = SimpleConvertToSSML(intromessagetext, "en-US-GuyNeural", "en-us");
+  var ssml = SimpleConvertToSSML(intromessagetext, "en-US-GuyNeural", "en-us");
 
-            await turnContext.SendActivityAsync(
-              MessageFactory.Text(intromessagetext, ssml), 
-              cancellationToken);
-        }
+  await turnContext.SendActivityAsync(MessageFactory.Text(intromessagetext, ssml), cancellationToken);
+}
 
 ```
