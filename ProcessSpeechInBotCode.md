@@ -39,7 +39,7 @@ private string SimpleConvertToSSML(string text, string voiceId, string locale)
 {
     string ssmlTemplate = @"
     <speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='{2}'>
-        <voice name='{1}'>{0}</voice>
+        <voice name='{1}'> {0} </voice>
     </speak>";
 
     return string.Format(ssmlTemplate, text, voiceId, locale);
