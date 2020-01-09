@@ -3,7 +3,7 @@ Telephony Channel in Microsoft Bot Framework allows you to bind an existing PSTN
 
 Telephony channel under the hood is built upon Microsoft Speech Services to allow Speech to Text and Text to Speech capabilities crucial for enabling an audio interaction/conversation over phone lines.
 
-Please follow following steps to enable a Telephony channel for your bot:
+Please follow these steps to enable a Telephony channel for your bot.
 
 ## Enable Telephony Channel in the bot
 
