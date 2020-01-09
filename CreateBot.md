@@ -2,6 +2,8 @@
 
 In this step, we will create a new bot in Azure that we could then link to the phone number we created in the previous steps.
 
+NOTE: if you run into any issues in this step, see [Troubleshooting](TroubleshootingTelephonyBot.md) steps.
+
 Log into Azure with your Azure admin credentials - or create a new free trial account of Azure. 
 Open https://aka.ms/ivr6 to go directly into the bot flow creation if you are an expert user.  Otherwise, after you log into Azure, click **Create a resource**:
 
