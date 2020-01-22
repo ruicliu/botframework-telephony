@@ -61,6 +61,20 @@ protected override async Task OnConversationUpdateActivityAsync
 }
 ```
 
+For customer service applications, you can use Customer Service style that is available for Jessa for the en-US market, if you are interested in a female voice.  The additional tag that you would add to the SSML construct is the <mstts:express-as> tag:
+
+```xml
+    <speak xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="http://www.w3.org/2001/mstts" xmlns:emo="http://www.w3.org/2009/10/emotionml" version="1.0" xml:lang="en-US">
+      <voice name="Microsoft Server Speech Text to Speech Voice (en-US, JessaNeural)">
+        **<mstts:express-as type="CustomerService">**
+          Welcome to Contoso Corporation.  How can I help you today? 
+        **</mstts:express-as>**
+      </voice>
+</speak>
+```
+
+You can test it using the (Audio Content Creation tool)[http://speech.microsoft.com/audiocontentcreation].  Select JessaNeural voice and under "Voice style" select "CustomerService".
+
 ## Understanding the user input
 
 You can use ```OnMessageActivityAsync``` method to process user voice input:
