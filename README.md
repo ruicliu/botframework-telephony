@@ -15,8 +15,9 @@ Please note:  This is a Beta (preview) version of software, and as with any prev
 ## Requirements
 * **IVR Private Preview Approval** - To get started, your Tenant/Organization needs to be approved for a Private Preview of the Microsoft Intelligent Call Center / IVR project.  Good candidates for the preview are existing Bot Framework customers with existing production bots (ideally those that have Office 365 E5 subscriptions as well) and a dedicated Microsoft account manager (including MSC/CSA). Please have your Microsoft account manager send an e-mail to ms-ivr-preview [AT] microsoft.com from their @microsoft.com e-mail address with following information:
   * Tenant/Organization name
-  * Azure account e-mail that should be whitelisted,
-  * Description of the bot. 
+  * Azure account e-mail that should be whitelisted
+  * Description of the bot
+  * Expected call volumes while in public preview.
   
   Once approved for privare preview, the Azure account provided will see Telephony channel in their bot settings. 
 * **Office 365 License** - A minimum of Office 365 E3 + calling plan or an E5 plan is required 
