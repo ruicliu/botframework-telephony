@@ -92,13 +92,11 @@ Click on **Add** to add a new resource account.  Creating a resource accounts is
 
 ![](images/resourceAccounts.png)
 
-**Note:**
-
-Creation of a Resource Account is a long-running operation.  It can take 15-20 minutes before you can use the account or assign licenses to it.
+**IMPORTANT:** Creation of a Resource Account is a long-running operation.  It can take 15-20 minutes before you can use the account or assign licenses to it.
 
 ### Step 3 - Add a new Resource Account 
 
-**IMPORTANT**: Did you wait for 15-20 minutes before proceeding with the following steps (see the note right above)?  That time is necessary for Office 365 to provision the accounts, underlying resources and propagate the accounts downstream.
+**IMPORTANT**: Did you wait for 15-20 minutes before proceeding with the following steps (see the note right below the screenshot above)?  That time is necessary for Office 365 to provision the accounts, create underlying resources and propagate downstream.  If you do not give it sufficient time and attempt the next step right away, you will likely receive an error "We can't save changes to <username>@<tenant>.onmicrosoft.com" in this step while the account is being provisioned.
 
 Fill out the Display name of your bot, give it a username, and set the Resource Account Type = Auto Attendant.  Click **Save** at the bottom.
   * Note down the chosen resource name and domain name. This will be needed later in the [Binding stage](#Bind-the-phone-number)
