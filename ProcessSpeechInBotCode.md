@@ -135,9 +135,9 @@ Note: This is a preview feature.
 Here is example ssml:
 
 ```xml
-    <speak version=\"1.0\" xml:lang=\"en-US\">
-      <voice name ='Microsoft Server Speech Text to Speech Voice (en-US, JessaRUS)'>
-        <audio src='https://raw.githubusercontent.com/microsoft/botframework-ivr/master/media/whatstheweatherlike.mp3'>this is fallback text</audio>
+    <speak version="1.0" xml:lang="en-US">
+      <voice name ="Microsoft Server Speech Text to Speech Voice (en-US, JessaRUS)">
+        <audio src="https://raw.githubusercontent.com/microsoft/botframework-ivr/master/media/whatstheweatherlike.mp3">this is fallback text</audio>
       </voice>
     </speak>
 ```
