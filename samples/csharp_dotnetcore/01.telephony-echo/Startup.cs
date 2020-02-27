@@ -31,9 +31,6 @@ namespace Microsoft.BotBuilderSamples
             // Create the Bot Framework Adapter
             services.AddSingleton<IBotFrameworkHttpAdapter, AdapterWithErrorHandler>();
 
-            // Register the disabled credential provider ( do not use in production bot )
-            services.AddSingleton<ICredentialProvider, DisabledAuthCredentialProvider>();
-
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
             services.AddTransient<IBot, EchoBot>();
         }

@@ -6,77 +6,27 @@ Having issues getting your bot to be chatty? Try the suggestions below.
 
 This indicates that the telephony service is picking up, but having trouble sending messages to your bot.
 
-### Currently auth needs to be disabled for telephony to work
+### Using SSML? Make sure to use the full name of the voice font
 
-Try disabling auth by registering an alternative credential provider.
-
-```csharp
-/// <summary>
-/// This disables authentication for all incoming requests.
-/// Do not use for production traffic!
-/// </summary>
-public class DisabledAuthCredentialProvider : ICredentialProvider
-{
-    /// <summary>
-    /// This gets the application password
-    /// </summary>
-    /// <param name="appId">The app id we need the password for</param>
-    /// <returns>The password</returns>
-    public Task<string> GetAppPasswordAsync(string appId)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// Checks to see if authentication is disabled or not (returns true to indicate disabled)
-    /// </summary>
-    /// <returns>true</returns>
-    public Task<bool> IsAuthenticationDisabledAsync()
-    {
-        return Task.FromResult(true);
-    }
-
-    /// <summary>
-    /// Checks to see if the app id is valid
-    /// </summary>
-    /// <param name="appId">The appid we need to check</param>
-    /// <returns>True if the app id is valid false otherwise</returns>
-    public Task<bool> IsValidAppIdAsync(string appId)
-    {
-        throw new NotImplementedException();
-    }
-}
-```
-Next, register this ICredential provider in the "ConfigureServices" section of the Startup.cs
+Currently [SSML](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup) voice fonts need to be specified using their full name.
 
 ```csharp
-//In startup.cs
-public void ConfigureServices(IServiceCollection services)
+protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
 {
-    services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+    //Wait for the user to say something :)
+    if(string.IsNullOrWhiteSpace(turnContext.Activity.Text)) {
+        return;
+    }
 
-    services.AddSingleton<IBotFrameworkHttpAdapter, BotFrameworkHttpAdapter>(); //Make sure this is a BotFrameworkHtttpAdapter that accepts ICredentialProvider in the startup
-    services.AddSingleton<ICredentialProvider, DisabledAuthCredentialProvider>(); //Add this line to register the class we previously created
+    //Echo what they say!
+    var replyText = $"You said {turnContext.Activity.Text}";
 
-    // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-    services.AddTransient<IBot, EchoBot>();
-}
-```
-
-### Using SSML? Make sure it follows these very specific formatting rules
-
-Ensure every tag or text element in the [SSML](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup) is seperated by a whitespace character
-
-```csharp
-private string SimpleConvertToSSML(string text, string voiceId, string locale)
-{
     //Doesn't work
-    //string ssmlTemplate = @"<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='{2}'><voice name='{1}'>{0}</voice></speak>";
+    //var ssmlText = $"<speak version='1.0' xmlns='https://www.w3.org/2001/10/synthesis' xml:lang='en-US'><voice name='Jessa24kRUS'>{replyText}</voice></speak>");
 
     //Works
-    string ssmlTemplate = @"<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='{2}'> <voice name='{1}'> {0} </voice> </speak>";
-
-    return string.Format(ssmlTemplate, text, voiceId, locale);
+    var ssmlText = $"<speak version='1.0' xmlns='https://www.w3.org/2001/10/synthesis' xml:lang='en-US'><voice name='Microsoft Server Speech Text to Speech Voice (en-US, Jessa24kRUS)'>{replyText}</voice></speak>");
+    await turnContext.SendActivityAsync(MessageFactory.Text(replyText, ssmlText), cancellationToken);
 }
 ```
 

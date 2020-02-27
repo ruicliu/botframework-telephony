@@ -56,7 +56,7 @@ namespace Microsoft.BotBuilderSamples.Bots
         {
             try
             {
-                string ssmlTemplate = $"<speak version=\"1.0\" xmlns=\"https://www.w3.org/2001/10/synthesis\" xml:lang=\"{locale}\"> <voice name=\"{voiceId}\"> {text} </voice> </speak>";
+                string ssmlTemplate = $"<speak version='1.0' xmlns='https://www.w3.org/2001/10/synthesis' xml:lang='{locale}'><voice name='{voiceId}'>{text}</voice></speak>";
                 return ssmlTemplate;
             }
             catch (Exception ex)

@@ -1,8 +1,8 @@
-﻿# EchoBot
+﻿# TelephonyEchoBot
 
-Bot Framework v4 echo bot sample.
+Bot Framework v4 telephony echo bot sample.
 
-This bot has been created using [Bot Framework](https://dev.botframework.com), it shows how to create a simple bot that accepts input from the user and echoes it back.
+This bot has been created using [Bot Framework](https://dev.botframework.com), it shows how to create a simple bot that accepts input from the user and echoes it back using SSML.
 
 ## Prerequisites
 
@@ -18,10 +18,10 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 - Clone the repository
 
     ```bash
-    git clone https://github.com/Microsoft/botbuilder-samples.git
+    git clone https://github.com/microsoft/botframework-ivr.git
     ```
 
-- In a terminal, navigate to `samples/csharp_dotnetcore/02.echo-bot`
+- In a terminal, navigate to `samples\csharp_dotnetcore\01.telephony-echo`
 - Run the bot from a terminal or from Visual Studio, choose option A or B.
 
   A) From a terminal
@@ -35,7 +35,7 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 
   - Launch Visual Studio
   - File -> Open -> Project/Solution
-  - Navigate to `samples/csharp_dotnetcore/02.echo-bot` folder
+  - Navigate to `samples\csharp_dotnetcore\01.telephony-echo` folder
   - Select `EchoBot.csproj` file
   - Press `F5` to run the project
 
