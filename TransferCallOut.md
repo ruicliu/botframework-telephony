@@ -1,10 +1,10 @@
 # Transfer call to an agent
 
-There could be various occasisons when a bot would like to trasnfer call to a human agent. Telephony Channel in Microsoft Bot Framework allows you to transfer call to an agent over a phone number, using [Microsoft Bot Framework Handoff library](https://github.com/microsoft/BotBuilder-Samples/tree/handoffv2/experimental/handoff-library).
+There could be various occasions when a bot would like to transfer call to a human agent. Telephony Channel in Microsoft Bot Framework allows you to transfer call to an agent over a phone number, using [Microsoft Bot Framework Handoff library](https://github.com/microsoft/BotBuilder-Samples/tree/handoffv2/experimental/handoff-library).
 
-Please follow these steps to trasnfer a call to an agent.
+Please follow these steps to transfer a call to an agent.
 
-## Initiate trasnfer
+## Initiate transfer
 You can use ```OnMessageActivityAsync``` method to initiate call transfer:
 
 ```csharp
