@@ -5,7 +5,7 @@ There could be various occasions when a bot would like to transfer call to a hum
 Please follow these steps to transfer a call to an agent.
 
 ## Requirements
-Ensure you have a valid phone system and calling plan licenses assigned to resource account created in [Step 1: Provision a new phone number for your bot in Office 365](AcquirePhoneNumber.md). You will need
+Ensure you have a valid Phone System and Calling Plan licenses assigned to resource account created in [Step 1: Provision a new phone number for your bot in Office 365](AcquirePhoneNumber.md). You will need both of the following:
 * Phone System - Virtual User
 * Domestic Calling Plan or International Calling Plan
 
