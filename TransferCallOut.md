@@ -4,8 +4,15 @@ There could be various occasions when a bot would like to transfer call to a hum
 
 Please follow these steps to transfer a call to an agent.
 
+## Requirements
+Ensure you have a valid phone system and calling plan licenses assigned to resource account created in [Step 1: Provision a new phone number for your bot in Office 365](AcquirePhoneNumber.md). You will need
+* Phone System - Virtual User
+* Domestic Calling Plan or International Calling Plan
+
+If your tenant doesn't have these licenses, you can add them as add-ons on [Purchase services in Microsoft 365 admin center](https://portal.office.com/adminportal#/catalog).
+
 ## Initiate transfer
-You can use ```OnMessageActivityAsync``` method to initiate call transfer:
+You can send an event created using ```EventFactory.CreateHandoffInitiation``` method to initiate call transfer.
 
 ```csharp
 protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
@@ -47,7 +54,7 @@ protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivi
 Microsoft Bot Framework Handoff library will be available in Bot Framework SDK 4.8. For now, please copy [EventFactory.cs](https://github.com/microsoft/BotBuilder-Samples/blob/handoffv2/experimental/handoff-library/csharp_dotnetcore/Microsoft.Bot.Builder.Handoff/EventFactory.cs) and [HandoffEventNames.cs](https://github.com/microsoft/BotBuilder-Samples/blob/handoffv2/experimental/handoff-library/csharp_dotnetcore/Microsoft.Bot.Builder.Handoff/HandoffEventNames.cs) to your project.
 
 ## Track transfer status
-Telephony Channel sends back ```handoff.status``` event to let the bot know if transfer was successful. You can use ```OnEventActivityAsync``` to handle transfer status.
+You can handle ```handoff.status``` event to know if transfer was successful.
 
 ```csharp
 protected override async Task OnEventActivityAsync(ITurnContext<IEventActivity> turnContext, CancellationToken cancellationToken)
@@ -75,4 +82,5 @@ protected override async Task OnEventActivityAsync(ITurnContext<IEventActivity> 
 ```
 
 ## Notes
+* Phone number should be in international format without dashes ex: +14251231234
 * If target doesn't pick up the call, Telephony Channel would keep calling target again and again.
