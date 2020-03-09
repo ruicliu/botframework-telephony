@@ -36,7 +36,7 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
   - Launch Visual Studio
   - File -> Open -> Project/Solution
   - Navigate to `samples\csharp_dotnetcore\01.telephony-echo` folder
-  - Select `EchoBot.csproj` file
+  - Select `telephony-echo.csproj` file
   - Press `F5` to run the project
 
 ## Testing the bot using Bot Framework Emulator
