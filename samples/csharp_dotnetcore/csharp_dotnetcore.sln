@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29609.76
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "telephony-core-ivr", "02.telephony-core-ivr\telephony-core-ivr.csproj", "{B154C042-16B5-4101-8FAA-EC730E044BBD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "telephony-echo", "01.telephony-echo\telephony-echo.csproj", "{24D0A68A-4983-40F7-AABF-849D34ADF44A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B154C042-16B5-4101-8FAA-EC730E044BBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B154C042-16B5-4101-8FAA-EC730E044BBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B154C042-16B5-4101-8FAA-EC730E044BBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B154C042-16B5-4101-8FAA-EC730E044BBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24D0A68A-4983-40F7-AABF-849D34ADF44A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24D0A68A-4983-40F7-AABF-849D34ADF44A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24D0A68A-4983-40F7-AABF-849D34ADF44A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24D0A68A-4983-40F7-AABF-849D34ADF44A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FCEBCB27-D4FD-4EC8-A390-731AC98308BC}
+	EndGlobalSection
+EndGlobal

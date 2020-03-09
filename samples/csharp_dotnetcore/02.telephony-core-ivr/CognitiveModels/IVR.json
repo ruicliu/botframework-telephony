@@ -1,0 +1,820 @@
+{
+  "luis_schema_version": "6.0.0",
+  "intents": [
+    {
+      "name": "Cancel",
+      "features": []
+    },
+    {
+      "name": "FindNearestStore",
+      "features": []
+    },
+    {
+      "name": "LeavePolicy",
+      "features": []
+    },
+    {
+      "name": "None",
+      "features": []
+    },
+    {
+      "name": "OrderStatus",
+      "features": []
+    },
+    {
+      "name": "POStatus",
+      "features": []
+    },
+    {
+      "name": "TaxForms",
+      "features": []
+    }
+  ],
+  "entities": [
+    {
+      "name": "OrderNumber",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "PONumber",
+      "children": [],
+      "roles": [],
+      "features": []
+    },
+    {
+      "name": "StoreLocation",
+      "children": [
+        {
+          "name": "City",
+          "children": [],
+          "features": []
+        },
+        {
+          "name": "State",
+          "children": [],
+          "features": []
+        }
+      ],
+      "roles": [],
+      "features": []
+    }
+  ],
+  "hierarchicals": [],
+  "composites": [],
+  "closedLists": [
+    {
+      "name": "LeaveOfAbscensePolicies",
+      "subLists": [
+        {
+          "canonicalForm": "Bereavement leave",
+          "list": []
+        },
+        {
+          "canonicalForm": "Parental leave",
+          "list": []
+        },
+        {
+          "canonicalForm": "Sabbatical",
+          "list": []
+        }
+      ],
+      "roles": []
+    },
+    {
+      "name": "Places.Nearby",
+      "inherits": {
+        "domain_name": "Places",
+        "model_name": "Nearby"
+      },
+      "subLists": [
+        {
+          "canonicalForm": "adjacent",
+          "list": []
+        },
+        {
+          "canonicalForm": "around me",
+          "list": [
+            "around here"
+          ]
+        },
+        {
+          "canonicalForm": "closest",
+          "list": []
+        },
+        {
+          "canonicalForm": "in the area",
+          "list": [
+            "in this area",
+            "in my area"
+          ]
+        },
+        {
+          "canonicalForm": "local",
+          "list": []
+        },
+        {
+          "canonicalForm": "near me",
+          "list": [
+            "near here"
+          ]
+        },
+        {
+          "canonicalForm": "nearby",
+          "list": []
+        },
+        {
+          "canonicalForm": "nearest",
+          "list": []
+        },
+        {
+          "canonicalForm": "neighboring",
+          "list": []
+        },
+        {
+          "canonicalForm": "near",
+          "list": []
+        }
+      ],
+      "roles": []
+    },
+    {
+      "name": "TaxFormTypes",
+      "subLists": [
+        {
+          "canonicalForm": "W2",
+          "list": []
+        },
+        {
+          "canonicalForm": "W4",
+          "list": []
+        }
+      ],
+      "roles": []
+    }
+  ],
+  "prebuiltEntities": [],
+  "utterances": [
+    {
+      "text": "calling to check on order number 12345",
+      "intent": "OrderStatus",
+      "entities": [
+        {
+          "entity": "OrderNumber",
+          "startPos": 33,
+          "endPos": 37
+        }
+      ]
+    },
+    {
+      "text": "check my order status",
+      "intent": "OrderStatus",
+      "entities": []
+    },
+    {
+      "text": "check my purchase order status",
+      "intent": "POStatus",
+      "entities": []
+    },
+    {
+      "text": "find a store near renton wa",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "City",
+          "startPos": 18,
+          "endPos": 23
+        },
+        {
+          "entity": "StoreLocation",
+          "startPos": 18,
+          "endPos": 26
+        },
+        {
+          "entity": "State",
+          "startPos": 25,
+          "endPos": 26
+        }
+      ]
+    },
+    {
+      "text": "find a store near san francisco california",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "City",
+          "startPos": 18,
+          "endPos": 30
+        },
+        {
+          "entity": "StoreLocation",
+          "startPos": 18,
+          "endPos": 41
+        },
+        {
+          "entity": "State",
+          "startPos": 32,
+          "endPos": 41
+        }
+      ]
+    },
+    {
+      "text": "find a store near texas city, texas",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "City",
+          "startPos": 18,
+          "endPos": 27
+        },
+        {
+          "entity": "StoreLocation",
+          "startPos": 18,
+          "endPos": 34
+        },
+        {
+          "entity": "State",
+          "startPos": 30,
+          "endPos": 34
+        }
+      ]
+    },
+    {
+      "text": "find the nearest store to kansas city, ks",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "City",
+          "startPos": 26,
+          "endPos": 36
+        },
+        {
+          "entity": "StoreLocation",
+          "startPos": 26,
+          "endPos": 40
+        },
+        {
+          "entity": "State",
+          "startPos": 39,
+          "endPos": 40
+        }
+      ]
+    },
+    {
+      "text": "find the nearest store to me",
+      "intent": "FindNearestStore",
+      "entities": []
+    },
+    {
+      "text": "find the store nearest kansas city, kansas",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "City",
+          "startPos": 23,
+          "endPos": 33
+        },
+        {
+          "entity": "StoreLocation",
+          "startPos": 23,
+          "endPos": 41
+        },
+        {
+          "entity": "State",
+          "startPos": 36,
+          "endPos": 41
+        }
+      ]
+    },
+    {
+      "text": "get me a store near kansas city, ks",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "City",
+          "startPos": 20,
+          "endPos": 30
+        },
+        {
+          "entity": "StoreLocation",
+          "startPos": 20,
+          "endPos": 34
+        },
+        {
+          "entity": "State",
+          "startPos": 33,
+          "endPos": 34
+        }
+      ]
+    },
+    {
+      "text": "i am looking for an invoice for my po shipment #f28322",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 48,
+          "endPos": 53
+        }
+      ]
+    },
+    {
+      "text": "i am looking for an invoice for my po shipment n28322",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 47,
+          "endPos": 52
+        }
+      ]
+    },
+    {
+      "text": "i am looking for my purchase order shipment in 28322",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 44,
+          "endPos": 51
+        }
+      ]
+    },
+    {
+      "text": "i want to find the nearest store",
+      "intent": "FindNearestStore",
+      "entities": []
+    },
+    {
+      "text": "i wanted to ask about leave policies",
+      "intent": "LeavePolicy",
+      "entities": []
+    },
+    {
+      "text": "i wanted to ask about my purchase order",
+      "intent": "POStatus",
+      "entities": []
+    },
+    {
+      "text": "i wanted to ask about pio in 22850",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 26,
+          "endPos": 33
+        }
+      ]
+    },
+    {
+      "text": "i wanted to ask about po number a12345",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 32,
+          "endPos": 37
+        }
+      ]
+    },
+    {
+      "text": "i wanted to ask about the bereavement leave policy",
+      "intent": "LeavePolicy",
+      "entities": []
+    },
+    {
+      "text": "i wanted to check on my purchase order status",
+      "intent": "POStatus",
+      "entities": []
+    },
+    {
+      "text": "i wanted to check on order 24896",
+      "intent": "OrderStatus",
+      "entities": [
+        {
+          "entity": "OrderNumber",
+          "startPos": 27,
+          "endPos": 31
+        }
+      ]
+    },
+    {
+      "text": "i wanted to check on order number 24896",
+      "intent": "OrderStatus",
+      "entities": [
+        {
+          "entity": "OrderNumber",
+          "startPos": 34,
+          "endPos": 38
+        }
+      ]
+    },
+    {
+      "text": "i wanted to check when my order #24896 will arrive",
+      "intent": "OrderStatus",
+      "entities": [
+        {
+          "entity": "OrderNumber",
+          "startPos": 33,
+          "endPos": 37
+        }
+      ]
+    },
+    {
+      "text": "i wanted to check when w2 tax forms will be mailed this year",
+      "intent": "TaxForms",
+      "entities": []
+    },
+    {
+      "text": "i wanted to know when tax forms will be sent",
+      "intent": "TaxForms",
+      "entities": []
+    },
+    {
+      "text": "i wanted to see what our parental leave policy is",
+      "intent": "LeavePolicy",
+      "entities": []
+    },
+    {
+      "text": "i was calling to ask about paid leave",
+      "intent": "LeavePolicy",
+      "entities": []
+    },
+    {
+      "text": "i'd like to find the store near me",
+      "intent": "FindNearestStore",
+      "entities": []
+    },
+    {
+      "text": "i'm asking about purchase order n12345",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 32,
+          "endPos": 37
+        }
+      ]
+    },
+    {
+      "text": "i'm calling about purchase order j12345",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 33,
+          "endPos": 38
+        }
+      ]
+    },
+    {
+      "text": "i'm calling about purchase order n12345",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 33,
+          "endPos": 38
+        }
+      ]
+    },
+    {
+      "text": "i'm calling to check on my order status",
+      "intent": "OrderStatus",
+      "entities": []
+    },
+    {
+      "text": "i'm calling to check on order number 12345",
+      "intent": "OrderStatus",
+      "entities": [
+        {
+          "entity": "OrderNumber",
+          "startPos": 37,
+          "endPos": 41
+        }
+      ]
+    },
+    {
+      "text": "i'm calling to check the status of my w2 tax form",
+      "intent": "TaxForms",
+      "entities": []
+    },
+    {
+      "text": "i'm checking on the status of my order",
+      "intent": "OrderStatus",
+      "entities": []
+    },
+    {
+      "text": "i'm looking for a store near houston, tx",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "City",
+          "startPos": 29,
+          "endPos": 35
+        },
+        {
+          "entity": "StoreLocation",
+          "startPos": 29,
+          "endPos": 39
+        },
+        {
+          "entity": "State",
+          "startPos": 38,
+          "endPos": 39
+        }
+      ]
+    },
+    {
+      "text": "i'm looking for a store near kansas city, ks",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "City",
+          "startPos": 29,
+          "endPos": 39
+        },
+        {
+          "entity": "StoreLocation",
+          "startPos": 29,
+          "endPos": 43
+        },
+        {
+          "entity": "State",
+          "startPos": 42,
+          "endPos": 43
+        }
+      ]
+    },
+    {
+      "text": "i'm looking for a store near kansas city, mo",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "City",
+          "startPos": 29,
+          "endPos": 39
+        },
+        {
+          "entity": "StoreLocation",
+          "startPos": 29,
+          "endPos": 43
+        },
+        {
+          "entity": "State",
+          "startPos": 42,
+          "endPos": 43
+        }
+      ]
+    },
+    {
+      "text": "i'm looking for a store near renton wa",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "City",
+          "startPos": 29,
+          "endPos": 34
+        },
+        {
+          "entity": "StoreLocation",
+          "startPos": 29,
+          "endPos": 37
+        },
+        {
+          "entity": "State",
+          "startPos": 36,
+          "endPos": 37
+        }
+      ]
+    },
+    {
+      "text": "i'm looking for a store near renton wah",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "City",
+          "startPos": 29,
+          "endPos": 34
+        },
+        {
+          "entity": "StoreLocation",
+          "startPos": 29,
+          "endPos": 38
+        },
+        {
+          "entity": "State",
+          "startPos": 36,
+          "endPos": 38
+        }
+      ]
+    },
+    {
+      "text": "i'm looking for a store near renton, wa",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "City",
+          "startPos": 29,
+          "endPos": 34
+        },
+        {
+          "entity": "StoreLocation",
+          "startPos": 29,
+          "endPos": 38
+        },
+        {
+          "entity": "State",
+          "startPos": 37,
+          "endPos": 38
+        }
+      ]
+    },
+    {
+      "text": "i'm looking for an invoice for my po shipment f28322",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 46,
+          "endPos": 51
+        }
+      ]
+    },
+    {
+      "text": "i'm looking for an invoice for my po shipment n28322",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 46,
+          "endPos": 51
+        }
+      ]
+    },
+    {
+      "text": "i'm looking for an invoice for my purchase order number n28322",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 56,
+          "endPos": 61
+        }
+      ]
+    },
+    {
+      "text": "i'm looking for my invoice for po shipment number f 12456",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 50,
+          "endPos": 56
+        }
+      ]
+    },
+    {
+      "text": "i'm looking for my purchase order shipment f28322",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 43,
+          "endPos": 48
+        }
+      ]
+    },
+    {
+      "text": "i'm looking for the nearest store to renton wa",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "City",
+          "startPos": 37,
+          "endPos": 42
+        },
+        {
+          "entity": "StoreLocation",
+          "startPos": 37,
+          "endPos": 45
+        },
+        {
+          "entity": "State",
+          "startPos": 44,
+          "endPos": 45
+        }
+      ]
+    },
+    {
+      "text": "i'm trying to find the nearest store",
+      "intent": "FindNearestStore",
+      "entities": []
+    },
+    {
+      "text": "i'm trying to find the nearest store to me",
+      "intent": "FindNearestStore",
+      "entities": []
+    },
+    {
+      "text": "uh can you find the nearest store renton wa",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "City",
+          "startPos": 34,
+          "endPos": 39
+        },
+        {
+          "entity": "StoreLocation",
+          "startPos": 34,
+          "endPos": 42
+        },
+        {
+          "entity": "State",
+          "startPos": 41,
+          "endPos": 42
+        }
+      ]
+    },
+    {
+      "text": "what day will tax forms be delivered",
+      "intent": "TaxForms",
+      "entities": []
+    },
+    {
+      "text": "what day will w2 tax forms be sent out",
+      "intent": "TaxForms",
+      "entities": []
+    },
+    {
+      "text": "what's our policy for bereavement leave",
+      "intent": "LeavePolicy",
+      "entities": []
+    },
+    {
+      "text": "what's the policy for paid leave?",
+      "intent": "LeavePolicy",
+      "entities": []
+    },
+    {
+      "text": "what's the sabbatical policy?",
+      "intent": "LeavePolicy",
+      "entities": []
+    },
+    {
+      "text": "when will order #94294 be here?",
+      "intent": "OrderStatus",
+      "entities": [
+        {
+          "entity": "OrderNumber",
+          "startPos": 17,
+          "endPos": 21
+        }
+      ]
+    },
+    {
+      "text": "when will tax forms be mailed",
+      "intent": "TaxForms",
+      "entities": []
+    },
+    {
+      "text": "when will w2 tax forms be mailed",
+      "intent": "TaxForms",
+      "entities": []
+    },
+    {
+      "text": "where is the nearest store to renton",
+      "intent": "FindNearestStore",
+      "entities": [
+        {
+          "entity": "StoreLocation",
+          "startPos": 30,
+          "endPos": 35
+        },
+        {
+          "entity": "City",
+          "startPos": 30,
+          "endPos": 35
+        }
+      ]
+    },
+    {
+      "text": "winter is coming",
+      "intent": "None",
+      "entities": []
+    }
+  ],
+  "versionId": "0.1",
+  "name": "luis-core-ivr-telephony",
+  "desc": "Luis Model for Telephony IVR sample",
+  "culture": "en-us",
+  "tokenizerVersion": "1.0.0",
+  "patternAnyEntities": [],
+  "regex_entities": [],
+  "phraselists": [],
+  "regex_features": [],
+  "patterns": [],
+  "settings": []
+}
