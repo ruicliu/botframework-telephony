@@ -14,7 +14,7 @@ Please note:  This is a Beta (preview) version of software, and as with any prev
 
 ## Requirements
 
-**NOTE** Private preview program is currently full. We are not accepting new applications until Microsoft //Build 2020.
+**NOTE**: Private preview program is currently full. We are not accepting new applications until Microsoft //Build 2020.
 
 * **IVR Private Preview Approval (Currently FULL - not accepting new requests)** - To get started, your Tenant/Organization needs to be approved for a Private Preview of the Microsoft Intelligent Call Center / IVR project.  Good candidates for the preview are existing Bot Framework customers with existing production bots (ideally those that have Office 365 E5 subscriptions as well) and a dedicated Microsoft account manager (including MSC/CSA). Please have your Microsoft account manager send an e-mail to ms-ivr-preview [AT] microsoft.com from their @microsoft.com e-mail address with following information:
   * Tenant/Organization name
