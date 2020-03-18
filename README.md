@@ -39,6 +39,7 @@ The following are the high-level steps needed you to enable IVR support in your 
 * [Step 4: Enable Telephony Channel](EnableTelephony.md)
 * [Step 5: Process speech inside of the bot](ProcessSpeechInBotCode.md)
 * [Step 6: Transfer call to an agent](TransferCallOut.md)
+* [Step 7: Terminating the ongoing call](TerminateCall.md)
 * [Troubleshooting](TroubleshootingTelephonyBot.md)
 
 Once setup, you should be able to simply dial the acquired phone number using any PSTN or mobile phone (subjected to cellular plan on the source phone).
