@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace CoreBot.Prompts
 {
+    /// <summary>
+    /// Simple prompt to validate a code like 'N12345'
+    /// </summary>
     public class PurchaseOrderNumberPrompt : TextPrompt
     {
         public PurchaseOrderNumberPrompt() : base(nameof(PurchaseOrderNumberPrompt), Validation)

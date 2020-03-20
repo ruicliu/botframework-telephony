@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace CoreBot.Prompts
 {
+    /// <summary>
+    /// Simple prompt to validate a 5 digit order code
+    /// </summary>
     public class OrderNumberPrompt : TextPrompt
     {
         public OrderNumberPrompt() : base(nameof(OrderNumberPrompt), Validation)

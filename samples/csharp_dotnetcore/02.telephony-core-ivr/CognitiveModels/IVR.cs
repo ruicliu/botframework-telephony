@@ -12,6 +12,9 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.BotBuilderSamples
 {
+    /// <summary>
+    /// Used to recognize the LUIS intents and entities we have configured in IVR.json
+    /// </summary>
     public class IVR : RecognizerResult, IRecognizerConvert
     {
         public enum Intent

@@ -22,12 +22,20 @@ namespace Microsoft.BotBuilderSamples.Dialogs
     public class LeavePolicyDialog : WaterfallDialog
     {
         private readonly string TransferNumber;
+        private readonly VoiceFactory VoiceFactory;
         private const string LeavePolicyStepMsgText = "Are you asking about parental leave, sabbaticals, or bereavement leave?";
-        public LeavePolicyDialog(IConfiguration configuration) : base(nameof(LeavePolicyDialog))
+        private const string LeavePolicyRetryMsgText = "I'm sorry, I didn't get that.";
+        private const string BereavementResponse = "In line with federal mandate, we offer three days of paid bereavement leave. If you need someone to talk to, stay on the line and we will put you in touch with our on site bereavement counciler.";
+        private const string ParentalAndSabbaticalPolicyResponse = "Both our parental leave and sabbatical policies are 12 weeks.";
+
+        public LeavePolicyDialog(VoiceFactory voiceFactory, IConfiguration configuration) : base(nameof(LeavePolicyDialog))
         {
+            VoiceFactory = voiceFactory;
+
             AddStep(PolicyTypeStepAsync);
             AddStep(FinalStepAsync);
 
+            //Get transfer number from config
             TransferNumber = configuration["TransferNumber"];
         }
 
@@ -37,13 +45,25 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
             if (leavePolicyDetails.LeaveOfAbscensePolicy == null)
             {
-                var promptMessage = MessageFactory.Text(LeavePolicyStepMsgText, LeavePolicyStepMsgText, InputHints.ExpectingInput);
+                //Build and send our prompt
+                var promptMessage = VoiceFactory.TextAndVoice(LeavePolicyStepMsgText, InputHints.ExpectingInput);
+                var retryMessageText = $"{LeavePolicyRetryMsgText} {LeavePolicyStepMsgText}";
+                var retryMessage = VoiceFactory.TextAndVoice(retryMessageText, InputHints.ExpectingInput);
+
+                var choices = new List<Choice>()
+                {
+                    new Choice() { Value = "Bereavement leave", Synonyms = new List<string>() { "bereavement","bereavement leave","bereavement leave policy" } },
+                    new Choice() { Value = "Sabbatical", Synonyms = new List<string>() { "sabbatical","sabbatical policy", "sabbatical leave policy" } },
+                    new Choice() { Value = "Parental leave", Synonyms = new List<string>() { "parental", "parental leave", "parental leave policy" } },
+                };
+
                 return await stepContext.PromptAsync(
                     nameof(ChoicePrompt),
                     new PromptOptions
                     {
                         Prompt = promptMessage,
-                        Choices = ChoiceFactory.ToChoices(new List<string> { "Parental leave", "Sabbatical", "Bereavement leave" })
+                        Choices = choices,
+                        RetryPrompt = retryMessage
                     },
                     cancellationToken);
             }
@@ -59,11 +79,14 @@ namespace Microsoft.BotBuilderSamples.Dialogs
                 leavePolicyDetails.LeaveOfAbscensePolicy = ((FoundChoice)stepContext.Result).Value;
             }
 
+            //Handle bereavement leave by transferring the call to a more capable bot.
             if (leavePolicyDetails.LeaveOfAbscensePolicy == "Bereavement leave")
             {
-                var bereavementResponse = "In line with federal mandate, we offer three days of paid bereavement leave. If you need someone to talk to, stay on the line and we will put you in touch with our on site bereavement counciler.";
-                await stepContext.Context.SendActivityAsync(MessageFactory.Text(bereavementResponse, bereavementResponse, InputHints.IgnoringInput), cancellationToken);
-                await Task.Delay(8000);
+                await stepContext.Context.SendActivityAsync(VoiceFactory.TextAndVoice(BereavementResponse, InputHints.IgnoringInput), cancellationToken);
+
+                await Task.Delay(10000); //Temporary hack to make sure message is done reading out loud before transfer starts. Bug is tracked to fix this issue.
+                
+                //Create handoff event, passing the phone number to transfer to as context.
                 var context = new { TargetPhoneNumber = TransferNumber };
                 var handoffEvent = EventFactory.CreateHandoffInitiation(stepContext.Context, context);
                 await stepContext.Context.SendActivityAsync(
@@ -74,11 +97,11 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             }
             else
             {
-                var leavePolicyResponse = $"Both our parental leave and sabbatical policies are 12 weeks.";
-                await stepContext.Context.SendActivityAsync(MessageFactory.Text(leavePolicyResponse, leavePolicyResponse, InputHints.IgnoringInput), cancellationToken);
+                //Handle other leave types with a single message.
+                await stepContext.Context.SendActivityAsync(VoiceFactory.TextAndVoice(ParentalAndSabbaticalPolicyResponse, InputHints.IgnoringInput), cancellationToken);
             }
 
-            // Restart the main dialog with a different message the second time around
+            // Restart the upstream dialog with a different message the second time around
             var promptMessage = "What else can I do for you?";
             return await stepContext.ReplaceDialogAsync(nameof(EmployeeDialog), promptMessage, cancellationToken);
         }
