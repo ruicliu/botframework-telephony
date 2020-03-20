@@ -20,13 +20,18 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 {
     public class PurchaseOrderStatusDialog : WaterfallDialog
     {
+        private readonly VoiceFactory VoiceFactory;
         private readonly string TransferNumber;
-        private const string OrderNumberStepMsgText = "Please state your purchase order code like 'N12345'.";
-        public PurchaseOrderStatusDialog(IConfiguration configuration): base(nameof(PurchaseOrderStatusDialog))
+        private const string OrderNumberStepMsgText = "Please state your purchase order code like 'J12345'.";
+        private const string OrderNumberRetryStepMsgText = "I'm sorry, I didn't get that. Please state your purchase order code, which contains a letter followed by 5 digits like 'K54321'";
+        public PurchaseOrderStatusDialog(VoiceFactory voiceFactory, IConfiguration configuration): base(nameof(PurchaseOrderStatusDialog))
         {
+            VoiceFactory = voiceFactory;
+
             AddStep(OrderNumberStepAsync);
             AddStep(FinalStepAsync);
 
+            //Get transfer number from config
             TransferNumber = configuration["TransferNumber"];
         }
 
@@ -36,8 +41,10 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
             if (orderDetails.PONumber == null)
             {
-                var promptMessage = MessageFactory.Text(OrderNumberStepMsgText, OrderNumberStepMsgText, InputHints.ExpectingInput);
-                return await stepContext.PromptAsync(nameof(PurchaseOrderNumberPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
+                //Build and send the next prompt if the viewmodel is not populated
+                var promptMessage = VoiceFactory.TextAndVoice(OrderNumberStepMsgText, InputHints.ExpectingInput);
+                var retryMessage = VoiceFactory.TextAndVoice(OrderNumberRetryStepMsgText, InputHints.ExpectingInput);
+                return await stepContext.PromptAsync(nameof(PurchaseOrderNumberPrompt), new PromptOptions { Prompt = promptMessage, RetryPrompt = retryMessage }, cancellationToken);
             }
 
             return await stepContext.NextAsync(orderDetails.PONumber, cancellationToken);
@@ -50,9 +57,11 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             orderDetails.PONumber = (string)stepContext.Result;
 
             var poStatusResponse = $"For information about purchase order {orderDetails.PONumber}, stay on the line and we will transfer you to a skilled representative.";
-            await stepContext.Context.SendActivityAsync(MessageFactory.Text(poStatusResponse, poStatusResponse, InputHints.IgnoringInput), cancellationToken);
+            await stepContext.Context.SendActivityAsync(VoiceFactory.TextAndVoice(poStatusResponse, InputHints.IgnoringInput), cancellationToken);
 
-            await Task.Delay(8000);
+            await Task.Delay(10000); //Temporary hack to make sure message is done reading out loud before transfer starts. Bug is tracked to fix this issue.
+
+            //Create handoff event, passing the phone number to transfer to as context.
             var poContext = new { TargetPhoneNumber = TransferNumber };
             var poHandoffEvent = EventFactory.CreateHandoffInitiation(stepContext.Context, poContext);
             await stepContext.Context.SendActivityAsync(

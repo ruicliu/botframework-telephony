@@ -18,7 +18,7 @@ namespace Microsoft.BotBuilderSamples.Bots
     // each with dependency on distinct IBot types, this way ASP Dependency Injection can glue everything together without ambiguity.
     // The ConversationState is used by the Dialog system. The UserState isn't, however, it might have been used in a Dialog implementation,
     // and the requirement is that all BotState objects are saved at the end of a turn.
-    public class DialogBot<T> : ActivityHandlerWithHandoff
+    public class DialogBot<T> : ActivityHandler
         where T : Dialog
     {
         protected readonly Dialog Dialog;
@@ -26,15 +26,18 @@ namespace Microsoft.BotBuilderSamples.Bots
         protected readonly BotState UserState;
         protected readonly ILogger Logger;
 
+        //Used to send our welcome message. CompanyName comes from the CompanyName property in the config.
         private readonly string CompanyName;
+        private readonly VoiceFactory VoiceFactory;
 
-        public DialogBot(ConversationState conversationState, UserState userState, T dialog, ILogger<DialogBot<T>> logger, IConfiguration configuration)
+        public DialogBot(ConversationState conversationState, UserState userState, T dialog, VoiceFactory voiceFactory, ILogger<DialogBot<T>> logger, IConfiguration configuration)
         {
             ConversationState = conversationState;
             UserState = userState;
             Dialog = dialog;
             Logger = logger;
             CompanyName = configuration["CompanyName"];
+            VoiceFactory = voiceFactory;
         }
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
@@ -44,8 +47,7 @@ namespace Microsoft.BotBuilderSamples.Bots
                 // Greet anyone that was not the target (recipient) of this message.
                 if (member.Id != turnContext.Activity.Recipient.Id)
                 {
-                    var text = $"Welcome to {CompanyName}!";
-                    var response = MessageFactory.Text(text, text);
+                    var response = VoiceFactory.TextAndVoice($"Welcome to {CompanyName}!");
                     await turnContext.SendActivityAsync(response, cancellationToken);
                     await Dialog.RunAsync(turnContext, ConversationState.CreateProperty<DialogState>("DialogState"), cancellationToken);
                 }
@@ -66,7 +68,7 @@ namespace Microsoft.BotBuilderSamples.Bots
             Logger.LogInformation("Running dialog with Message Activity.");
 
             // Run the Dialog with the new message Activity.
-            if(!string.IsNullOrWhiteSpace(turnContext.Activity.Text))
+            if(!string.IsNullOrWhiteSpace(turnContext.Activity.Text)) //Exclude empty or whitespace messages
                 await Dialog.RunAsync(turnContext, ConversationState.CreateProperty<DialogState>("DialogState"), cancellationToken);
         }
     }

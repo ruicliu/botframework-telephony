@@ -7,7 +7,9 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 - Use [LUIS](https://www.luis.ai) to implement core AI capabilities
 - Transfer calls to other numbers
 - Accept and action on DTMF input
+- Hang up the phone call
 - Implement Multi-turn dialogs
+- Implement a full IVR flow
 
 ## Prerequisites
 

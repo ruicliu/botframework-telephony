@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CoreBot.CognitiveModels;
 using CoreBot.DialogViewModels;
+using CoreBot.Prompts;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
@@ -19,9 +20,13 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 {
     public class OrderStatusDialog : WaterfallDialog
     {
+        private readonly VoiceFactory VoiceFactory;
         private const string OrderNumberStepMsgText = "What is your five digit order number?";
-        public OrderStatusDialog(): base(nameof(OrderStatusDialog))
+        private const string OrderNumberStepRetryMsgText = "I'm sorry, I didn't get that. Please state your five digit order number like '12345'";
+        public OrderStatusDialog(VoiceFactory voiceFactory): base(nameof(OrderStatusDialog))
         {
+            VoiceFactory = voiceFactory;
+
             AddStep(OrderNumberStepAsync);
             AddStep(FinalStepAsync);
         }
@@ -32,8 +37,10 @@ namespace Microsoft.BotBuilderSamples.Dialogs
 
             if (orderDetails.OrderNumber == null)
             {
-                var promptMessage = MessageFactory.Text(OrderNumberStepMsgText, OrderNumberStepMsgText, InputHints.ExpectingInput);
-                return await stepContext.PromptAsync("OrderNumberPrompt", new PromptOptions { Prompt = promptMessage }, cancellationToken);
+                //Build and send the next prompt if the viewmodel is not populated
+                var promptMessage = VoiceFactory.TextAndVoice(OrderNumberStepMsgText, InputHints.ExpectingInput);
+                var retryMessage = VoiceFactory.TextAndVoice(OrderNumberStepRetryMsgText, InputHints.ExpectingInput);
+                return await stepContext.PromptAsync(nameof(OrderNumberPrompt), new PromptOptions { Prompt = promptMessage, RetryPrompt = retryMessage }, cancellationToken);
             }
 
             return await stepContext.NextAsync(orderDetails.OrderNumber, cancellationToken);
@@ -46,8 +53,8 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             orderDetails.OrderNumber = (string)stepContext.Result;
 
             var response = $"Order {orderDetails.OrderNumber} will arrive Wednesday.";
-            await stepContext.Context.SendActivityAsync(MessageFactory.Text(response, response, InputHints.IgnoringInput), cancellationToken);
-            // Restart the main dialog with a different message the second time around
+            await stepContext.Context.SendActivityAsync(VoiceFactory.TextAndVoice(response, InputHints.IgnoringInput), cancellationToken);
+            // Restart the upstream dialog with a different message the second time around
             var promptMessage = "What else can I do for you?";
             return await stepContext.ReplaceDialogAsync(nameof(CustomerDialog), promptMessage, cancellationToken);
         }

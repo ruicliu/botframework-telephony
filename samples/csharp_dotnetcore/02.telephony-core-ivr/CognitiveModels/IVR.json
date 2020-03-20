@@ -157,6 +157,238 @@
   "prebuiltEntities": [],
   "utterances": [
     {
+      "text": "0 star for wendy's in kirkland",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "3 stars for future flight of boeing in everett",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "3 stars for space needle in seattle",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "5 stars for pike street market in seattle downtown on this travel site",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "5-star casual nearby restaurant for 4 people reservation",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "a menu for quaker steak and lube",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "a north side tag agency in tulsa oklahoma phone number",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "a telephone number for british airways in italy",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "a telephone number for eleven oh one kettering squadron",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "adair county health department hours of operation",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "add great clips to my favorites",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "add helensburgh to my favorite places",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "add highland pub to my favorites list",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "add jinx to my favorite places",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "add k mart to favorite list",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "add looks salon to favorite list",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "add lowe's to my favorite places",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "add olive garden to favorite list",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "add park street pizza to my favorites",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "add perry hall bowling alley to my favorites",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "add prime 9 steakhouse to my favorites",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "add red barn on route 6 to my favorites list",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "add starbucks on 1st ave to my favorites list",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "add subway to my list of favorites",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address bellevue square",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address for apple valley petco",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address for dmv on powell in portland oregon",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address for express scripts bloomington minnesota office",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address for highland county ohio health department",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address for king county juvenile detention center",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address for local walmart",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address for loughborough urgent care centre",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address for the color room on lincoln avenue in chicago",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address for walmart on bechtle avenue in springfield ohio",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address musician's friend kansas city missouri",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address of bed bath and beyond in pentagon city",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address south side restaurant",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address to clear creek apartments overland park kansas",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address to the golden corral",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "address to times square",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "al's pizzeria in castile new york s menu",
+      "intent": "None",
+      "entities": []
+    },
+    {
+      "text": "ask about peo number j12345",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 21,
+          "endPos": 26
+        }
+      ]
+    },
+    {
+      "text": "ask about purchase order j 54377",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 25,
+          "endPos": 31
+        }
+      ]
+    },
+    {
+      "text": "bye",
+      "intent": "Cancel",
+      "entities": []
+    },
+    {
       "text": "calling to check on order number 12345",
       "intent": "OrderStatus",
       "entities": [
@@ -175,6 +407,16 @@
     {
       "text": "check my purchase order status",
       "intent": "POStatus",
+      "entities": []
+    },
+    {
+      "text": "check store",
+      "intent": "FindNearestStore",
+      "entities": []
+    },
+    {
+      "text": "exit",
+      "intent": "Cancel",
       "entities": []
     },
     {
@@ -389,6 +631,17 @@
       "entities": []
     },
     {
+      "text": "i wanted to check on order 12345",
+      "intent": "OrderStatus",
+      "entities": [
+        {
+          "entity": "OrderNumber",
+          "startPos": 27,
+          "endPos": 31
+        }
+      ]
+    },
+    {
       "text": "i wanted to check on order 24896",
       "intent": "OrderStatus",
       "entities": [
@@ -432,6 +685,17 @@
       "entities": []
     },
     {
+      "text": "i wanted to put on the status of purchase order j 12345",
+      "intent": "POStatus",
+      "entities": [
+        {
+          "entity": "PONumber",
+          "startPos": 48,
+          "endPos": 54
+        }
+      ]
+    },
+    {
       "text": "i wanted to see what our parental leave policy is",
       "intent": "LeavePolicy",
       "entities": []
@@ -447,6 +711,16 @@
       "entities": []
     },
     {
+      "text": "ignore",
+      "intent": "Cancel",
+      "entities": []
+    },
+    {
+      "text": "i'm asking about leave policies",
+      "intent": "LeavePolicy",
+      "entities": []
+    },
+    {
       "text": "i'm asking about purchase order n12345",
       "intent": "POStatus",
       "entities": [
@@ -456,6 +730,11 @@
           "endPos": 37
         }
       ]
+    },
+    {
+      "text": "i'm asking about the status of an order",
+      "intent": "OrderStatus",
+      "entities": []
     },
     {
       "text": "i'm calling about purchase order j12345",
@@ -478,6 +757,11 @@
           "endPos": 38
         }
       ]
+    },
+    {
+      "text": "i'm calling to ask about the bereavement leave policy",
+      "intent": "LeavePolicy",
+      "entities": []
     },
     {
       "text": "i'm calling to check on my order status",
@@ -503,6 +787,16 @@
     {
       "text": "i'm checking on the status of my order",
       "intent": "OrderStatus",
+      "entities": []
+    },
+    {
+      "text": "i'm done",
+      "intent": "Cancel",
+      "entities": []
+    },
+    {
+      "text": "i'm going to ask about your brevemente leave policy",
+      "intent": "LeavePolicy",
       "entities": []
     },
     {
@@ -567,6 +861,11 @@
           "endPos": 43
         }
       ]
+    },
+    {
+      "text": "i'm looking for a store near me",
+      "intent": "FindNearestStore",
+      "entities": []
     },
     {
       "text": "i'm looking for a store near renton wa",
@@ -715,6 +1014,51 @@
     {
       "text": "i'm trying to find the nearest store to me",
       "intent": "FindNearestStore",
+      "entities": []
+    },
+    {
+      "text": "leave policy",
+      "intent": "LeavePolicy",
+      "entities": []
+    },
+    {
+      "text": "no",
+      "intent": "Cancel",
+      "entities": []
+    },
+    {
+      "text": "no thank you",
+      "intent": "Cancel",
+      "entities": []
+    },
+    {
+      "text": "order status",
+      "intent": "OrderStatus",
+      "entities": []
+    },
+    {
+      "text": "quit",
+      "intent": "Cancel",
+      "entities": []
+    },
+    {
+      "text": "sabbatical",
+      "intent": "LeavePolicy",
+      "entities": []
+    },
+    {
+      "text": "tell me more what are parental leave policy is",
+      "intent": "LeavePolicy",
+      "entities": []
+    },
+    {
+      "text": "thank you for your help",
+      "intent": "Cancel",
+      "entities": []
+    },
+    {
+      "text": "that will be all",
+      "intent": "Cancel",
       "entities": []
     },
     {
