@@ -1,10 +1,25 @@
-﻿# TelephonyEchoBot
+# CoreBot
 
-Bot Framework v4 telephony echo bot sample.
+Bot Framework v4 core bot sample.
 
-This bot has been created using [Bot Framework](https://dev.botframework.com), it shows how to create a simple bot that accepts input from the user and echoes it back using SSML.
+This bot has been created using [Bot Framework](https://dev.botframework.com), it shows how to:
+
+- Use [LUIS](https://www.luis.ai) to implement core AI capabilities
+- Transfer calls to other numbers
+- Accept and action on DTMF input
+- Hang up the phone call
+- Implement Multi-turn dialogs
+- Implement a full IVR flow
 
 ## Prerequisites
+
+This sample **requires** prerequisites in order to run.
+
+### Overview
+
+This bot uses [LUIS](https://www.luis.ai), an AI based cognitive service, to implement language understanding.
+
+### Install .NET Core CLI
 
 - [.NET Core SDK](https://dotnet.microsoft.com/download) version 2.1
 
@@ -12,6 +27,18 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
   # determine dotnet version
   dotnet --version
   ```
+
+### Create a LUIS Application to enable language understanding
+
+The LUIS model for this example can be found under `CognitiveModels/IVR.json` and the LUIS language model setup, training, and application configuration steps can be found [here](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-v4-luis?view=azure-bot-service-4.0&tabs=cs).
+
+Once you created the LUIS model, update `appsettings.json` with your `LuisAppId`, `LuisAPIKey` and `LuisAPIHostName`.
+
+```json
+  "LuisAppId": "Your LUIS App Id",
+  "LuisAPIKey": "Your LUIS Subscription key here",
+  "LuisAPIHostName": "Your LUIS App region here (i.e: westus.api.cognitive.microsoft.com)"
+```
 
 ## To try this sample
 
@@ -21,7 +48,7 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
     git clone https://github.com/microsoft/botframework-ivr.git
     ```
 
-- In a terminal, navigate to `samples\csharp_dotnetcore\01.telephony-echo`
+- In a terminal, navigate to `samples/csharp_dotnetcore/02.telephony-core-ivr`
 - Run the bot from a terminal or from Visual Studio, choose option A or B.
 
   A) From a terminal
@@ -35,8 +62,8 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 
   - Launch Visual Studio
   - File -> Open -> Project/Solution
-  - Navigate to `samples\csharp_dotnetcore\01.telephony-echo` folder
-  - Select `telephony-echo.csproj` file
+  - Navigate to `samples/csharp_dotnetcore/02.telephony-core-ivr` folder
+  - Select `telephony-core-ivr.csproj` file
   - Press `F5` to run the project
 
 ## Testing the bot using Bot Framework Emulator
@@ -59,6 +86,8 @@ To learn more about deploying a bot to Azure, see [Deploy your bot to Azure](htt
 
 - [Bot Framework Documentation](https://docs.botframework.com)
 - [Bot Basics](https://docs.microsoft.com/azure/bot-service/bot-builder-basics?view=azure-bot-service-4.0)
+- [Dialogs](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-concept-dialog?view=azure-bot-service-4.0)
+- [Gathering Input Using Prompts](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-prompts?view=azure-bot-service-4.0&tabs=csharp)
 - [Activity processing](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-concept-activity-processing?view=azure-bot-service-4.0)
 - [Azure Bot Service Introduction](https://docs.microsoft.com/azure/bot-service/bot-service-overview-introduction?view=azure-bot-service-4.0)
 - [Azure Bot Service Documentation](https://docs.microsoft.com/azure/bot-service/?view=azure-bot-service-4.0)
@@ -67,5 +96,3 @@ To learn more about deploying a bot to Azure, see [Deploy your bot to Azure](htt
 - [Azure Portal](https://portal.azure.com)
 - [Language Understanding using LUIS](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/)
 - [Channels and Bot Connector Service](https://docs.microsoft.com/en-us/azure/bot-service/bot-concepts?view=azure-bot-service-4.0)
-- [Restify](https://www.npmjs.com/package/restify)
-- [dotenv](https://www.npmjs.com/package/dotenv)
