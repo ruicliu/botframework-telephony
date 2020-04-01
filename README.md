@@ -10,18 +10,26 @@ Telphony channel in Microsoft Bot Framework is the Microsoft technology for enab
 
  ![](images/telephonychannel.png)
 
-Please note:  This is a Beta (preview) version of software, and as with any preview software, there may be initial risks and limitations you run into, such as a need to integrate with your existing IVR, etc.  We are actively working on and supporting this product and are here to help you in case you run into any issues.  Reach us at ms-ivr-preview@microsoft.com.  
+Please note:  This is a Beta (preview) version of software, and as with any preview software, there may be initial risks and limitations you run into, such as a need to integrate with your existing IVR, etc.  We are actively working on and supporting this product and are here to help you in case you run into any issues.  Reach us at ms-ivr-preview@microsoft.com.
+
+**General Availability**:  due to the shifting impact of COVID-19, we have not set the GA date yet and are instead working with private preview customers directly on their IVR's.
 
 ## Requirements
 
 **NOTE**: Private preview program is currently full. We are not accepting new applications until Microsoft //Build 2020.
 
-* **IVR Private Preview Approval (Currently FULL - not accepting new requests)** - To get started, your Tenant/Organization needs to be approved for a Private Preview of the Microsoft Intelligent Call Center / IVR project.  Good candidates for the preview are existing Bot Framework customers with existing production bots (ideally those that have Office 365 E5 subscriptions as well) and a dedicated Microsoft account manager (including MSC/CSA). Please have your Microsoft account manager send an e-mail to ms-ivr-preview [AT] microsoft.com from their @microsoft.com e-mail address with following information:
+```
+**COVID-19 UPDATE**:  We are receiving a growing number of requests for private preview for COVID-19 call center bots.  Since the product is currently in preview, it is not suitable for medical applications.  Therefore, we are not approving COVID-19 bots at this time.  We recommend [QnAMaker](https://www.qnamaker.ai/) bots for web and messaging channels.
+```
+
+* **IVR Private Preview Approval (Currently FULL - not accepting new requests)** - To get started, your Tenant/Organization needs to be approved for a Private Preview of the Microsoft Intelligent Call Center / IVR project.  Good candidates for the preview are existing Bot Framework customers with existing production bots (ideally those that have Office 365 E5 subscriptions as well) and a dedicated Microsoft account manager (including MSC/CSA). Please have your Microsoft account manager send an e-mail to ms-ivr-preview@microsoft.com from their @microsoft.com e-mail address with following information:
   * Tenant/Organization name
   * Azure account e-mail that should be whitelisted
   * Description of the bot
   * Expected call volumes while in public preview.
   
+We are not approving general "evaluation" requests. Please only submit requests if you have actual target users who would be able to dial your IVR and use it if you are whitelisted.
+
   Once approved for privare preview, the Azure account provided will see Telephony channel in their bot settings. 
 * **Office 365 License** - A minimum of Office 365 E3 + calling plan or an E5 plan is required 
 * **Azure Subscription** - You will need a valid Azure subscription.
