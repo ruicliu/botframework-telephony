@@ -20,9 +20,8 @@ Please note:  This is a Beta (preview) version of software, and as with any prev
 
 ```
 COVID-19 UPDATE:  We are receiving a growing number of requests for private preview for COVID-19 call 
-center bots.  Since the product is currently in preview, it is not suitable for medical applications.  
-Therefore, we are not approving COVID-19 bots at this time.  We recommend https://www.qnamaker.ai/ 
-bots for web and messaging channels.
+center bots.  Since the product is currently in preview, we are not approving COVID-19 bots at this time.  
+We recommend https://www.qnamaker.ai/ bots for web and messaging channels.
 ```
 
 * **IVR Private Preview Approval (Currently FULL - not accepting new requests)** - To get started, your Tenant/Organization needs to be approved for a Private Preview of the Microsoft Intelligent Call Center / IVR project.  Good candidates for the preview are existing Bot Framework customers with existing production bots (ideally those that have Office 365 E5 subscriptions as well) and a dedicated Microsoft account manager (including MSC/CSA). Please have your Microsoft account manager send an e-mail to ms-ivr-preview@microsoft.com from their @microsoft.com e-mail address with following information:
