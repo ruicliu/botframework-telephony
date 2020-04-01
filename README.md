@@ -19,9 +19,9 @@ Please note:  This is a Beta (preview) version of software, and as with any prev
 **NOTE**: Private preview program is currently full. We are not accepting new applications until Microsoft //Build 2020.
 
 ```
-COVID-19 UPDATE:  We are receiving a growing number of requests for private preview for COVID-19 
-call center bots.  Since the product is currently in preview, it is not suitable for medical 
-applications.  Therefore, we are not approving COVID-19 bots at this time.  We recommend [QnAMaker](https://www.qnamaker.ai/) 
+COVID-19 UPDATE:  We are receiving a growing number of requests for private preview for COVID-19 call 
+center bots.  Since the product is currently in preview, it is not suitable for medical applications.  
+Therefore, we are not approving COVID-19 bots at this time.  We recommend https://www.qnamaker.ai/ 
 bots for web and messaging channels.
 ```
 
