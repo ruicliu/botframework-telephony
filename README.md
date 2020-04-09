@@ -30,7 +30,7 @@ We recommend https://www.qnamaker.ai/ bots for web and messaging channels.
   * Description of the bot
   * Expected call volumes while in public preview.
   
-We are not approving general "evaluation" requests. Please only submit requests if you have actual target users who would be able to dial your IVR and use it if you are whitelisted.
+We are not approving general "evaluation" requests or PoCs. Please only submit requests if you have actual target users who would be able to dial your IVR and use it if you are whitelisted.
 
   Once approved for privare preview, the Azure account provided will see Telephony channel in their bot settings. 
 * **Office 365 License** - A minimum of Office 365 E3 + calling plan or an E5 plan is required 
