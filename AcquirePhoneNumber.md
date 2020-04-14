@@ -52,6 +52,8 @@ Acquiring a phone number would require performing the following tasks in the fol
 
 Navigate to [https://aka.ms/ivr2](https://aka.ms/ivr2). Click "+" to create a new Service number.
 
+NOTE: if you are having permission/access issues with the URL above, you can alternatively use [this portal](https://admin.teams.microsoft.com/phone-numbers).  Make sure you use InPrivate window to navigate there. Once you are prompted for login and password, you may get redirected to the home page of Teams Admin Center.  In the left nav bar, navigate to Voice > Phone numbers or go to think URL directly after logging in: https://admin.teams.microsoft.com/phone-numbers.  That is a backup procedure to acquire phone numbers. 
+
 ![](images/newServiceNumber.png)
 
 ### Step 2 - Select New service numbers option:
