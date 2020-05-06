@@ -26,8 +26,6 @@ protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersA
 ## Start recording, stop recording, and attach metadata to the recording
 Adapter offers “StartRecording”,“StopRecording”, and "ResumeRecording" methods, which have channel specific implementations.
 
-Implementation for Telephony and DLS use the existing socket and virtual routing to make it relatively seamless to add the new functionality
-
 StartRecording when called, starts recording the conversation and returns a recording result containing metadata about the recording.
 
 StopRecording when called stops recording the conversation and returns a recording result containing metadata about the recording.
@@ -55,7 +53,12 @@ If StopRecording is never called, the recording must be stopped when the channel
 
 If a recording is started for a conversation (On any storage path), recording cannot be started elsewhere. Channel should return "RecordingAlreadyInProgress" in this case, and otherwise do nothing. This will require the channel to ensure some synchronization so that no race condition is experienced by consumers of thsi API.
 
+If StopRecording is called and there is no recording in progress, channel should return "RecordingNotStarted".
+
 If a recording for a single conversation is stopped and started again, the recordings should be appended in storage.
+
+Channels must return a recording id that uniquely refers to the recording at the storage path.
+Channels should prefer to use conversation id as this recording id where possible.
 
 ```csharp
 public class AdapterWithRecording : AdapterWithErrorHandler
@@ -94,7 +97,6 @@ public class AdapterWithRecording : AdapterWithErrorHandler
         };
     }
 }
-
 ```
 
 Call Pattern
