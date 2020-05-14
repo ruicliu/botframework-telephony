@@ -66,7 +66,7 @@ In the next page that follows, select the Country, Toll-Free/State/Region and a 
 
 **NOTE**:
  * Due to varying laws, not all countries are available in this dropdown. **If your target country is not in the dropdown**, you will need to follow instructions [here](https://docs.microsoft.com/en-us/microsoftteams/manage-phone-numbers-for-your-organization/manage-phone-numbers-for-your-organization?toc=/skypeforbusiness/toc.json&bc=/skypeforbusiness/breadcrumb/toc.json) and provide the "911" emergency local address required by local authorities for calls originating from that phone number.
-* For IVR private preview customers, if you are unable to get phone numbers (for whatever reason) in the admin portal, you can also reach out to the number management team at gcstnmsd@microsoft.com, provide them your subscription name and a number of Service Phone Numbers required. That team will work with you to provision the numbers you require into your subscription and clear all region-specific local authority requirements.
+* If your country is not in the dropdown of countries on that page, please reach out to the number management team at gcstnmsd@microsoft.com, provide them your subscription name and a number of Service Phone Numbers required. That team will work with you to provision the numbers you require into your subscription and clear all region-specific local authority requirements.
 
 If you will have several bots in your IVR as skills (you can develop each skill separately and transfer calls between those), you can obtain more than one phone number. You can also use one phone number for pre-production, and one for production loads:
 
