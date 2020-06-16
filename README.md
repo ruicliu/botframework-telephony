@@ -16,7 +16,7 @@ Please note:  This is a Beta (preview) version of software, and as with any prev
 
 ## Requirements
 
-**NOTE**: Private preview program is currently full. We are not accepting new applications until Microsoft //Build 2020.
+**NOTE**: Private preview program is currently full. We are not accepting new applications until after Microsoft Ignite 2020.
 
 ```
 COVID-19 UPDATE:  We are receiving a growing number of requests for private preview for COVID-19 call 
