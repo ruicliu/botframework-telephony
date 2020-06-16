@@ -2,8 +2,8 @@
 
 
 ```
-NOTE: Ability to create intelligent IVR's with Microsoft Bot Framework is a 
-private preview project available to the select partners only.
+**Private preview program is currently full**. We are not adding additional customers until after 
+Microsoft Ignite 2020. 
 ```
 
 Telphony channel in Microsoft Bot Framework is the Microsoft technology for enabling PSTN calling capabilites in a Bot. Telephony channel allows you to build an IVR by leveraging Office 365 phone numbers, along with the full power of Microsoft Azure Bot Framework and Microsoft Speech Services.
