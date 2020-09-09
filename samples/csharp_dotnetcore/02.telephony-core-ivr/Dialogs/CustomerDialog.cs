@@ -43,7 +43,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
         {
             // Use the text provided in FinalStepAsync or the default if it is the first time.
             var messageText = stepContext.Options?.ToString() ?? IntroText;
-            var promptMessage = VoiceFactory.TextAndVoice(messageText, InputHints.ExpectingInput);
+            var promptMessage = VoiceFactory.TextAndVoice(messageText, InputHints.IgnoringInput);
             return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
         }
 
