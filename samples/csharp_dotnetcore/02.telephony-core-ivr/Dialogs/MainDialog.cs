@@ -56,7 +56,7 @@ namespace Microsoft.BotBuilderSamples.Dialogs
         private async Task<DialogTurnResult> DTMFIntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             // Use the text provided in FinalStepAsync or the default if it is the first time.
-            var promptMessage = VoiceFactory.TextAndVoice(IntroMessage, InputHints.ExpectingInput);
+            var promptMessage = VoiceFactory.TextAndVoice(IntroMessage, InputHints.IgnoringInput);
             return await stepContext.PromptAsync(nameof(TextPrompt), new PromptOptions { Prompt = promptMessage }, cancellationToken);
         }
 
@@ -67,11 +67,11 @@ namespace Microsoft.BotBuilderSamples.Dialogs
             {
                 case "1":
                     var customerResponse = $"Thank you valued customer.";
-                    await stepContext.Context.SendActivityAsync(VoiceFactory.TextAndVoice(customerResponse), cancellationToken);
+                    await stepContext.Context.SendActivityAsync(VoiceFactory.TextAndVoice(customerResponse, InputHints.IgnoringInput), cancellationToken);
                     return await stepContext.ReplaceDialogAsync(nameof(CustomerDialog));
                 case "2":
                     var employeeResponse = $"You have selected employee resources.";
-                    await stepContext.Context.SendActivityAsync(VoiceFactory.TextAndVoice(employeeResponse), cancellationToken);
+                    await stepContext.Context.SendActivityAsync(VoiceFactory.TextAndVoice(employeeResponse, InputHints.IgnoringInput), cancellationToken);
                     return await stepContext.ReplaceDialogAsync(nameof(EmployeeDialog));
                 default:
                     // Retry if dialog is not answered with a number
