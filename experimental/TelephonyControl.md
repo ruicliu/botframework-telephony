@@ -2,8 +2,9 @@
 To allow speech specific functionality, the botframework SDK has extended existing APIs and implemented a new one for recording.
 
 ## Allow/disable barge in
-To disable barge in for a message, the activity must have "IgnoringInput" as the input hint value.
-When using InputHints.IgnoringInput, ensure that an AcceptingInput or ExpectingInput message follows it to guarantee compatibility with existing channels.
+If the user generates input to the bot (either speech or DTMF) while the bot is playing a message, the bot will stop the playback. This behavior is known as "barge in". Sometimes it is necessary, due to legal or compliance requirements, to disallow barge in for the duration of a message.
+
+To disable barge in, the activity must have `IgnoringInput` as the input hint value. The input hint affects only the message it was applied to, not any subsequent messages.
 
 ```csharp
 protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
@@ -12,16 +13,19 @@ protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersA
     {
         if (member.Id != turnContext.Activity.Recipient.Id)
         {
-            //First message can't be interrupted by the user
-            var recordingCallMessage = $"This call may be recorded for quality assurance purposes.";
+            // This message can't be interrupted by the user
+            var recordingCallMessage = "This call may be recorded for quality assurance purposes.";
             await stepContext.Context.SendActivityAsync(MessageFactory.Text(recordingCallMessage, recordingCallMessage, InputHints.IgnoringInput), cancellationToken)
-            //This message can be interrupted by the user
-            var supportingCallMessage = $"What can I help you with today?";
-            await stepContext.Context.SendActivityAsync(MessageFactory.Text(supportingCallMessage, supportingCallMessage, InputHints.ExpectingInput), cancellationToken);
+            
+            // This message can be interrupted by the user
+            var supportingCallMessage = "What can I help you with today?";
+            await stepContext.Context.SendActivityAsync(MessageFactory.Text(supportingCallMessage, supportingCallMessage), cancellationToken);
         }
     }
 }
 ```
+
+_Note:_ In the Public Preview release, the `IgnoringInput` hint only works for DTMF input. This is a known limitation that will be resolved in the GA release.
 
 ## Start recording, stop recording, and attach metadata to the recording
 Adapter offers “StartRecording”,“StopRecording”, and "ResumeRecording" methods, which have channel specific implementations.
