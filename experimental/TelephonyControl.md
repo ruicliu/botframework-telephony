@@ -15,11 +15,11 @@ protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersA
         {
             // This message can't be interrupted by the user
             var recordingCallMessage = "This call may be recorded for quality assurance purposes.";
-            await stepContext.Context.SendActivityAsync(MessageFactory.Text(recordingCallMessage, recordingCallMessage, InputHints.IgnoringInput), cancellationToken)
-            
+            await turnContext.SendActivityAsync(MessageFactory.Text(recordingCallMessage, recordingCallMessage, InputHints.IgnoringInput), cancellationToken);
+
             // This message can be interrupted by the user
             var supportingCallMessage = "What can I help you with today?";
-            await stepContext.Context.SendActivityAsync(MessageFactory.Text(supportingCallMessage, supportingCallMessage), cancellationToken);
+            await turnContext.SendActivityAsync(MessageFactory.Text(supportingCallMessage, supportingCallMessage), cancellationToken);
         }
     }
 }
