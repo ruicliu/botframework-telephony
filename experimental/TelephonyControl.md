@@ -25,7 +25,7 @@ protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersA
 }
 ```
 
-_Note:_ In the Public Preview release, the `IgnoringInput` hint only works for DTMF input. This is a known limitation that will be resolved in the GA release.
+_Note:_ In the Public Preview release, barge in only works for DTMF input (in other words, when _not_ using `InputHints.IgnoringInput`, speech input will be buffered up and sent to the bot after the end of message playback). This is a known limitation that will be resolved in the GA release.
 
 ## DTMF input
 
