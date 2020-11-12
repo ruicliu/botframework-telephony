@@ -5,7 +5,11 @@ There could be various occasions when a bot would like to transfer call to a hum
 Please follow these steps to transfer a call to an agent.
 
 ## Requirements
-Ensure you have a valid Phone Number and Azure Communication Service Resource created in [Step 1: Provision a new phone number for your bot in Azure Communication Services](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony-sms/get-phone-number). 
+Ensure you have a valid Phone System and Calling Plan licenses assigned to resource account created in [Step 1: Provision a new phone number for your bot in Office 365](AcquirePhoneNumber.md). You will need both of the following:
+* Phone System - Virtual User
+* Domestic Calling Plan or International Calling Plan
+
+If your tenant doesn't have these licenses, you can add them as add-ons on [Purchase services in Microsoft 365 admin center](https://portal.office.com/adminportal#/catalog).
 
 ## Initiate transfer
 You can send an event created using ```EventFactory.CreateHandoffInitiation``` method to initiate call transfer.

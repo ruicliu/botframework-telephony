@@ -5,7 +5,7 @@
 **Private preview program is currently full**. We are not adding additional customers at this time. 
 ```
 
-Telephony channel in Microsoft Bot Framework is the Microsoft technology for enabling PSTN calling capabilites in a Bot. Telephony channel allows you to build an IVR by leveraging Azure Communication Services phone numbers, along with the full power of Microsoft Azure Bot Framework and Microsoft Speech Services.
+Telphony channel in Microsoft Bot Framework is the Microsoft technology for enabling PSTN calling capabilites in a Bot. Telephony channel allows you to build an IVR by leveraging Office 365 phone numbers, along with the full power of Microsoft Azure Bot Framework and Microsoft Speech Services.
 
  ![](images/telephonychannel.png)
 
@@ -23,7 +23,7 @@ center bots.  Since the product is currently in preview, we are not approving CO
 We recommend https://www.qnamaker.ai/ bots for web and messaging channels.
 ```
 
-* **IVR Private Preview Approval (Currently FULL - not accepting new requests)** - To get started, your Tenant/Organization needs to be approved for a Private Preview of the Microsoft Intelligent Call Center / IVR project.  Good candidates for the preview are existing Bot Framework customers with existing production bots and a dedicated Microsoft account manager (including MSC/CSA). Please have your Microsoft account manager send an e-mail to ms-ivr-preview@microsoft.com from their @microsoft.com e-mail address with following information:
+* **IVR Private Preview Approval (Currently FULL - not accepting new requests)** - To get started, your Tenant/Organization needs to be approved for a Private Preview of the Microsoft Intelligent Call Center / IVR project.  Good candidates for the preview are existing Bot Framework customers with existing production bots (ideally those that have Office 365 E5 subscriptions as well) and a dedicated Microsoft account manager (including MSC/CSA). Please have your Microsoft account manager send an e-mail to ms-ivr-preview@microsoft.com from their @microsoft.com e-mail address with following information:
   * Tenant/Organization name
   * Azure account e-mail that should be whitelisted
   * Description of the bot
@@ -32,6 +32,7 @@ We recommend https://www.qnamaker.ai/ bots for web and messaging channels.
 We are not approving general "evaluation" requests or PoCs. Please only submit requests if you have actual target users who would be able to dial your IVR and use it if you are whitelisted.
 
   Once approved for privare preview, the Azure account provided will see Telephony channel in their bot settings. 
+* **Office 365 License** - A minimum of Office 365 E3 + calling plan or an E5 plan is required 
 * **Azure Subscription** - You will need a valid Azure subscription.
 
 # Enabling IVR 
@@ -40,14 +41,14 @@ After getting approved into the private preview, overall setup should take rough
 
 The following are the high-level steps needed you to enable IVR support in your bot:
 
-* [Step 1: Create an Azure Communication Services Resource](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/create-communication-resource)
-* [Step 2: Provision a new phone number for your bot in Azure Communication Services](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony-sms/get-phone-number)
-* [Step 3: Create a new Azure Web App Bot](CreateBot.md)
-* [Step 4: Enable your bot to speak and understand voice](CreateSpeechResource.md)
-* [Step 5: Enable Telephony Channel](EnableTelephony.md)
-* [Step 6: Process speech inside of the bot](ProcessSpeechInBotCode.md)
-* [Step 7: Transfer call to an agent](TransferCallOut.md)
-* [Step 8: Terminating the ongoing call](TerminateCall.md)
+* [Optional: create a new Office 365 account trial](CreateOfficeTrial.md)
+* [Step 1: Provision a new phone number for your bot in Office 365](AcquirePhoneNumber.md)
+* [Step 2: Create a new Azure Web App Bot](CreateBot.md)
+* [Step 3: Enable your bot to speak and understand voice](CreateSpeechResource.md)
+* [Step 4: Enable Telephony Channel](EnableTelephony.md)
+* [Step 5: Process speech inside of the bot](ProcessSpeechInBotCode.md)
+* [Step 6: Transfer call to an agent](TransferCallOut.md)
+* [Step 7: Terminating the ongoing call](TerminateCall.md)
 * [Troubleshooting](TroubleshootingTelephonyBot.md)
 
 Once setup, you should be able to simply dial the acquired phone number using any PSTN or mobile phone (subjected to cellular plan on the source phone).
