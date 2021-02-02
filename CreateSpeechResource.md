@@ -19,17 +19,8 @@ You'll be prompted to provide some information:
    * For **Subscription**, choose the appropriate subscription
    * For **Location**, choose the appropriate region.
    
-Ideally, this should be same as Bot's Azure region for best latencies. Please note that currently Telephony Channel is only supported in following Azure regions:
-        * West US
-        * West US 2
-        * East US
-        * East US 2
-        * West Europe
-        * North Europe
-        * Southeast Asia
-        * West Central US
-        * East Asia
-        * Central India
+Ideally, this should be same as Bot's Azure region for best latencies. Please note that currently Telephony Channel is only supported in West US 2 and East US Azure regions.
+        
    * For **Pricing tier**, select **F0** (Free Tier) to start with. Note that usage in Free tier is subjected to [Free tier Limits](https://azure.microsoft.com/en-us/pricing/details/cognitive-services/speech-services/)
    * For **Resource group**, select an existing resource group or create a new resource group.
 After you've entered all required information, click **Create**. 
