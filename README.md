@@ -1,4 +1,4 @@
-# Building an modern IVR with Microsoft Bot Framework 
+# Building a modern IVR with Microsoft Bot Framework 
 
 ![](images/telephony.png)
 
