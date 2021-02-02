@@ -1,8 +1,6 @@
 # Create a Speech Services resource
 
-Now that you have the bot, we need to give it ability to speak (text-to-speech) and understand human voice (speech-to-text). To do that, we will create a Speech resource in Azure.
-
-NOTE: If you run into any issues during this step, make sure you read the [Troubleshooting](TroubleshootingTelephonyBot.md) guide.
+Now that you have the bot, we need to give it ability to understand human voice (speech-to-text) and speak (text-to-speech). For that that, you will create a Speech resource in Azure.
 
 Go to the [Azure portal](https://portal.azure.com) and select **Create a resource** from the left navigation:
 

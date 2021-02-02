@@ -102,7 +102,7 @@ protected override async Task OnConversationUpdateActivityAsync
       
   var spokenEquivalent = displayText;
 
-  // first paramter of MessageFactory.Text is what should be displayed in messaging
+  // first parameter of MessageFactory.Text is what should be displayed in messaging
   //   channels like Skype, Facebook Messenger, Web Chat, etc
   // second paramter of MessageFactory.Text is the equivalent message that should be 
   //   read aloud with speech-only scenario, such as an IVR
