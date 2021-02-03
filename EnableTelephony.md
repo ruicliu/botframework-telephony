@@ -13,21 +13,18 @@ Go to the [Azure portal](https://portal.azure.com) > Bot (Created in previous [s
 
 ![](images/create-a-bot/c015-click-on-channels.png)
 
-For you to see Telephony as one of the options, your Azure account needs to be whitelisted for the Private Preview by a member of Microsoft Bot Framework team.  If you were whitelisted successfully, you will see the Telephony channel:
+Click on the Telephony channel:
 
 ![](images/create-a-bot/c016-click-on-telephony.png)
 
 Configure the channel with following information:
 
-* Telephony number - Acquired previously in [provisioning a new phone number for your bot in Azure Communication Services](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony-sms/get-phone-number)
-* Azure Communication Service Access Key and Endpoint - Acquired while [creating a Azure Communication Services Resource](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/create-communication-resource)
-* Cognitive Service Subscription Key - Acquired while [creating the Speech Resource](CreateSpeechResource.md)
-* Location for the chosen for the Cognitive Service Speech Resource 
-    - Format: WestUS, WestUS2, EastUS, EastUS2, WestEurope, NorthEurupe,SouthEastAsia
+* Telephony number - Acquired previously in [provisioning a new phone number for your bot in Azure Communication Services](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony-sms/get-phone-number).
+* Azure Communication Service Access Key and Endpoint - Acquired while [creating a Azure Communication Services Resource](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/create-communication-resource).
+* Cognitive Service Subscription account created during [Cognitive Service account creation](CreateSpeechResource.md).
 
 
 ![](images/create-a-bot/c017-fill-out-settings-click-save.png)
 
 Click **Save**.
 
-**Next step**:  [Process speech inside of the bot](ProcessSpeechInBotCode.md)
