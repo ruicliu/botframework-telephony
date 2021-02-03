@@ -8,7 +8,7 @@
 
 # Bot Framework Telephony Channel
 
-**Telephony channel** in a Microsoft technology for enabling phone calling capabilities in a bot. Put another way, you can connect your bot to a phone number and interact with your bot by voice via a phone.
+**Telephony channel** in a Microsoft technology for enabling phone calling capabilities in a bot. The technology allows an end user to speak with a bot via a phone call.
 
 Telephony channel leverages the power of [Microsoft Bot Framework](https://dev.botframework.com) combined with the [Azure Communication Services](https://azure.microsoft.com/en-us/services/communication-services) and the [Azure Speech Services](https://azure.microsoft.com/en-us/services/cognitive-services/speech-services). 
  
