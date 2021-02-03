@@ -15,7 +15,7 @@ Click **Create**:
 ![](images/create-a-bot/c008-click-create-speech.png)
 
 You'll be prompted to provide some information:
-   * Give your resource a **Name** (fpr example, **TelephonyChannelSpeech**)
+   * Give your resource a **Name** (for example, **TelephonyChannelSpeech**)
    * For **Subscription**, choose the appropriate subscription
    * For **Location**, choose the appropriate region.
    

@@ -1,11 +1,6 @@
 # Transfer call to an agent
 
-There could be various occasions when a bot would like to transfer call to a human agent. Telephony Channel in Microsoft Bot Framework allows you to transfer call to an agent over a phone number, using [Microsoft Bot Framework Handoff library](https://github.com/microsoft/BotBuilder-Samples/tree/handoffv2/experimental/handoff-library).
-
-Please follow these steps to transfer a call to an agent.
-
-## Requirements
-Ensure you have a valid Phone Number and Azure Communication Service Resource created in [Step 1: Provision a new phone number for your bot in Azure Communication Services](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony-sms/get-phone-number). 
+There could be various occasions when a bot would like to transfer call to a human agent. Like any other channel, Telephony channel allows you to transfer call to an agent over a phone number. Read an overview of Human Handoff approaches in the Bot Framework [here](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-design-pattern-handoff-human?view=azure-bot-service-4.0).
 
 ## Initiate transfer
 You can send an event created using ```EventFactory.CreateHandoffInitiation``` method to initiate call transfer.
@@ -46,8 +41,6 @@ protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivi
     }
 }
 ```
-
-Microsoft Bot Framework Handoff library will be available in Bot Framework SDK 4.8. For now, please copy [EventFactory.cs](https://github.com/microsoft/BotBuilder-Samples/blob/handoffv2/experimental/handoff-library/csharp_dotnetcore/Microsoft.Bot.Builder.Handoff/EventFactory.cs) and [HandoffEventNames.cs](https://github.com/microsoft/BotBuilder-Samples/blob/handoffv2/experimental/handoff-library/csharp_dotnetcore/Microsoft.Bot.Builder.Handoff/HandoffEventNames.cs) to your project.
 
 ## Track transfer status
 You can handle ```handoff.status``` event to know if transfer was successful.

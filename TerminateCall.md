@@ -1,25 +1,19 @@
 # Terminate the ongoing call
 
-In cases such as when end user is unauthorized or when bot decides to end the conversation, bot might want to hang up the call. To do so, bot can send EndOfConversation activity. Here is the sample bot code to end the call:
+Bot can end the conversation by hanging up the call. To do so, send the `EndOfConversation` activity. Here is the sample bot code to end the call:
 
 ```csharp
-protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext)
 {
-    string customerCode = turnContext.Activity.Text.Trim().ToLower();
+    ...
 
-    // If user is not from white list, drop the call.
-    if (!whiteListedCustomers.Contains(customerCode.ToLower()))
+    if (NeedToEndConversation())
     {
-        await turnContext.SendActivityAsync(
-            Activity.CreateEndOfConversationActivity(),
-            cancellationToken);
+        await turnContext.SendActivityAsync(Activity.CreateEndOfConversationActivity());
     }
     else
     {
-        responseMessage = SimpleConvertToSSML("Thanks for providing customer code", "en-US", "en-US-GuyNeural");
-        await turnContext.SendActivityAsync(
-            GetActivity(responseMessage, responseMessage),
-            cancellationToken);
+        await turnContext.SendActivityAsync("Hello user");
     }
 }
 ```
