@@ -1,13 +1,13 @@
-# Building a modern IVR with Microsoft Bot Framework 
+# Connect your bot to a phone number with Microsoft Bot Framework 
 
 ![](images/telephony.png)
 
-**Telephony channel** in the Microsoft Bot Framework is a technology for enabling phone calling capabilites in a bot. Put another way, you can connect your bot to a phone number and interact with your bot by voice via a phone. This capability is known in the industry as [IVR](https://en.wikipedia.org/wiki/Interactive_voice_response).
+**Telephony channel** in a Microsoft technology for enabling phone calling capabilities in a bot. Put another way, you can connect your bot to a phone number and interact with your bot by voice via a phone.
 
-Telephony channel allows you to build a _modern_ IVR by leveraging the Microsoft Bot Framework combined with the Azure Communication Services and the Microsoft Speech Services. 
+Telephony channel leverages the power of Microsoft Bot Framework combined with the Azure Communication Services and the Microsoft Speech Services. 
  
  ---
-__Please note__:  This is a Beta (preview) version of software, and as with any preview software, there may be initial risks and limitations you run into, such as a need to integrate with your existing IVR, etc.  We are working on and supporting this product and are here to help you in case you run into any issues.  Reach us at ms-ivr-preview@microsoft.com or submit an issue [here](https://github.com/microsoft/botframework-ivr/issues).
+__Please note__:  This is a Beta (preview) version of software, and as with any preview software, there may be initial risks and limitations you run into, such as a need to integrate with your existing IVR, etc.  We are working on and supporting this product and are here to help you in case you run into any issues.  Reach us at ms-ivr-preview@microsoft.com or submit an issue [here](https://github.com/microsoft/botframework-telephony/issues).
 
 Refer to our [roadmap](roadmap.md) for timeline of individual feature and General Availability.
 
