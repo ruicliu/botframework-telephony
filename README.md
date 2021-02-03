@@ -1,6 +1,10 @@
 # Connect your bot to a phone number with Microsoft Bot Framework 
 
-![](images/telephony.png)
+<!-- ![](images/bot-framework-default.png) -->
+
+<p align="center">
+  <img src="images/bot-framework-default.png" />
+</p>
 
 **Telephony channel** in a Microsoft technology for enabling phone calling capabilities in a bot. Put another way, you can connect your bot to a phone number and interact with your bot by voice via a phone.
 
