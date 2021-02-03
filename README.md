@@ -10,7 +10,7 @@
 
 **Telephony channel** in a Microsoft technology for enabling phone calling capabilities in a bot. Put another way, you can connect your bot to a phone number and interact with your bot by voice via a phone.
 
-Telephony channel leverages the power of Microsoft Bot Framework combined with the Azure Communication Services and the Microsoft Speech Services. 
+Telephony channel leverages the power of [Microsoft Bot Framework](https://dev.botframework.com) combined with the [Azure Communication Services](https://azure.microsoft.com/en-us/services/communication-services) and the [Azure Speech Services](https://azure.microsoft.com/en-us/services/cognitive-services/speech-services). 
  
  ---
 __Please note__:  This is a Beta (preview) version of software, and as with any preview software, there may be initial risks and limitations you run into, such as a need to integrate with your existing IVR, etc. We are working on and supporting this product and are here to help you in case you run into any issues. Reach us at ms-telephony-preview@microsoft.com or submit an issue [here](https://github.com/microsoft/botframework-telephony/issues).
