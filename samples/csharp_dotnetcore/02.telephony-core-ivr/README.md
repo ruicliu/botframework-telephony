@@ -45,7 +45,7 @@ Once you created the LUIS model, update `appsettings.json` with your `LuisAppId`
 - Clone the repository
 
     ```bash
-    git clone https://github.com/microsoft/botframework-ivr.git
+    git clone https://github.com/microsoft/botframework-telephony.git
     ```
 
 - In a terminal, navigate to `samples/csharp_dotnetcore/02.telephony-core-ivr`

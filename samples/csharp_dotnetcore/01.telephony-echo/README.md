@@ -18,7 +18,7 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 - Clone the repository
 
     ```bash
-    git clone https://github.com/microsoft/botframework-ivr.git
+    git clone https://github.com/microsoft/botframework-telephony.git
     ```
 
 - In a terminal, navigate to `samples\csharp_dotnetcore\01.telephony-echo`
