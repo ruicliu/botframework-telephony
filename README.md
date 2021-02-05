@@ -26,9 +26,7 @@ Check out our docs and samples:
 
 ## Feedback
 
-* File a bug or suggestion in [GitHub Issues](https://github.com/microsoft/botframework-telephony/issues)
-* Ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged/botframework)
-
+File a bug or suggestion in [GitHub Issues](https://github.com/microsoft/botframework-telephony/issues).
 
 ## Contributing
 
