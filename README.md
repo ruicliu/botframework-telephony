@@ -28,8 +28,8 @@ __Please note__:  This is a Beta (preview) version of software, and as with any 
   Once setup, you should be able to dial the acquired phone number using any phone and hear your bot echo your voice. If you hear that, congratulations! You're ready for dive deeper for more advanced features.
 
 * [**Telephony features.**](AdvancedFeatures.md) Explore how to build advanced bots that take advantage of advanced telephony features.
-* [**Roadmap.**](roadmap.md)
-* [**Samples.**](https://github.com/microsoft/botframework-telephony/tree/pubprev/samples)
+* [**Roadmap.**](roadmap.md) Explore what's coming up next.
+* [**Samples.**](Samples.md) Learn from our samples.
 
 ## Feedback
 

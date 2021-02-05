@@ -14,14 +14,16 @@ namespace Microsoft.BotBuilderSamples.Bots
     {
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-
-            //Wait for the user to say something :)
-            if(string.IsNullOrWhiteSpace(turnContext.Activity.Text)) {
+            // Wait for the user to say something
+            var userText = turnContext.Activity.Text;
+            if (String.IsNullOrWhiteSpace(userText))
+            {
                 return;
             }
 
-            //Echo what they say!
-            var replyText = $"You said {turnContext.Activity.Text}";
+            // Echo what they say
+
+            var replyText = $"You said {userText}";
             await turnContext.SendActivityAsync(
                 MessageFactory.Text(
                     replyText,
