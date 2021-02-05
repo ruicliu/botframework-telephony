@@ -15,9 +15,7 @@ __Please note__:  This is a Beta (preview) version of software, and as with any 
 
 ---
 
-## Documentation
-
-Check out our docs and samples:
+## Documentation and samples
 
 * **Getting started**. Are you ready to build a bot that answers phone calls? Follow these four easy steps:
 
