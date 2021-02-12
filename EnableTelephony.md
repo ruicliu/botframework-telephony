@@ -23,6 +23,7 @@ Configure the channel with following information:
 * Azure Communication Service Access Key and Endpoint - Acquired while [creating a Azure Communication Services Resource](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/create-communication-resource).
 * Cognitive Service Subscription account created during [Cognitive Service account creation](CreateSpeechResource.md).
 
+Make sure to specify the Telephony number in the format shown below. (+11234567890)
 
 ![](images/create-a-bot/c017-fill-out-settings-click-save.png)
 
