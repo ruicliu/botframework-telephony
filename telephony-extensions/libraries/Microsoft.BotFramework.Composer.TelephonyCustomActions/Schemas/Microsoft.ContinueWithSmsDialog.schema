@@ -23,10 +23,10 @@
       "title": "User's SMS (+555123456)",
       "description": "User's phone number"
     },
-    "problem": {
+    "messageData": {
       "$ref": "schema:#/definitions/stringExpression",
-      "title": "Problem",
-      "description": "Short problem description"
+      "title": "MessageData",
+      "description": "Message data to pass with the SMS"
     },
     "resultProperty": {
       "$ref": "schema:#/definitions/stringExpression",
