@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Batch DTMF Input Action",
+  "description": "Collects DTMF inputs until a given DTMF tone is received",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "activity": {
+      "$kind": "Microsoft.IActivityTemplate",
+      "title": "Prompt Activity",
+      "description": "Activity to send for initial prompt."
+    },
+    "completeDTMFChar": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Input Completed DTMF",
+      "description": "DTMF value to indicate when input is complete"
+    },
+    "resultProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Result",
+      "description": "Value from callers memory to store the result"
+    }
+  }
+}

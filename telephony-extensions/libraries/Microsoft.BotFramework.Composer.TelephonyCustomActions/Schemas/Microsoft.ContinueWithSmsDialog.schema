@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.botframework.com/schemas/component/v1.0/component.schema",
+  "$role": "implements(Microsoft.IDialog)",
+  "title": "Begin an SMS dialog",
+  "description": "Begin another SMS dialog.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "Id",
+      "description": "Optional id for the dialog"
+    },
+    "disabled": {
+      "$ref": "schema:#/definitions/booleanExpression",
+      "title": "Disabled",
+      "description": "Optional condition which if true will disable this action.",
+      "examples": [
+        "user.age > 3"
+      ]
+    },
+    "smsNumber": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "User's SMS (+555123456)",
+      "description": "User's phone number"
+    },
+    "problem": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Problem",
+      "description": "Short problem description"
+    },
+    "resultProperty": {
+      "$ref": "schema:#/definitions/stringExpression",
+      "title": "Property",
+      "description": "Property to store any value returned by the dialog that is called.",
+      "examples": [
+        "dialog.userName"
+      ]
+    }
+  }
+}
