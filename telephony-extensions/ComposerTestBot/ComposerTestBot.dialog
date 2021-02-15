@@ -22,20 +22,13 @@
           "activity": "${SendActivity_003038()}"
         },
         {
-          "$kind": "BatchDtmfAction",
+          "$kind": "Microsoft.ContinueWithSmsDialog",
           "$designer": {
-            "id": "EweCRB"
+            "id": "e9hIgM"
           },
-          "completeDTMFChar": "#",
-          "activity": "${BatchDtmfAction_Activity_EweCRB()}",
+          "smsNumber": "+4251234567",
+          "problem": "credit card replacement for account #1234",
           "resultProperty": "dialog.result"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "zUrzoG"
-          },
-          "activity": "${SendActivity_zUrzoG()}"
         }
       ]
     },

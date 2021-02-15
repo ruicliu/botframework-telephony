@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using Bot.Builder.Community.Adapters.ACS.SMS;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,7 @@ using Microsoft.Bot.Connector.Authentication;
 using Microsoft.BotFramework.Composer.Core;
 using Microsoft.BotFramework.Composer.Core.Settings;
 using Microsoft.BotFramework.Composer.TelephonyCustomActions;
+using Microsoft.BotFramework.Composer.WebApp.Bots;
 using Microsoft.BotFramework.Composer.WebAppTemplates.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -124,6 +126,25 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
             return adapter;
         }
 
+        public AcsSmsAdapter GetAcsBotAdapter(AcsSmsAdapterOptions options, IStorage storage, BotSettings settings, UserState userState, CrossChannelUserState crossChannelUserState, ConversationState conversationState, IServiceProvider s)
+        {
+            var adapter = new AcsSmsAdapter(options);
+
+            adapter
+                .UseStorage(storage)
+                .UseBotState(userState, conversationState, crossChannelUserState)
+                .Use(new RegisterClassMiddleware<IConfiguration>(Configuration))
+                .Use(s.GetService<TelemetryInitializerMiddleware>());
+
+            adapter.OnTurnError = async (turnContext, exception) =>
+            {
+                await turnContext.SendActivityAsync(exception.Message).ConfigureAwait(false);
+                await conversationState.ClearStateAsync(turnContext).ConfigureAwait(false);
+                await conversationState.SaveChangesAsync(turnContext).ConfigureAwait(false);
+            };
+            return adapter;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -184,6 +205,10 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
             services.AddSingleton(userState);
             services.AddSingleton(conversationState);
 
+            //Add Cross Channel User State
+            var crossChannelUserState = new CrossChannelUserState(storage, userState);
+            services.AddSingleton(crossChannelUserState);
+
             // Configure bot loading path
             var botDir = settings.Bot;
             var resourceExplorer = new ResourceExplorer().AddFolder(botDir);
@@ -198,10 +223,20 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
             services.AddSingleton<IBotFrameworkHttpAdapter, BotFrameworkHttpAdapter>(s =>
                 GetBotAdapter(storage, settings, userState, conversationState, s));
 
+            // Configure and add ACS SMS Adapter
+            var acsSmsAdapterOptions = new AcsSmsAdapterOptions()
+            {
+                AcsPhoneNumber = Configuration.GetSection("acsSmsAdapterSettings")["AcsPhoneNumber"], // e.g. +15552622396
+                AcsConnectionString = Configuration.GetSection("acsSmsAdapterSettings")["AcsConnectionString"], // From the Azure portal and should start with 'endpoint=https://'
+                EnableDeliveryReports = bool.Parse(Configuration.GetSection("acsSmsAdapterSettings")["EnableDeliveryReports"])
+            };
+
+            services.AddSingleton(s => GetAcsBotAdapter(acsSmsAdapterOptions, storage, settings, userState, crossChannelUserState, conversationState, s));
+
             var removeRecipientMention = settings?.Feature?.RemoveRecipientMention ?? false;
 
             services.AddSingleton<IBot>(s =>
-                new ComposerBot(
+                new ComposerBotWithSms(
                     s.GetService<ConversationState>(),
                     s.GetService<UserState>(),
                     s.GetService<ResourceExplorer>(),
@@ -210,6 +245,8 @@ namespace Microsoft.BotFramework.Composer.WebAppTemplates
                     s.GetService<IBotTelemetryClient>(),
                     rootDialog,
                     defaultLocale,
+                    s.GetService<AcsSmsAdapter>(),
+                    Configuration,
                     removeRecipientMention));
         }
 
