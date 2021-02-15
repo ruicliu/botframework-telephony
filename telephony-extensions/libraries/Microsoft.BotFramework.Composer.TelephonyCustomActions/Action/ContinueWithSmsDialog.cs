@@ -52,8 +52,8 @@ namespace Microsoft.BotFramework.Composer.TelephonyCustomActions.Action
         [JsonProperty("smsNumber")]
         public StringExpression SmsNumber { get; set; }
 
-        [JsonProperty("problem")]
-        public StringExpression Problem { get; set; }
+        [JsonProperty("messageData")]
+        public StringExpression MessageData { get; set; }
 
         /// <summary>
         /// Gets or sets the property path to store the dialog result in.
@@ -77,7 +77,7 @@ namespace Microsoft.BotFramework.Composer.TelephonyCustomActions.Action
             // Pull some values we stored in turnState so we can continue the conversation on the SMS adapter
             // Note: this is a bit hacky, we may need to find a more elegant way of doing this.
             var acsSmsAdapter = dc.Context.TurnState.Get<AcsSmsAdapter>();
-            var leBot = dc.Context.TurnState.Get<IBot>();
+            var bot = dc.Context.TurnState.Get<IBot>();
             var convoState = dc.Context.TurnState.Get<ConversationState>();
             var config = dc.Context.TurnState.Get<IConfiguration>();
 
@@ -91,13 +91,13 @@ namespace Microsoft.BotFramework.Composer.TelephonyCustomActions.Action
                 ChannelId = "ACS_SMS"
             };
 
-            // Capture the problem so we can send it in the continue conversation event.
-            var problem = Problem.GetValue(dc.State); 
+            // Capture the context so we can send it in the continue conversation event.
+            var messageData = MessageData.GetValue(dc.State); 
             async Task BotCallback(ITurnContext context, CancellationToken ct)
             {
                 // Set the problem in value property of the continuation activity.
-                context.Activity.Value = problem;
-                await leBot.OnTurnAsync(context, ct);
+                context.Activity.Value = messageData;
+                await bot.OnTurnAsync(context, ct);
             }
 
             // send proactive message with convRef to start SMS

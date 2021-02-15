@@ -8,3 +8,7 @@
 
 # BatchDtmfAction_Activity_EweCRB()
 - Please enter a number followed by pound
+# BatchDtmfAction_Activity_A574Re()
+- Enter a number followed by pound
+# SendActivity_AUsEZC()
+- Your number is ${dialog.result}
