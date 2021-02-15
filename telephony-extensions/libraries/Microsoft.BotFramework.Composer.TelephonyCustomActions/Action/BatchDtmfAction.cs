@@ -48,8 +48,16 @@ namespace Microsoft.BotFramework.Composer.TelephonyCustomActions.Action
 
             if (dc.Context.Activity.Text == CompleteDtmfChar.GetValue(dc.State))
             {
-                dc.State.SetValue(ResultProperty.GetValue(dc.State), current);
-                return await dc.EndDialogAsync(result: current, cancellationToken: cancellationToken);
+                string path = ResultProperty.GetValue(dc.State);
+                if (path == string.Empty)
+                {
+                    throw new InvalidOperationException("Unable to save the DTMF value, incorrect Result expression");
+                }
+                else
+                {
+                    dc.State.SetValue(path, current);
+                    return await dc.EndDialogAsync(result: current, cancellationToken: cancellationToken);
+                }
             }
 
             if (Regex.IsMatch(dc.Context.Activity.Text, "^[0123456789]{1}$"))

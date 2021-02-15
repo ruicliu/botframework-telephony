@@ -20,6 +20,22 @@
             "id": "003038"
           },
           "activity": "${SendActivity_003038()}"
+        },
+        {
+          "$kind": "BatchDtmfAction",
+          "$designer": {
+            "id": "EweCRB"
+          },
+          "completeDTMFChar": "#",
+          "activity": "${BatchDtmfAction_Activity_EweCRB()}",
+          "resultProperty": "dialog.result"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "zUrzoG"
+          },
+          "activity": "${SendActivity_zUrzoG()}"
         }
       ]
     },

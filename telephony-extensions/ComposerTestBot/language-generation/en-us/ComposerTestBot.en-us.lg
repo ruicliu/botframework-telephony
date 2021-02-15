@@ -5,3 +5,8 @@
 
 # SendActivity_003038
 - You said '${turn.activity.text}'
+
+# BatchDtmfAction_Activity_EweCRB()
+- Please enter a number followed by pound
+# SendActivity_zUrzoG()
+- You have entered '${dialog.result}'
