@@ -40,3 +40,7 @@ Cognitive service keys map to bots 1:1. This means that if a bot has a cognitive
 A phone number can only be associated with a single bot.
 
 Violating either of the above conditions will result in an error on configuration of the channel.
+
+## Transfer / handoff to another number failing 
+
+If you are unable to successfully handoff / transfer to another number, confirm that your ACS number is enabled for Outbound Calling via the Azure portal.  If it is, try disabling outbound calling, saving and then enabling it again.
