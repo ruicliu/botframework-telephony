@@ -1,32 +1,6 @@
 # Controlling Telephony and speech specific behavior
 To allow speech specific functionality, the botframework SDK has extended existing APIs and implemented a new one for recording.
 
-## Allow/disable barge in
-If the user generates input to the bot (either speech or [DTMF](https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling)) while the bot is playing a message, the bot will stop the playback. This behavior is known as "barge in". Sometimes it is necessary, due to legal or compliance requirements, to disallow barge in for the duration of a message.
-
-To disable barge in, the activity must have `IgnoringInput` as the input hint value. The input hint affects only the message it was applied to, not any subsequent messages.
-
-```csharp
-protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
-{
-    foreach (var member in membersAdded)
-    {
-        if (member.Id != turnContext.Activity.Recipient.Id)
-        {
-            // This message can't be interrupted by the user
-            var recordingCallMessage = "This call may be recorded for quality assurance purposes.";
-            await turnContext.SendActivityAsync(MessageFactory.Text(recordingCallMessage, recordingCallMessage, InputHints.IgnoringInput), cancellationToken);
-
-            // This message can be interrupted by the user
-            var supportingCallMessage = "What can I help you with today?";
-            await turnContext.SendActivityAsync(MessageFactory.Text(supportingCallMessage, supportingCallMessage), cancellationToken);
-        }
-    }
-}
-```
-
-_Note:_ In the Public Preview release, barge in only works for DTMF input (in other words, when _not_ using `InputHints.IgnoringInput`, speech input will be buffered up and sent to the bot after the end of message playback). This is a known limitation that will be resolved in the GA release.
-
 ## DTMF input
 
 DTMF input is passed to the bot in the `Text` field of the activity object. Possible DTMF characters are digits from `0` to `9`, `*` (star) and `#` (pound). DTMF input is not localized.
