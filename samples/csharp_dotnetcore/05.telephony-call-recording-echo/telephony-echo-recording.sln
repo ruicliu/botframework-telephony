@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "telephony-echo-recording", "telephony-echo-recording.csproj", "{0C5E1B9D-6C4E-458D-BE55-B99EABE5A7C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.BotFramework.CommandExtensions", "..\..\..\telephony-extensions\libraries\Microsoft.BotFramework.CommandExtensions\Microsoft.BotFramework.CommandExtensions.csproj", "{151541A7-65C2-4421-BB99-3F648E5AF422}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.BotFramework.Telephony.CallRecording", "..\..\..\telephony-extensions\libraries\Microsoft.BotFramework.Telephony.CallRecording\Microsoft.BotFramework.Telephony.CallRecording.csproj", "{69CE7BA7-86CF-410B-9FF1-10E138C02279}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C5E1B9D-6C4E-458D-BE55-B99EABE5A7C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C5E1B9D-6C4E-458D-BE55-B99EABE5A7C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C5E1B9D-6C4E-458D-BE55-B99EABE5A7C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C5E1B9D-6C4E-458D-BE55-B99EABE5A7C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{151541A7-65C2-4421-BB99-3F648E5AF422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{151541A7-65C2-4421-BB99-3F648E5AF422}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{151541A7-65C2-4421-BB99-3F648E5AF422}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{151541A7-65C2-4421-BB99-3F648E5AF422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69CE7BA7-86CF-410B-9FF1-10E138C02279}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69CE7BA7-86CF-410B-9FF1-10E138C02279}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69CE7BA7-86CF-410B-9FF1-10E138C02279}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69CE7BA7-86CF-410B-9FF1-10E138C02279}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5C408E3B-6684-4B5D-B617-706403C04081}
+	EndGlobalSection
+EndGlobal
