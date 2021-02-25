@@ -56,77 +56,36 @@ protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivi
 _Note:_ In the Public Preview release, every individual key press is sent to the bot as a separate activity. The ability to "batch" multiple DTMF signals in a single activity will be added in the GA release.
 
 ## Start recording, stop recording, and attach metadata to the recording
-Adapter offers “StartRecording”,“StopRecording”, and "ResumeRecording" methods, which have channel specific implementations.
+Telephony Extensions packages offers “StartRecording”,“StopRecording”, and "ResumeRecording" methods, which have channel specific implementations.
 
-StartRecording when called, starts recording the conversation and returns a recording result containing metadata about the recording.
+StartRecording when called, starts recording the conversation. StopRecording when called stops recording the conversation.
 
-StopRecording when called stops recording the conversation and returns a recording result containing metadata about the recording.
-
-ResumeRecording when called, resumes recording the conversation, appending the new section of the recording to the previously started recording for this conversation, and returns a recoridng result containing metadata about the recording.
-
-```csharp
-public class RecordingResult
-{
-    public string RecordingId { get; set; }
-    public RecordingStatus RecordingStatus { get; set; }
-    public string Message { get; set; }
-}
-
-public enum RecordingStatus
-{
-    RecordingStarted,
-    RecordingNotStarted,
-    RecordingAlreadyInProgress,
-    RecordingStopped
-}
-```
+ResumeRecording when called, resumes recording the conversation, appending the new section of the recording to the previously started recording for this conversation.
 
 If StopRecording is never called, the recording must be stopped when the channel ends the conversation
 
-If a recording is started for a conversation (On any storage path), recording cannot be started elsewhere. Channel should return "RecordingAlreadyInProgress" in this case, and otherwise do nothing. This will require the channel to ensure some synchronization so that no race condition is experienced by consumers of thsi API.
+If a recording is started for a conversation (On any storage path), recording cannot be started elsewhere. Channel should return an error indicating that the "Recording is already in progress" in this case, and otherwise do nothing. This will require the channel to ensure some synchronization so that no race condition is experienced by consumers of this API.
 
-If StopRecording is called and there is no recording in progress, channel should return "RecordingNotStarted".
+If StopRecording is called and there is no recording in progress, channel should return an error indicating that the "Recording has not started".
 
-If a recording for a single conversation is stopped and started again, the recordings should be appended in storage.
+If a recording for a single conversation is paused and resumed again, the recordings should be appended in storage.
 
-Channels must return a recording id that uniquely refers to the recording at the storage path.
-Channels should prefer to use conversation id as this recording id where possible.
+If a recording for a single conversation is stopped and started again, the recordings appear as multiple recording sessions in the storage.
 
 ```csharp
-public class AdapterWithRecording : AdapterWithErrorHandler
+public class TelephonyExtensions
 {
-    public AdapterWithRecording(IConfiguration configuration, ILogger<BotFrameworkHttpAdapter> logger, ConversationState conversationState = null) : base(configuration, logger, conversationState)
-    {
-    }
+    public static readonly string RecordingStart = "recording_start_command";
 
-    public virtual async Task<RecordingResult> StartRecordingAsync(string StoragePath, ITurnContext turnContext, CancellationToken cancellationToken)
+    public static Activity CreateRecordingStartCommand()
     {
-        //Endpoint like /{conversationId}/StartRecording
-        return new RecordingResult
+        var startRecordingActivity = new Activity(ActivityTypesWithCommand.Command)
         {
-            RecordingStatus = RecordingStatus.RecordingStarted,
-            Message = "Recording has started successfully."
+            Name = RecordingStart;
+            Value = new CommandValue<RecordingStartSettings>()
         };
-    }
 
-    public virtual async Task<RecordingResult> StopRecordingAsync(ITurnContext turnContext, CancellationToken cancellationToken)
-    {
-        //Endpoint like /{conversationId}/StopRecording
-        return new RecordingResult
-        {
-            RecordingStatus = RecordingStatus.RecordingStopped,
-            Message = "Recording has stopped successfully."
-        };
-    }
-
-    public virtual async Task<RecordingResult> ResumeRecordingAsync(ITurnContext turnContext, CancellationToken cancellationToken)
-    {
-        //Endpoint like /{conversationId}/ResumeRecording
-        return new RecordingResult
-        {
-            RecordingStatus = RecordingStatus.RecordingStarted,
-            Message = "Recording has resumed successfully."
-        };
+        return startRecordingActivity;
     }
 }
 ```
@@ -140,21 +99,24 @@ protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersA
         // Greet anyone that was not the target (recipient) of this message.
         if (member.Id != turnContext.Activity.Recipient.Id)
         {
+            await turnContext.SendActivityAsync(TelephonyExtensions.CreateRecordingStartCommand(), cancellationToken);
+
             var response = VoiceFactory.TextAndVoice($"Welcome to {CompanyName}! This call may be recorded for quality assurance purposes.");
-
             await turnContext.SendActivityAsync(response, cancellationToken);
-            AdapterWithRecording adapterWithRecording = (AdapterWithRecording)turnContext.Adapter;
-
-            var recordingResult = await adapterWithRecording.StartRecordingAsync("Storage1", turnContext, cancellationToken);
-            if (recordingResult.RecordingStatus == RecordingStatus.RecordingNotStarted)
-            {
-                var recordingFailed = VoiceFactory.TextAndVoice($"Recording has failed, but your call will continue.");
-
-                await turnContext.SendActivityAsync(recordingFailed, cancellationToken);
-            }
 
             await Dialog.RunAsync(turnContext, ConversationState.CreateProperty<DialogState>("DialogState"), cancellationToken);
         }
+    }
+}
+
+protected override async Task OnRecordingStartResultAsync(ITurnContext<ICommandResultActivity> turnContext, CancellationToken cancellationToken)
+{
+    var result = CommandExtensions.GetCommandResultValue<object>(turnContext.Activity);
+
+    if (result.Error != null)
+    {
+        var recordingFailed = VoiceFactory.TextAndVoice($"Recording has failed, but your call will continue.");
+        wait turnContext.SendActivityAsync(recordingStatusText, cancellationToken);
     }
 }
 ```
