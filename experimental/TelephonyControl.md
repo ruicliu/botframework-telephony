@@ -56,7 +56,7 @@ protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivi
 _Note:_ In the Public Preview release, every individual key press is sent to the bot as a separate activity. The ability to "batch" multiple DTMF signals in a single activity will be added in the GA release.
 
 ## Start recording, stop recording, and attach metadata to the recording
-Telephony Extensions packages offers “StartRecording”,“StopRecording”, and "ResumeRecording" methods, which have channel specific implementations.
+Telephony extensions package offers “StartRecording”,“StopRecording”, and "ResumeRecording" methods, which have channel specific implementations.
 
 StartRecording when called, starts recording the conversation. StopRecording when called stops recording the conversation.
 
@@ -99,6 +99,7 @@ protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersA
         // Greet anyone that was not the target (recipient) of this message.
         if (member.Id != turnContext.Activity.Recipient.Id)
         {
+            // Start recording when the call begins
             await turnContext.SendActivityAsync(TelephonyExtensions.CreateRecordingStartCommand(), cancellationToken);
 
             var response = VoiceFactory.TextAndVoice($"Welcome to {CompanyName}! This call may be recorded for quality assurance purposes.");
@@ -113,6 +114,7 @@ protected override async Task OnRecordingStartResultAsync(ITurnContext<ICommandR
 {
     var result = CommandExtensions.GetCommandResultValue<object>(turnContext.Activity);
 
+    // Check if recordinf started successfully
     if (result.Error != null)
     {
         var recordingFailed = VoiceFactory.TextAndVoice($"Recording has failed, but your call will continue.");
