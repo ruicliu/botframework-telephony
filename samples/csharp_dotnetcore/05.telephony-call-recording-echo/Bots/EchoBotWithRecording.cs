@@ -160,7 +160,7 @@ namespace Microsoft.BotBuilderSamples.Bots
             {
                 if (member.Id != turnContext.Activity.Recipient.Id)
                 {
-                    // Welcome message that will not recorded
+                    // Welcome message that will not be recorded
                     // Played to minimize initial silence till call recording starts
                     var welcome = "Hello and welcome to the ivr bot";
                     await turnContext.SendActivityAsync(
