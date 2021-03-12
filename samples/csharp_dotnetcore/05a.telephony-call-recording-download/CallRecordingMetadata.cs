@@ -23,7 +23,7 @@ namespace BotFramework.Telephony.Samples
         public string ChannelType;
         public string Format;
         public AudioConfiguration AudioConfiguration;
-        public VideoConfiguration VideoConfiguration;        
+        public VideoConfiguration VideoConfiguration;
     }
 
     public class Participant

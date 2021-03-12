@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.BotFramework.Comm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.BotFramework.Telephony.CallRecording", "..\..\..\telephony-extensions\libraries\Microsoft.BotFramework.Telephony.CallRecording\Microsoft.BotFramework.Telephony.CallRecording.csproj", "{69CE7BA7-86CF-410B-9FF1-10E138C02279}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "04.telephony-call-recording", "..\05a.telephony-call-recording-download\04.telephony-call-recording.csproj", "{92D074F6-7146-4DA1-8151-4DF7E4EB7FFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{69CE7BA7-86CF-410B-9FF1-10E138C02279}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69CE7BA7-86CF-410B-9FF1-10E138C02279}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69CE7BA7-86CF-410B-9FF1-10E138C02279}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92D074F6-7146-4DA1-8151-4DF7E4EB7FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92D074F6-7146-4DA1-8151-4DF7E4EB7FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92D074F6-7146-4DA1-8151-4DF7E4EB7FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92D074F6-7146-4DA1-8151-4DF7E4EB7FFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

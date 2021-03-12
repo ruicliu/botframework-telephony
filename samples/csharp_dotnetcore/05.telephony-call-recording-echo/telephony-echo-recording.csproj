@@ -13,8 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\telephony-extensions\libraries\Microsoft.BotFramework.CommandExtensions\Microsoft.BotFramework.CommandExtensions.csproj" />
     <ProjectReference Include="..\..\..\telephony-extensions\libraries\Microsoft.BotFramework.Telephony.CallRecording\Microsoft.BotFramework.Telephony.CallRecording.csproj" />
-    <ProjectReference Include="..\..\..\telephony-extensions\libraries\Microsoft.BotFramework.Telephony.CallRecording\Microsoft.BotFramework.Telephony.CallRecording\Microsoft.BotFramework.Telephony.CallRecording.csproj" />
-    <ProjectReference Include="..\Microsoft.BotFramework.CommandExtensions\Microsoft.BotFramework.CommandExtensions.csproj" />
   </ItemGroup>
 
   <ItemGroup>

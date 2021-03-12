@@ -80,8 +80,7 @@ namespace BotFramework.Telephony.Samples
                         CloudBlockBlob downloadBlob = container.GetBlockBlobReference(recordingFileName);
                         await downloadBlob.UploadFromStreamAsync(recordingStream).ConfigureAwait(false);  
 
-                        log.LogInformation("Saved recording successfully");                      
-                                                             
+                        log.LogInformation("Saved recording successfully");
                     }
                 }
             }
