@@ -1,47 +1,44 @@
+using System;
+using System.Globalization;
+using System.IO;
+using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Azure.EventGrid.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Extensions.Logging;
-using Microsoft.Azure.EventGrid.Models;
-using Newtonsoft.Json;
-using System.Security.Cryptography;
-using System.IO;
-using System;
-using System.Net.Http;
-using System.Globalization;
-using System.Text;
-using Newtonsoft.Json.Linq;
-using System.Linq;
 using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob;  
-using System.Threading.Tasks;  
+using Microsoft.WindowsAzure.Storage.Blob;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace BotFramework.Telephony.Samples
-{       
+{
     public static class CallRecordingDownloader
     {
-        
-        private static HttpClient client = new HttpClient();      
+        private static readonly HttpClient client = new HttpClient();
 
         // Make Event Grid is registered for the subscription: 
         // az provider register --namespace Microsoft.EventGrid
         // az provider show -n Microsoft.EventGrid
         [FunctionName("CallRecordingDownloader")]
         public static async void Run(
-            [EventGridTrigger]EventGridEvent eventGridEvent, 
+            [EventGridTrigger] EventGridEvent eventGridEvent,
             ILogger log)
         {
             try
             {
                 log.LogInformation("Received event : {0}", eventGridEvent.EventType);
 
-                if ( eventGridEvent.EventType == "Microsoft.Communication.RecordingFileStatusUpdated")
+                if (eventGridEvent.EventType == "Microsoft.Communication.RecordingFileStatusUpdated")
                 {
-                    if(eventGridEvent.Data == null)
+                    if (eventGridEvent.Data == null)
                     {
                         log.LogInformation("Received invalid event data");
                         return;
-                    }               
+                    }
 
                     RecordingFileStatusUpdatedEventData eventData = ((JObject)(eventGridEvent.Data)).ToObject<RecordingFileStatusUpdatedEventData>();
 
@@ -54,7 +51,7 @@ namespace BotFramework.Telephony.Samples
                             log.LogInformation("Invalid metadata");
                             return;
                         }
-                        
+
                         RecordingMetadata metadata = JsonConvert.DeserializeObject<RecordingMetadata>(metadataString);
 
                         var recordingStream = await DownloadChunk(metadata, log).ConfigureAwait(false);
@@ -65,26 +62,26 @@ namespace BotFramework.Telephony.Samples
                         }
 
                         // Save to storage blob
-                        string connStr = Environment.GetEnvironmentVariable("CUSTOMCONNSTR_RecordingStorageBlob",EnvironmentVariableTarget.Process);
+                        string connStr = Environment.GetEnvironmentVariable("CUSTOMCONNSTR_RecordingStorageBlob", EnvironmentVariableTarget.Process);
                         CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connStr);
-                        
+
                         CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
                         CloudBlobContainer container = blobClient.GetContainerReference("recordings");
 
                         string recordingMetadataFileName = String.Format("{0}_metadata.json", metadata.CallId);
                         CloudBlockBlob metadataBlob = container.GetBlockBlobReference(recordingMetadataFileName);
-                        await metadataBlob.UploadTextAsync(metadataString).ConfigureAwait(false);      
+                        await metadataBlob.UploadTextAsync(metadataString).ConfigureAwait(false);
 
                         string recordingFileName = String.Format("{0}.{1}", metadata.CallId, metadata.RecordingInfo.Format);
                         CloudBlockBlob downloadBlob = container.GetBlockBlobReference(recordingFileName);
-                        await downloadBlob.UploadFromStreamAsync(recordingStream).ConfigureAwait(false);  
+                        await downloadBlob.UploadFromStreamAsync(recordingStream).ConfigureAwait(false);
 
                         log.LogInformation("Saved recording successfully");
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.LogInformation("Failed with {0}", ex.Message);
                 log.LogInformation("Failed with {0}", ex.InnerException.Message);
@@ -130,13 +127,13 @@ namespace BotFramework.Telephony.Samples
         }
 
         public static async Task<string> GetDownloadMetadata(
-            string documentId, 
-            ILogger log)        
+            string documentId,
+            ILogger log)
         {
             string downloadMetadataUrl = "https://{0}/recording/download/{1}/metadata?api-version=2021-04-15-preview1";
 
-            string acsEndPoint = Environment.GetEnvironmentVariable("AcsEndpoint",EnvironmentVariableTarget.Process);
-            string acsAccessKey = Environment.GetEnvironmentVariable("CUSTOMCONNSTR_AcsAccessKey",EnvironmentVariableTarget.Process);
+            string acsEndPoint = Environment.GetEnvironmentVariable("AcsEndpoint", EnvironmentVariableTarget.Process);
+            string acsAccessKey = Environment.GetEnvironmentVariable("CUSTOMCONNSTR_AcsAccessKey", EnvironmentVariableTarget.Process);
 
             // Download metadata for chunk
             var downloadMetadataUrlForChunk = String.Format(downloadMetadataUrl, acsEndPoint, documentId);
@@ -153,15 +150,15 @@ namespace BotFramework.Telephony.Samples
 
             // Add HMAC headers.
             AddHmacHeaders(request, contentHashed, acsAccessKey, HttpMethod.Get);
-            var response = await client.SendAsync(request);                
+            var response = await client.SendAsync(request);
 
-            if(!response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
                 log.LogInformation("Failed to download metadata. StatusCode: " + response.StatusCode);
                 return null;
             }
 
-            var metadataString = await response.Content.ReadAsStringAsync().ConfigureAwait(false); 
+            var metadataString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             log.LogInformation(metadataString);
 
             return metadataString;
@@ -169,11 +166,11 @@ namespace BotFramework.Telephony.Samples
 
         public static async Task<Stream> DownloadChunk(RecordingMetadata metadata, ILogger log)
         {
-            string downloadRecordingUrl = "https://{0}/recording/download/{1}?api-version=2021-04-15-preview1";  
-            string acsEndPoint = Environment.GetEnvironmentVariable("AcsEndpoint",EnvironmentVariableTarget.Process);
-            string acsAccessKey = Environment.GetEnvironmentVariable("CUSTOMCONNSTR_AcsAccessKey",EnvironmentVariableTarget.Process);
-            
-            var downloadUrlForChunk = String.Format(downloadRecordingUrl, acsEndPoint, metadata.ChunkDocumentId);               
+            string downloadRecordingUrl = "https://{0}/recording/download/{1}?api-version=2021-04-15-preview1";
+            string acsEndPoint = Environment.GetEnvironmentVariable("AcsEndpoint", EnvironmentVariableTarget.Process);
+            string acsAccessKey = Environment.GetEnvironmentVariable("CUSTOMCONNSTR_AcsAccessKey", EnvironmentVariableTarget.Process);
+
+            var downloadUrlForChunk = String.Format(downloadRecordingUrl, acsEndPoint, metadata.ChunkDocumentId);
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Get,
@@ -187,11 +184,11 @@ namespace BotFramework.Telephony.Samples
             // Add HMAC headers.
             AddHmacHeaders(request, contentHashed, acsAccessKey, HttpMethod.Get);
 
-            // Make a request to the ACS apis mentioned above                    
+            // Make a request to the ACS apis mentioned above
             var response = await client.SendAsync(request).ConfigureAwait(false);
-            log.LogInformation("Download recording statusCode: {0}", response.StatusCode);     
+            log.LogInformation("Download recording statusCode: {0}", response.StatusCode);
 
-            if(!response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
                 log.LogInformation("Failed to download document. StatusCode: " + response.StatusCode);
                 return null;
