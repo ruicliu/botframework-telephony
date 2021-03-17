@@ -14,7 +14,7 @@ Bot Framework v4 telephony echo bot sample with call recording.
     ```
 - Open samples\csharp_dotnetcore\05.telephony-call-recording-echo\telephony-echo-recording.sln in Visual Studio
 - Build and publish telephony-echo-bot-recording to the telephony bot above
-- This bot should now be able to recording incoming calls.
+- This bot should now be able to record incoming calls.
 
 ### Download call recording files
 
@@ -57,18 +57,3 @@ The final step is to subscribe to the RecordingFileStatusUpdated event in the AC
 - Save the new event subscription
 
 The Azure function should now be able to receive notifications and save the recording to the blob container as they become available.
-
-## Further reading
-
-- [Bot Framework Documentation](https://docs.botframework.com)
-- [Bot Basics](https://docs.microsoft.com/azure/bot-service/bot-builder-basics?view=azure-bot-service-4.0)
-- [Activity processing](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-concept-activity-processing?view=azure-bot-service-4.0)
-- [Azure Bot Service Introduction](https://docs.microsoft.com/azure/bot-service/bot-service-overview-introduction?view=azure-bot-service-4.0)
-- [Azure Bot Service Documentation](https://docs.microsoft.com/azure/bot-service/?view=azure-bot-service-4.0)
-- [.NET Core CLI tools](https://docs.microsoft.com/en-us/dotnet/core/tools/?tabs=netcore2x)
-- [Azure CLI](https://docs.microsoft.com/cli/azure/?view=azure-cli-latest)
-- [Azure Portal](https://portal.azure.com)
-- [Language Understanding using LUIS](https://docs.microsoft.com/en-us/azure/cognitive-services/luis/)
-- [Channels and Bot Connector Service](https://docs.microsoft.com/en-us/azure/bot-service/bot-concepts?view=azure-bot-service-4.0)
-- [Restify](https://www.npmjs.com/package/restify)
-- [dotenv](https://www.npmjs.com/package/dotenv)
