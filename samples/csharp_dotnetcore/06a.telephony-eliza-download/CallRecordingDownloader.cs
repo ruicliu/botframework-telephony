@@ -141,8 +141,6 @@ namespace BotFramework.Telephony.Samples
                                 }
                                 else
                                 {
-                                    //string acsconnectionString = "endpoint=https://arturl-sg-scratch.communication.azure.com/;accesskey=yt5H5TiSX8Qjq2nBwUV9leI9OU7eiozkXfG1Bu4bHzw9KtNzdkNgNFezyYVdqqRSWpyqj9sfMj4wkXVV1EIwkA=="
-
                                     var acsParams = GetACSConnectionParameters(log);
                                     string acsconnectionString = $"endpoint=https://{acsParams.AcsEndPoint}/;accesskey={acsParams.AcsAccessKey}";
 
