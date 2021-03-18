@@ -13,14 +13,20 @@ namespace Microsoft.Bot.Schema.Telephony
         {
             if (((Activity)turnContext.Activity).Name == TelephonyExtensions.RecordingStart)
             {
+                TelephonyExtensions.VerifyChannelForCommandResult(TelephonyExtensions.RecordingStart, turnContext);
+
                 return OnRecordingStartResultAsync(new DelegatingTurnContext<IActivity>(turnContext), cancellationToken);
             }
             else if (((Activity)turnContext.Activity).Name == TelephonyExtensions.RecordingPause)
             {
+                TelephonyExtensions.VerifyChannelForCommandResult(TelephonyExtensions.RecordingPause, turnContext);
+
                 return OnRecordingPauseResultAsync(new DelegatingTurnContext<IActivity>(turnContext), cancellationToken);
             }
             else if (((Activity)turnContext.Activity).Name == TelephonyExtensions.RecordingResume)
             {
+                TelephonyExtensions.VerifyChannelForCommandResult(TelephonyExtensions.RecordingResume, turnContext);
+
                 return OnRecordingResumeResultAsync(new DelegatingTurnContext<IActivity>(turnContext), cancellationToken);
             }
 
