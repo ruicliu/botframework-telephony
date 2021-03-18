@@ -30,5 +30,11 @@ namespace Microsoft.BotBuilderSamples.Bots
             string ssml = $"<speak version='1.0' xmlns='https://www.w3.org/2001/10/synthesis' xmlns:mstts='https://www.w3.org/2001/mstts' xml:lang='{Locale}'><voice name='{VoiceName}'><mstts:express-as style='{ExpressAsType}'>{text}</mstts:express-as></voice></speak>";
             return MessageFactory.Text(text, ssml, inputHint);
         }
+
+        public Activity TextAndVoiceNoBargeIn(string text)
+        {
+            string ssml = $"<speak version='1.0' xmlns='https://www.w3.org/2001/10/synthesis' xmlns:mstts='https://www.w3.org/2001/mstts' xml:lang='{Locale}'><voice name='{VoiceName}'><mstts:express-as style='{ExpressAsType}'>{text}</mstts:express-as></voice></speak>";
+            return MessageFactory.Text(text, ssml, InputHints.IgnoringInput);
+        }
     }
 }
