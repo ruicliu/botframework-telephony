@@ -14,7 +14,10 @@
 __Please note__:  This is a Beta (preview) version of software, and as with any preview software, there may be initial risks and limitations you run into, such as a need to integrate with your existing IVR, etc. We are working on and supporting this product and are here to help you in case you run into any issues. Submit an issue [here](https://github.com/microsoft/botframework-telephony/issues).
 
 ---
-__Dislaimer__: The latest update includes samples demonstrating call recording functionality. Call recording is temporarily available through the Telephony Channel public preview at no charge. Be aware that Azure billing for Call Recording will begin in April, at a rate of $0.01/minute of recorded content. Services in public preview are subject to future pricing changes.
+__Disclaimer__: The latest update includes samples demonstrating call recording functionality. Call recording is temporarily available through the Telephony Channel public preview at no charge. Be aware that Azure billing for Call Recording will begin in April, at a rate of $0.01/minute of recorded content. Services in public preview are subject to future pricing changes.
+
+---
+__Please note__: Many countries and states have laws and regulations that apply to the recording of PSTN, voice, and video calls, which often require that users consent to the recording of their communications. It is your responsibility to use the call recording capabilities in compliance with the law. You must obtain consent from the parties of recorded communications in a manner that complies with the laws applicable to each participant.
 
 ---
 
