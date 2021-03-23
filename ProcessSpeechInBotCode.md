@@ -1,8 +1,8 @@
 # Processing speech inside the bot
 
-With Azure Speech Services, you get access to best-in-class Speech-to-Text and Text-to-Speech capabilities. [Sign up using this document here](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/get-started). 
+With Azure Speech Services, you get access to best-in-class Speech-to-Text and Text-to-Speech capabilities. [Sign up using this document here](https://docs.microsoft.com/azure/cognitive-services/speech-service/get-started). 
 
-Azure Speech Services includes ability to use a neural voice, i.e. synthesized speech that is nearly indistinguishable from the human recordings. Neural voices can be used to make interactions with chatbots and voice assistants more natural and engaging. [Learn more about Text-to-Speech and neural voices here](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#text-to-speech).
+Azure Speech Services includes ability to use a neural voice, i.e. synthesized speech that is nearly indistinguishable from the human recordings. Neural voices can be used to make interactions with chatbots and voice assistants more natural and engaging. [Learn more about Text-to-Speech and neural voices here](https://docs.microsoft.com/azure/cognitive-services/speech-service/language-support#text-to-speech).
 
 
 ## 1. Processing Audio input
@@ -56,9 +56,9 @@ protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivi
 }
 ```
 
-### 1.1. Extract callerId from TurnContext.Activity 
+### 1.1. Extract phoneNumber from TurnContext.Activity 
 
-Telephony channel enriches FromId field of activities with phone number of the caller(callerId).
+Telephony channel enriches FromId field of activities with phone number of the caller.
 
 ```csharp
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
@@ -66,16 +66,16 @@ Telephony channel enriches FromId field of activities with phone number of the c
             string responseText;
             string responseMessage = null;
 
-            var callerId = turnContext.Activity.From.Id;
-            UserAccount account = GetUserAccount(callerId);
+            var phoneNumber = turnContext.Activity.From.Name;
+            UserAccount account = GetUserAccount(phoneNumber);
 
             if (account != null)
             {
-                responseText = $"Hello and thank you for calling billing department. We have pulled up your account associated with {callerId}. Do you want to continue with this account? Say yes or no.";  
+                responseText = $"Hello and thank you for calling billing department. We have pulled up your account associated with {phoneNumber}. Do you want to continue with this account? Say yes or no.";  
             }
             else
             {
-                responseText = $"Hello and thank you for calling billing department. Can you please provide phone number associated with the account?";
+                responseText = $"Hello and thank you for calling billing department. Can you please provide the phone number associated with the account?";
             }
             responseMessage = SimpleConvertToSSML(responseText, "en-US", "en-US-JessaNeural");
 
@@ -116,7 +116,7 @@ protected override async Task OnConversationUpdateActivityAsync
 
   ### 3.1. SSML:
 
-  For more advanced voice control, you can leverage the full power of [Speech Synthesis Markup Language (SSML)](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup) to customize the speech output, including adding regional differences, specifying genders, speaking styles (cheerful, empathetic, etc).
+  For more advanced voice control, you can leverage the full power of [Speech Synthesis Markup Language (SSML)](https://docs.microsoft.com/azure/cognitive-services/speech-service/speech-synthesis-markup) to customize the speech output, including adding regional differences, specifying genders, speaking styles (cheerful, empathetic, etc).
 
   ```csharp
   private string SimpleConvertToSSML(string text, string voiceId, string locale)
@@ -161,7 +161,7 @@ You can test it using the [Audio Content Creation tool](http://speech.microsoft.
 
   ### 3.2. Playing pre-recorded audio to the customer:
 
-Bot can also play pre-recorded audio to the customer using audio element in ssml. The audio element in SSML supports the insertion of recorded audio files and the insertion of other audio formats in conjunction with synthesized speech output. Here is the list of <a href = "https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/rest-text-to-speech#audio-outputs">supported audio formats</a>. If the audio element is not empty then the contents should be the marked-up text to be spoken. The content will be played in specified voice if the audio document is not available or media type of audio is unsupported. 
+Bot can also play pre-recorded audio to the customer using audio element in ssml. The audio element in SSML supports the insertion of recorded audio files and the insertion of other audio formats in conjunction with synthesized speech output. Here is the list of <a href = "https://docs.microsoft.com/azure/cognitive-services/speech-service/rest-text-to-speech#audio-outputs">supported audio formats</a>. If the audio element is not empty then the contents should be the marked-up text to be spoken. The content will be played in specified voice if the audio document is not available or media type of audio is unsupported. 
 
 Note: This is a preview feature.
 
