@@ -21,7 +21,7 @@ If a recording for a single conversation is paused and resumed again, the record
 
 If a recording for a single conversation is stopped and started again, the recordings appear as multiple recording sessions in the storage.
 
-The following is an example of starting call recording at the beginning of the conversatoin:
+The following is an example of starting call recording at the beginning of the conversation:
 
 ```csharp
 public class TelephonyExtensions
