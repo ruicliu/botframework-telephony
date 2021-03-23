@@ -8,7 +8,7 @@ This indicates that the telephony service is picking up, but having trouble send
 
 ### Using SSML? Make sure to use the full name of the voice font
 
-Currently [SSML](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup) voice fonts need to be specified using their full name.
+Currently [SSML](https://docs.microsoft.com/azure/cognitive-services/speech-service/speech-synthesis-markup) voice fonts need to be specified using their full name.
 
 ```csharp
 protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
@@ -30,13 +30,22 @@ protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivi
 }
 ```
 
-Validate that your speech account is in a region that supports the voice you are attempting to use. [Regions](https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/regions#standard-and-neural-voices)
+Validate that your speech account is in a region that supports the voice you are attempting to use. [Regions](https://docs.microsoft.com/azure/cognitive-services/speech-service/regions#standard-and-neural-voices)
 
 ## Getting an error when binding a cognitive services key to a number. 
 
 ![](images/channelConfigurationError.png)
 
-Cognitive service keys map to bots 1:1. This means that if a bot has a cognitive services key, no other bot can use the same key, and vice versa.
-A phone number can only be associated with a single bot.
+An Azure Communications Services phone number can only be associated with a single bot.
+
+When using Direct Line Speech, Cognitive Services keys map to bots 1:1. This means that if a bot has a cognitive services key, no other bot can use the same key, and vice versa.
 
 Violating either of the above conditions will result in an error on configuration of the channel.
+
+## Transfer / handoff to another number failing 
+
+If you are unable to successfully handoff / transfer to another number, confirm that your ACS number is enabled for Outbound Calling via the Azure portal.  If it is, try disabling outbound calling, saving and then enabling it again.
+
+## Additional resources
+
+Search for or open a [GitHub issue](https://github.com/microsoft/botframework-telephony/issues)

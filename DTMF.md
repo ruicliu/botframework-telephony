@@ -1,6 +1,6 @@
-# Recognize dialtone (DTMF) input
+# Recognize dual-tone multi-frequency signaling (DTMF) input
 
-Dialtone (also known as [DTMF](https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling), or dual-tone multi-frequency signaling) is sent to the bot as individual messages one number at a time. DTMF input can be recognized by the presence of an entity of type "DTMF", as demonstrated in the below example:
+[DTMF](https://en.wikipedia.org/wiki/Dual-tone_multi-frequency_signaling), or dual-tone multi-frequency signaling, is sent to the bot as individual messages one number at a time. DTMF input can be recognized by the presence of an entity of type "DTMF", as demonstrated in the below example:
 
 ```csharp
 protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext)
