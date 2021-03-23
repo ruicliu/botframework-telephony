@@ -114,7 +114,7 @@ protected override async Task OnRecordingStartResultAsync(ITurnContext<ICommandR
 {
     var result = CommandExtensions.GetCommandResultValue<object>(turnContext.Activity);
 
-    // Check if recordinf started successfully
+    // Check if recording started successfully
     if (result.Error != null)
     {
         var recordingFailed = VoiceFactory.TextAndVoice($"Recording has failed, but your call will continue.");
