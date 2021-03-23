@@ -7,9 +7,9 @@ __Disclaimer__: Call recording is temporarily available through the Telephony Ch
 ## Start recording, stop recording, and attach metadata to the recording
 Telephony extensions package offers _StartRecording_, _StopRecording_, and _ResumeRecording_ methods:
 
-- _StartRecording_ starts recording the conversation. 
-- _StopRecording_ stops recording the conversation.
-- _ResumeRecording_ resumes recording the conversation, appending the new section of the recording to the previously started recording for this conversation.
+- _StartRecording_ starts recording of the conversation. 
+- _StopRecording_ stops recording of the conversation.
+- _ResumeRecording_ resumes recording of the conversation, appending the new section of the recording to the previously started recording for this conversation.
 
 If _StopRecording_ is never called, the recording is stopped when the bot ends the conversation.
 
@@ -20,6 +20,8 @@ If _StopRecording_ is called and there is no recording in progress, Telephony ch
 If a recording for a single conversation is paused and resumed again, the recordings are appended in storage.
 
 If a recording for a single conversation is stopped and started again, the recordings appear as multiple recording sessions in the storage.
+
+The following is an example of starting call recording at the beginning of the conversatoin:
 
 ```csharp
 public class TelephonyExtensions
@@ -39,7 +41,6 @@ public class TelephonyExtensions
 }
 ```
 
-Call Pattern
 ```csharp
 protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
 {
@@ -53,21 +54,28 @@ protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersA
 
             var response = VoiceFactory.TextAndVoice($"Welcome to {CompanyName}! This call may be recorded for quality assurance purposes.");
             await turnContext.SendActivityAsync(response, cancellationToken);
-
-            await Dialog.RunAsync(turnContext, ConversationState.CreateProperty<DialogState>("DialogState"), cancellationToken);
         }
     }
 }
+```
 
+To ensure call recording has started successfully, bots should await the "recording start" command result. This is done by overriding the `OnRecordingStartResultAsync` method of bot:
+
+```csharp
 protected override async Task OnRecordingStartResultAsync(ITurnContext<ICommandResultActivity> turnContext, CancellationToken cancellationToken)
 {
     var result = CommandExtensions.GetCommandResultValue<object>(turnContext.Activity);
 
     // Check if recording started successfully
-    if (result.Error != null)
+    if (result.Error == null)
+    {
+        // Call recording has started successfully, bot can proceed
+        // ...
+    }
+    else
     {
         var recordingFailed = VoiceFactory.TextAndVoice($"Recording has failed, but your call will continue.");
-        wait turnContext.SendActivityAsync(recordingStatusText, cancellationToken);
+        await turnContext.SendActivityAsync(recordingStatusText, cancellationToken);
     }
 }
 ```
