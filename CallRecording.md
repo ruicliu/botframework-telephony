@@ -2,6 +2,8 @@
 
 __Disclaimer__: Call recording is temporarily available through the Telephony Channel public preview at no charge. Be aware that Azure billing for Call Recording will begin in April, at a rate of $0.01/minute of recorded content. Services in public preview are subject to future pricing changes.
 
+> Many countries and states have laws and regulations that apply to the recording of PSTN, voice, and video calls, which often require that users consent to the recording of their communications. It is your responsibility to use the call recording capabilities in compliance with the law. You must obtain consent from the parties of recorded communications in a manner that complies with the laws applicable to each participant.
+
 ---
 
 ## Start recording, stop recording, and attach metadata to the recording
