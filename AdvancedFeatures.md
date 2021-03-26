@@ -9,3 +9,12 @@ While many bots can be Telephony-enabled by the steps above, you can build more 
 * [Troubleshooting](TroubleshootingTelephonyBot.md)
 * [Barge-in](BargeIn.md) (also known as *allow-interrupt*)
 * [Call recording](CallRecording.md)
+
+Telephony channel can be configured manually through the Azure portal or programmatically using [ARM](https://docs.microsoft.com/rest/api/resources) API or [Azure Command-Line Interface](https://docs.microsoft.com/en-us/cli/azure). 
+
+Here are some example of configuring Telephony channel programmatically:
+
+* [List phone numbers bound to the bot](ListPhoneNumbers.md)
+
+
+
