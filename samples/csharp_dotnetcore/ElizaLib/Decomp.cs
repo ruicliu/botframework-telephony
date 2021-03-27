@@ -8,6 +8,8 @@ namespace Eliza
     /// <summary>Eliza decomposition rule</summary>
     public class Decomp
     {
+        private Random random = new Random();
+
         /// <summary>The decomp pattern</summary>
         internal string pattern;
 
@@ -72,7 +74,7 @@ namespace Eliza
             int size = reasemb.Count;
             if (mem)
             {
-                currReasmb = new Random().Next() * size;
+                currReasmb = random.Next(0, size);
             }
             //  Increment and make sure it is within range.
             currReasmb++;
