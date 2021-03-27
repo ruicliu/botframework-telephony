@@ -40,7 +40,7 @@ namespace Microsoft.BotBuilderSamples.Bots
             var conversationData = await conversationStateAccessors.GetAsync(turnContext, () => new ConversationData());
 
             // If we have not yet started recording, ask the user the wait.
-            if ((turnContext.Activity.ChannelId == "telephony") && 
+            if ((TelephonyExtensions.IsTelephonyChannel(turnContext.Activity.ChannelId)) &&
                 (conversationData.RecordingState == RecordingState.Uninitialized))
             {
                 var waitText = $"Please wait";
@@ -67,26 +67,6 @@ namespace Microsoft.BotBuilderSamples.Bots
                     VoiceFactory.TextAndVoice(replyText, InputHints.IgnoringInput),
                     cancellationToken);
 
-            // Simple command to test pausing the recording
-            if (userText == "pause")
-            {
-                // Pause only if the recording is active. Ignore the command otherwise.
-                if (conversationData.RecordingState == RecordingState.Recording)
-                {
-                    await RecordingHelpers.TryPauseRecording(turnContext, cancellationToken);
-                }
-            }
-
-            // Simple command to test resuming the recording
-            if (userText == "resume")
-            {
-                // Resume only if the recording is paused. Ignore the command otherwise.
-                if (conversationData.RecordingState == RecordingState.Paused)
-                {
-                    await RecordingHelpers.TryResumeRecording(turnContext, cancellationToken);
-                }
-                
-            }
         }
 
         protected override async Task OnRecordingStartResultAsync(
@@ -172,7 +152,10 @@ namespace Microsoft.BotBuilderSamples.Bots
                         cancellationToken);
 
                     // Start recording if Telephony channel
-                    await RecordingHelpers.TryStartRecording(turnContext, cancellationToken);
+                    if (TelephonyExtensions.IsTelephonyChannel(turnContext.Activity.ChannelId))
+                    {
+                        await TelephonyExtensions.TryRecordingStart(turnContext, cancellationToken);
+                    }
                 }
             }
         }
