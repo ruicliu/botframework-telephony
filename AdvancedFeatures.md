@@ -14,6 +14,7 @@ Telephony channel can be configured manually through the Azure portal or program
 
 Here are some example of configuring Telephony channel programmatically:
 
+* [Configure Telephony channel using Azure CLI](az-cli-config.md)
 * [List phone numbers bound to the bot](ListPhoneNumbers.md)
 
 
