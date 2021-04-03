@@ -94,7 +94,7 @@ You will be using this file as one of the parameters in Azure CLI.
 
 As you can see, the template file does not contain any actual data, such as the name of your bot or other resources. This information is provided in a different file, the `parameters.json`. Below is an example of such a file. You will need to replace 
 
-```JSON
+```JavaScript
 {
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
@@ -149,7 +149,7 @@ If the process succeeds, you can navigate to the Azure portal's Channels blade a
 
 A bot can be associated with multiple phone numbers. To accomplish that, add another "phoneNumber" element `template.json` file as follows:
 
-```JSON
+```JavaScript
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
