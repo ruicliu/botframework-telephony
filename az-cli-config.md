@@ -4,7 +4,7 @@ Telephony channel configuration process can be automated using [Azure CLI](https
 
 ## Prerequisites
 
-First, you need to install the Azure CLI as described [here](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli). 
+First, you need to install the Azure CLI as described [here](https://docs.microsoft.com/cli/azure/install-azure-cli). 
 
 Next, log in to Azure using the account you want to use:
 
@@ -12,7 +12,7 @@ Next, log in to Azure using the account you want to use:
 az login 
 ```
 
-After that you will need to prepare the following Azure resources:
+After that, you will need to prepare the following Azure resources:
 
 - Your bot
 - An instance of Azure Communication Service
@@ -103,7 +103,7 @@ As you can see, the template file does not contain any actual data, such as the 
             "value": "my-telephony-bot" // The id of your bot
         },
         "phoneNumber1": {
-            "value": "+14254445555" // The phone number you want to bind to you bot. Read below on how to bind multiple phone numbers
+            "value": "+14254445555" // The phone number you want to connect to your bot. Read below on how to connect multiple phone numbers
         },
         "acsResourceId": {
             // The full resource Id of the Azure Communication Service. You can get this string
@@ -138,16 +138,16 @@ Once you have filled out the `parameters.json` file with your data, validate you
 az deployment group validate --subscription your-subscription-id -g your-resource-group --template-file template.json --parameters parameters.json
 ```
 
-If the validation succeeds, you will receive a full ARM template populated with your resource names. At this point you can proceed to actually configuring the channel. You can do by running `az deployment group create`:
+If the validation succeeds, you will receive a full ARM template populated with your resource names. At this point you can proceed to actually configuring the channel. You can do this by running `az deployment group create`:
 
 ```Powershell
 az deployment group create --subscription your-subscription-id -g your-resource-group --template-file template.json --parameters parameters.json
 ```
 If the process succeeds, you can navigate to the Azure portal's Channels blade and make sure the bot's Telephony channel is configured.
 
-## Binding multiple phone numbers to the bot
+## Connecting multiple phone numbers to the bot
 
-A bot can be associated with multiple phone numbers. To accomplish that, add another "phoneNumber" element `template.json` file as follows:
+A bot can be associated with multiple phone numbers. To accomplish this, add another "phoneNumber" element `template.json` file as follows:
 
 ```JavaScript
 {
