@@ -92,7 +92,7 @@ You will be using this file as one of the parameters in Azure CLI.
 
 ## Parameters file
 
-As you can see, the template file does not contain any actual data, such as the name of your bot or other resources. This information is provided in a different file, the `parameters.json`. Below is an example of such a file. You will need to replace 
+As you can see, the template file does not contain any actual data, such as the name of your bot or other resources. This information is provided in a different file, the `parameters.json`. Below is an example of such a file. You will need to replace the sample values with the actual values representing your resources.
 
 ```JavaScript
 {
