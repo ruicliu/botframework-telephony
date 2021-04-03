@@ -100,33 +100,33 @@ As you can see, the template file does not contain any actual data, such as the 
     "contentVersion": "1.0.0.0",
     "parameters": {
         "botId": {
-            "value": "my-telephony-bot" // The id of your bot
+            "value": "my-telephony-bot" // REPLACE: The id of your bot
         },
         "phoneNumber1": {
-            "value": "+14254445555" // The phone number you want to connect to your bot. Read below on how to connect multiple phone numbers
+            "value": "+14254445555" // REPLACE: The phone number you want to connect to your bot. Read below on how to connect multiple phone numbers
         },
         "acsResourceId": {
-            // The full resource Id of the Azure Communication Service. You can get this string
+            // REPLACE: The full resource Id of the Azure Communication Service. You can get this string
             // by navigating to the Overview pane of the resource in the Azure portal and clicking 'JSON View'
             "value": "/subscriptions/47397625-56fa-4c6b-9301-a7edddc893ed/resourceGroups/my-rg/providers/Microsoft.Communication/CommunicationServices/my-acs"
         },
         "acsEndpoint": {
-            // The endpoint Url - this string always ends with 'communication.azure.com/'
-            "value": "https://arturl-sg-scratch.communication.azure.com/"
+            // REPLACE: The endpoint Url - this string always ends with 'communication.azure.com/'
+            "value": "https://my-acs.communication.azure.com/"
         },
         "acsSecret": {
-            "value": "..." // ACS key
+            "value": "..." // REPLACE: ACS key
         },
         "cognitiveServiceResourceId": {
-            // The full resource Id of the Cognitive Services resource. You can get this string
+            // REPLACE: The full resource Id of the Cognitive Services resource. You can get this string
             // by navigating to the Overview pane of the resource in the Azure portal and clicking 'JSON View'
             "value": "/subscriptions/47397625-56fa-4c6b-9301-a7edddc893ed/resourceGroups/my-rg/providers/Microsoft.CognitiveServices/accounts/my-cognitive-service"
         },
         "cognitiveServiceSubscriptionKey": {
-            "value": "..." // Cognitive Services key
+            "value": "..." // REPLACE: Cognitive Services key
         },
         "cognitiveServiceRegion": {
-            "value": "eastus" // The region of the Cognitive Services resource
+            "value": "eastus" // REPLACE: The region of the Cognitive Services resource
         }
     }
 }
