@@ -76,9 +76,6 @@ Copy the following script into a file called `template.json`. This file is calle
                             "defaultLocale": null
                         }
                     ],
-                    "cognitiveServiceSubscriptionKey": "[parameters('cognitiveServiceSubscriptionKey')]",
-                    "cognitiveServiceRegion": "[parameters('cognitiveServiceRegion')]",
-                    "defaultLocale": null,
                     "premiumSKU": null
                 },
                 "channelName":"TelephonyChannel"
