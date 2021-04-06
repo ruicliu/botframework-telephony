@@ -190,6 +190,11 @@ PublishScripts/
 *.nuget.props
 *.nuget.targets
 
+# Node.js Samples
+samples/**/lib
+samples/**/package-lock.json
+samples/**/yarn.lock
+
 # Microsoft Azure Build Output
 csx/
 *.build.csdef
