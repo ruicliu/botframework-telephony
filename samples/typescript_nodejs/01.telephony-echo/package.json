@@ -7,7 +7,7 @@
     "main": "./lib/index.js",
     "scripts": {
         "build": "tsc --build",
-        "lint": "tslint -c tslint.json 'src/**/*.ts'",
+        "lint": "eslint src",
         "postinstall": "npm run build && node ./deploymentScripts/webConfigPrep.js",
         "start": "tsc --build && node ./lib/index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,16 +18,18 @@
         "url": "https://github.com"
     },
     "dependencies": {
-        "botbuilder": "~4.11.0",
+        "botbuilder": "^4.12.0",
         "dotenv": "^8.2.0",
-        "replace": "^1.2.0",
+        "replace": "^1.2.1",
         "restify": "~8.5.1"
     },
     "devDependencies": {
         "@types/dotenv": "6.1.1",
-        "@types/restify": "8.4.2",
-        "nodemon": "~2.0.4",
-        "tslint": "~6.1.2",
-        "typescript": "~3.9.2"
+        "@types/restify": "8.5.1",
+        "@typescript-eslint/eslint-plugin": "^4.21.0",
+        "@typescript-eslint/parser": "^4.21.0",
+        "eslint": "^7.23.0",
+        "nodemon": "~2.0.7",
+        "typescript": "^4.2.3"
     }
 }
