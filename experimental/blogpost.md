@@ -1,4 +1,5 @@
-# Building Intelligent IVR Assistants to Improve Customer Experiences and Contact Center Productivity 
+# Building Intelligent IVR Assistants to Improve Customer Experiences and Contact Center Productivity
+
 > Update the title to make it SEO friendly
 > TODO: Kelvin Chan
 
@@ -60,7 +61,11 @@ Contact centers are ....
     1. voice tone
     1. speed
     1. etc.
+
 ## Conclusion
+
+Call to Action
+GitHub for feedback
 
 ## Links
 
