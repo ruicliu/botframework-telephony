@@ -1,35 +1,38 @@
 {
-    "name": "echobot",
-    "version": "1.0.0",
-    "description": "Bot Builder v4 echo bot sample",
-    "author": "Microsoft",
-    "license": "MIT",
-    "main": "./lib/index.js",
-    "scripts": {
-        "build": "tsc --build",
-        "lint": "eslint src",
-        "postinstall": "npm run build && node ./deploymentScripts/webConfigPrep.js",
-        "start": "tsc --build && node ./lib/index.js",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "watch": "nodemon --watch ./src -e ts --exec \"npm run start\""
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com"
-    },
-    "dependencies": {
-        "botbuilder": "^4.12.0",
-        "dotenv": "^8.2.0",
-        "replace": "^1.2.1",
-        "restify": "~8.5.1"
-    },
-    "devDependencies": {
-        "@types/dotenv": "6.1.1",
-        "@types/restify": "8.5.1",
-        "@typescript-eslint/eslint-plugin": "^4.21.0",
-        "@typescript-eslint/parser": "^4.21.0",
-        "eslint": "^7.23.0",
-        "nodemon": "~2.0.7",
-        "typescript": "^4.2.3"
-    }
+  "name": "echobot",
+  "version": "1.0.0",
+  "description": "Bot Builder v4 echo bot sample",
+  "author": "Microsoft",
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "scripts": {
+    "build": "webpack",
+    "lint": "eslint src",
+    "postinstall": "node ./deploymentScripts/webConfigPrep.js",
+    "start": "webpack --mode development && node ./lib/index.js",
+    "deploy": "az webapp deployment source config-zip --resource-group  --name  --src bot.zip",
+    "watch": "nodemon --watch ./src -e ts --exec \"npm run start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com"
+  },
+  "dependencies": {
+    "botbuilder": "^4.12.0",
+    "dotenv": "^8.2.0",
+    "replace": "^1.2.1",
+    "restify": "~8.5.1"
+  },
+  "devDependencies": {
+    "@types/dotenv": "6.1.1",
+    "@types/restify": "8.5.1",
+    "@typescript-eslint/eslint-plugin": "^4.21.0",
+    "@typescript-eslint/parser": "^4.21.0",
+    "eslint": "^7.23.0",
+    "nodemon": "~2.0.7",
+    "ts-loader": "^8.1.0",
+    "typescript": "^4.2.3",
+    "webpack": "^5.31.0",
+    "webpack-cli": "^4.6.0"
+  }
 }
