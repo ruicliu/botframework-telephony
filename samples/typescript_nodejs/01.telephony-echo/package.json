@@ -8,10 +8,9 @@
   "scripts": {
     "build": "node esbuild.js",
     "lint": "eslint src",
-    "postinstall": "node ./deploymentScripts/webConfigPrep.js",
-    "start": "webpack --mode development && node ./lib/index.js",
+    "start": "node esdev.js && node ./lib/index.js",
     "deploy": "az webapp deployment source config-zip --resource-group  --name  --src dist/dist.zip",
-    "watch": "node esdev.js"
+    "watch": "nodemon --watch ./src -e ts --exec \"npm run start\""
   },
   "repository": {
     "type": "git",
@@ -30,6 +29,7 @@
     "@typescript-eslint/parser": "^4.21.0",
     "esbuild": "^0.11.6",
     "eslint": "^7.23.0",
+    "nodemon": "^2.0.7",
     "typescript": "^4.2.3"
   }
 }
