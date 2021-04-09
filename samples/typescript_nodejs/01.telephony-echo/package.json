@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "./lib/index.js",
   "scripts": {
-    "build": "node esbuild.js",
+    "build": "tsc -noEmit && node esbuild.js",
     "lint": "eslint src",
     "start": "node esdev.js && node ./lib/index.js",
     "deploy": "az webapp deployment source config-zip --resource-group  --name  --src dist/dist.zip",
