@@ -63,6 +63,7 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
    ```
    yarn build
    ```
+1. Zip the /dist folder into dist/dist.zip
 1. Run the deployment script
    ```
    yarn deploy
