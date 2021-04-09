@@ -1,6 +1,6 @@
 # echo-bot
 
-Bot Builder v4 echo bot sample
+Telephony echo bot sample
 
 This bot has been created using [Bot Framework](https://dev.botframework.com), it shows how to create a simple bot that accepts input from the user and echoes it back.
 
@@ -8,36 +8,40 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 
 - [Node.js](https://nodejs.org) version 10.14.1 or higher
 
-    ```bash
-    # determine node version
-    node --version
-    ```
+  ```
+  # determine node version
+  node --version
+  ```
+
+- [AZ cli](https://docs.microsoft.com/cli/azure/install-azure-cli)
 
 ## To try this sample
 
 - Clone the repository
 
-    ```bash
-    git clone https://github.com/microsoft/botbuilder-samples.git
-    ```
+  ```
+  git clone https://github.com/microsoft/botframework-telephony.git
+  ```
 
-- In a console, navigate to `samples/typescript_nodejs/02.echo-bot`
+- In a console, navigate to `samples/typescript_nodejs/01.telephony-echo`
 
-    ```bash
-    cd samples/typescript_nodejs/02.echo-bot
-    ```
+  ```
+  cd samples/typescript_nodejs/01.telephony-echo
+  ```
 
 - Install modules
 
-    ```bash
-    npm install
-    ```
+  ```
+  yarn
+  or
+  npm install
+  ```
 
 - Start the bot
 
-    ```bash
-    npm start
-    ```
+  ```
+  yarn start
+  ```
 
 ## Testing the bot using Bot Framework Emulator
 
@@ -52,6 +56,17 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 - Enter a Bot URL of `http://localhost:3978/api/messages`
 
 ## Deploy the bot to Azure
+
+1. Use one of the provided deployment templates to create your resources in Azure.
+1. Fill in your resource group and bot name in the deploy script in package.json.
+1. Build your bot for production
+   ```
+   yarn build
+   ```
+1. Run the deployment script
+   ```
+   yarn deploy
+   ```
 
 To learn more about deploying a bot to Azure, see [Deploy your bot to Azure](https://aka.ms/azuredeployment) for a complete list of deployment instructions.
 

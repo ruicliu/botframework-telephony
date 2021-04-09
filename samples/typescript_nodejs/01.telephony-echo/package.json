@@ -1,7 +1,7 @@
 {
   "name": "echobot",
   "version": "1.0.0",
-  "description": "Bot Builder v4 echo bot sample",
+  "description": "Telephony echo bot sample",
   "author": "Microsoft",
   "license": "MIT",
   "main": "./lib/index.js",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com"
+    "url": "https://github.com/microsoft/botframework-telephony"
   },
   "dependencies": {
     "botbuilder": "^4.12.0",
