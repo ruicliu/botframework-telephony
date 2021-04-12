@@ -9,12 +9,11 @@ build({
   minify: true,
   platform: "node",
   logLevel: "error",
-}).then((result) => {
+}).then(() => {
   try {
     copyFile("web.config", `${outdir}/web.config`, () => {});
     copyFile(".deployment", `${outdir}/.deployment`, () => {});
     copyFile("deploy.cmd", `${outdir}/deploy.cmd`, () => {});
-    result.stop();
   } catch (error) {
     console.log(error);
   }
