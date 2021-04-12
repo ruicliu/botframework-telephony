@@ -1,12 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const path = require("path");
-
 const dotenv = require("dotenv");
 // Import required bot configuration.
-const ENV_FILE = path.join(__dirname, ".env");
-dotenv.config({ path: ENV_FILE });
+dotenv.config();
 
 const restify = require("restify");
 
