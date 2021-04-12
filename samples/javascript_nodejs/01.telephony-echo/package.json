@@ -1,0 +1,29 @@
+{
+  "name": "echobot",
+  "version": "1.0.0",
+  "description": "Telephony echo bot sample",
+  "author": "Microsoft",
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "scripts": {
+    "build": "node esbuild.js",
+    "lint": "eslint src",
+    "start": "node esdev.js && node ./lib/index.js",
+    "deploy": "az webapp deployment source config-zip --resource-group  --name  --src dist/dist.zip",
+    "watch": "nodemon --watch ./src -e js --exec \"npm run start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/botframework-telephony"
+  },
+  "dependencies": {
+    "botbuilder": "^4.12.0",
+    "dotenv": "^8.2.0",
+    "restify": "~8.5.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.11.6",
+    "eslint": "^7.23.0",
+    "nodemon": "^2.0.7"
+  }
+}
