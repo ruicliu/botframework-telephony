@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
-using Microsoft.Bot.Schema.CommandExtensions;
 using Microsoft.Bot.Schema.Telephony;
 
 namespace Microsoft.BotBuilderSamples.Bots
@@ -65,7 +64,7 @@ namespace Microsoft.BotBuilderSamples.Bots
         }
 
         protected override async Task OnRecordingStartResultAsync(
-            ITurnContext<IActivity> turnContext,
+            ITurnContext<ICommandResultActivity> turnContext,
             CancellationToken cancellationToken)
         {
             var recordingResult = turnContext.Activity.GetCommandResultValue<object>();

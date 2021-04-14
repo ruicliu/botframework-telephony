@@ -1,7 +1,6 @@
 ﻿using Microsoft.Bot.Builder;
-using Microsoft.Bot.Schema.CommandExtensions;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,11 +8,11 @@ namespace Microsoft.Bot.Schema.Telephony
 {
     public static class TelephonyExtensions
     {
-        public static readonly string TelephonyChannelId = "telephony";
+        public const string TelephonyChannelId = "telephony";
 
-        public static readonly string RecordingStart = "channel/vnd.microsoft.telephony.recording.start";
-        public static readonly string RecordingPause = "channel/vnd.microsoft.telephony.recording.pause";
-        public static readonly string RecordingResume = "channel/vnd.microsoft.telephony.recording.resume";
+        public const string RecordingStart = "channel/vnd.microsoft.telephony.recording.start";
+        public const string RecordingPause = "channel/vnd.microsoft.telephony.recording.pause";
+        public const string RecordingResume = "channel/vnd.microsoft.telephony.recording.resume";
 
         public static bool IsTelephonyChannel(string channelId)
         {
@@ -54,7 +53,7 @@ namespace Microsoft.Bot.Schema.Telephony
             // Recording Start is only supported on the Telephony Channel
             VerifyChannelForCommand(RecordingStart, turnContext);
 
-            var startRecordingActivity = new Activity(ActivityTypesWithCommand.Command);
+            var startRecordingActivity = new Activity(ActivityTypes.Command);
 
             startRecordingActivity.Name = RecordingStart;
 
@@ -78,7 +77,7 @@ namespace Microsoft.Bot.Schema.Telephony
             // Recording Pause is only supported on the Telephony Channel
             VerifyChannelForCommand(RecordingPause, turnContext);
 
-            var pauseRecordingActivity = new Activity(ActivityTypesWithCommand.Command);
+            var pauseRecordingActivity = new Activity(ActivityTypes.Command);
 
             pauseRecordingActivity.Name = RecordingPause;
             var response = await turnContext.SendActivityAsync(pauseRecordingActivity, cancellationToken).ConfigureAwait(false);
@@ -91,13 +90,59 @@ namespace Microsoft.Bot.Schema.Telephony
             // Recording Resume is only supported on the Telephony Channel
             VerifyChannelForCommand(RecordingResume, turnContext);
 
-            var resumeRecordingActivity = new Activity(ActivityTypesWithCommand.Command);
+            var resumeRecordingActivity = new Activity(ActivityTypes.Command);
 
             resumeRecordingActivity.Name = RecordingResume;
 
             var response = await turnContext.SendActivityAsync(resumeRecordingActivity, cancellationToken).ConfigureAwait(false);
 
             return response;
+        }
+
+        /// <summary>
+        /// Gets the CommandValue from the activity.
+        /// </summary>
+        /// <param name="cmdActivity">The command activity</param>
+        /// <returns>Gets the CommandValue from the activity</returns>
+        public static CommandValue<T> GetCommandValue<T>(this ICommandActivity activity)
+        {
+            object value = activity?.Value;
+
+            if (value == null)
+            {
+                return null;
+            }
+            else if (value is CommandValue<T> commandValue)
+            {
+                return commandValue;
+            }
+            else
+            {
+                return ((JObject)value).ToObject<CommandValue<T>>();
+            }
+        }
+
+        /// <summary>
+        /// Gets the CommandResultValue from the commmand result activity.
+        /// </summary>
+        /// <param name="cmdResultActivity">The command result activity</param>
+        /// <returns>Gets the CommandResultValue from the activity.</returns>
+        public static CommandResultValue<T> GetCommandResultValue<T>(this ICommandResultActivity activity)
+        {
+            object value = activity?.Value;
+
+            if (value == null)
+            {
+                return null;
+            }
+            else if (value is CommandResultValue<T> commandResultValue)
+            {
+                return commandResultValue;
+            }
+            else
+            {
+                return ((JObject)value).ToObject<CommandResultValue<T>>();
+            }
         }
     }
 }
