@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Eliza;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
-using Microsoft.Bot.Schema.CommandExtensions;
 using Microsoft.Bot.Schema.Telephony;
 
 namespace Microsoft.BotBuilderSamples.Bots
@@ -70,7 +69,7 @@ namespace Microsoft.BotBuilderSamples.Bots
         }
 
         protected override async Task OnRecordingStartResultAsync(
-            ITurnContext<IActivity> turnContext,
+            ITurnContext<ICommandResultActivity> turnContext,
             CancellationToken cancellationToken)
         {
             var recordingResult = turnContext.Activity.GetCommandResultValue<object>();
@@ -97,7 +96,7 @@ namespace Microsoft.BotBuilderSamples.Bots
         }
 
         protected override async Task OnRecordingPauseResultAsync(
-            ITurnContext<IActivity> turnContext,
+            ITurnContext<ICommandResultActivity> turnContext,
             CancellationToken cancellationToken)
         {
             var recordingResult = turnContext.Activity.GetCommandResultValue<object>();
@@ -118,7 +117,7 @@ namespace Microsoft.BotBuilderSamples.Bots
         }
 
         protected override async Task OnRecordingResumeResultAsync(
-            ITurnContext<IActivity> turnContext,
+            ITurnContext<ICommandResultActivity> turnContext,
             CancellationToken cancellationToken)
         {
             var recordingResult = turnContext.Activity.GetCommandResultValue<object>();

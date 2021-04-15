@@ -7,11 +7,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.11.1" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.13.0-rc5" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\telephony-extensions\libraries\Microsoft.BotFramework.CommandExtensions\Microsoft.BotFramework.CommandExtensions.csproj" />
     <ProjectReference Include="..\..\..\telephony-extensions\libraries\Microsoft.BotFramework.Telephony.CallRecording\Microsoft.BotFramework.Telephony.CallRecording.csproj" />
   </ItemGroup>
 
@@ -19,6 +18,10 @@
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
 </Project>
