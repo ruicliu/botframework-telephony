@@ -139,7 +139,7 @@ protected override async Task OnConversationUpdateActivityAsync
         To sign up for the new service, press or say 2.
         Otherwise, just tell me something, and I will repeat it back.";
 
-    var spokenTextInSSMLFormat = SimpleConvertToSSML(intromessagetext, "en-US-GuyNeural", "en-us");
+    var spokenTextInSSMLFormat = SimpleConvertToSSML(displayText, "en-US-GuyNeural", "en-us");
 
     await turnContext.SendActivityAsync(MessageFactory.Text(displayText, spokenTextInSSMLFormat), cancellationToken);
   }
