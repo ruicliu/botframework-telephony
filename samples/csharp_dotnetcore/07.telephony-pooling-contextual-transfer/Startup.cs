@@ -1,18 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
 using Microsoft.BotBuilderSamples.Bots;
 using Microsoft.Extensions.Hosting;
-using System.Collections.Generic;
+using Microsoft.BotFramework.Telephony.Broker;
 using Newtonsoft.Json.Linq;
-using System.Linq;
+
 
 namespace Microsoft.BotBuilderSamples
 {
@@ -33,7 +34,7 @@ namespace Microsoft.BotBuilderSamples
             //Section for pooling
             //Requires app settings "PhoneNumberPool" and "BrokerEndpoint"
             //Register the object that handles latching keys for us
-            services.AddSingleton(new LatchingKeyPool(
+            services.AddSingleton<IKeyPoolAsync>(new LatchingKeyPool(
                     Configuration.GetSection("PhoneNumberPool").GetChildren().Select(c => c?.Value).ToList()
             ));
             //Register our object that handles storing key value state for us

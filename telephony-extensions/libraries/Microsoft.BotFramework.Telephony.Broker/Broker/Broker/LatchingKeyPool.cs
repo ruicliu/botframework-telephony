@@ -5,12 +5,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.BotBuilderSamples
+namespace Microsoft.BotFramework.Telephony.Broker
 {
     /// <summary>
     /// Holds list of keys with latching condition
     /// </summary>
-    public class LatchingKeyPool
+    public class LatchingKeyPool : IKeyPoolAsync
     {
         private SemaphoreSlim latchingSemaphore = new SemaphoreSlim(1, 1);
         private readonly ConcurrentDictionary<string, bool> pool = new ConcurrentDictionary<string, bool>(StringComparer.InvariantCultureIgnoreCase);
@@ -49,7 +49,6 @@ namespace Microsoft.BotBuilderSamples
                 {
                     latchingSemaphore.Release();
                 }
-                await Task.Delay(10); //We need the task.delay in case this thread is the one blocking the release.
             }
         }
 

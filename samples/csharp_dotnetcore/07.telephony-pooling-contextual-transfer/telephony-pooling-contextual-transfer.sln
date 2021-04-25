@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "telephony-pooling-contextual-transfer", "telephony-pooling-contextual-transfer.csproj", "{66926D05-C132-48CC-88D5-A614D740AE02}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Broker", "..\..\..\telephony-extensions\libraries\Microsoft.BotFramework.Telephony.Broker\Broker\Broker\Broker.csproj", "{B9E9831E-12C1-4BAF-B2D8-310A0B2863CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{66926D05-C132-48CC-88D5-A614D740AE02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66926D05-C132-48CC-88D5-A614D740AE02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66926D05-C132-48CC-88D5-A614D740AE02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9E9831E-12C1-4BAF-B2D8-310A0B2863CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9E9831E-12C1-4BAF-B2D8-310A0B2863CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9E9831E-12C1-4BAF-B2D8-310A0B2863CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9E9831E-12C1-4BAF-B2D8-310A0B2863CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
