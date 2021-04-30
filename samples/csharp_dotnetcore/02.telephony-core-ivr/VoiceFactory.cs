@@ -28,7 +28,7 @@ namespace Microsoft.Bot.Builder
         /// Generates text activity with text to speech details
         /// </summary>
         /// <param name="text">message text</param>
-        /// <param name="inputHint">modify barge-in behaviour (allow-interupt), see BargeIn.md for more info</param>
+        /// <param name="inputHint">modify barge-in behaviour (allow-interrupt), see BargeIn.md for more info</param>
         /// <returns></returns>
         public Activity TextAndVoice(string text, string inputHint = null)
         {
