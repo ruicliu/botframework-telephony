@@ -9,7 +9,7 @@ Sometimes it is necessary though, due to legal or compliance requirements, to di
 To disable barge-in (either for speech barge-in, DTMF barge-in, or both), the bot activity must have an inputHint value. The inputHint property indicates whether your bot is accepting, ignoring speech, ignoring non-speech, or ignoring all user input after the message is delivered to the client. The barge-in mode will only affect the message it is applied to, not any subsequent messages. As stated before, both speech and DTMF barge-in are enabled by default so no inputHint is needed for that case (although "acceptingInput" and "expectingInput" will be understood as like the default barge-in enabled by the channel). Below are examples on how to disable only speech, only dtmf, or both forms of barge-in:
 
 ### InputHint Additions
-There is a class of valid constants for the inputHint field called InputHints in the Microsoft.Bot.Internal.Schema nuget package. The IgnoringNonSpeechInput and IgnoringSpeechInput constants will be added in the future, so for those two cases please use string literal InputHint values "ignoringNonSpeechInput" and "ignoringSpeechInput" respectively. The planned expansion of InputHints looks as follows:
+There is a class of valid constants for the inputHint field called [InputHints in the Microsoft.Bot.Schema](https://github.com/microsoft/botbuilder-dotnet/blob/main/libraries/Microsoft.Bot.Schema/InputHints.cs) nuget package. The IgnoringNonSpeechInput and IgnoringSpeechInput constants will be added in the future, so for those two cases please use string literal InputHint values "ignoringNonSpeechInput" and "ignoringSpeechInput" respectively. The planned expansion of InputHints looks as follows:
 ```csharp
     public static class InputHints
     {
@@ -48,7 +48,7 @@ To disable both speech and DTMF barge-in, the inputHint field should be set to I
 
 
 
- ### Example 2: Disable Just DTMF Barge-In
+ ### Example 2: Disable Non-Speech Barge-In
 To disable only DTMF barge-in, the inputHint field should be set to "ignoringNonSpeechInput" (InputHints.IgnoringNonSpeechInput once it is added). This mode ensures only speech barge-in will be honored during message playout, all DTMF (numpad keys) will be ignored.
 ```csharp
     private string SimpleConvertToSSML(string text, string voiceId, string locale)
@@ -74,7 +74,7 @@ To disable only DTMF barge-in, the inputHint field should be set to "ignoringNon
 ```
 
 
- ### Example 3: Disable Just Speech Barge-In
+ ### Example 3: Disable Speech Barge-In
 To disable only speech barge-in, the inputHint field should be set to "ignoringSpeechInput" (InputHints.IgnoringSpeechInput once it is added). This mode ensures only DTMF (numpad keys) barge-in will be honored during message playout, any speech from end user will be ignored.
 ```csharp
     private string SimpleConvertToSSML(string text, string voiceId, string locale)
