@@ -24,6 +24,12 @@ namespace Microsoft.Bot.Builder
             ExpressAsType = expressAsType;
         }
 
+        /// <summary>
+        /// Generates text activity with text to speech details
+        /// </summary>
+        /// <param name="text">message text</param>
+        /// <param name="inputHint">modify barge-in behaviour (allow-interrupt), see BargeIn.md for more info</param>
+        /// <returns></returns>
         public Activity TextAndVoice(string text, string inputHint = null)
         {
             string ssml = $"<speak version='1.0' xmlns='https://www.w3.org/2001/10/synthesis' xmlns:mstts='https://www.w3.org/2001/mstts' xml:lang='{Locale}'><voice name='{VoiceName}'><mstts:express-as style='{ExpressAsType}'>{text}</mstts:express-as></voice></speak>";
