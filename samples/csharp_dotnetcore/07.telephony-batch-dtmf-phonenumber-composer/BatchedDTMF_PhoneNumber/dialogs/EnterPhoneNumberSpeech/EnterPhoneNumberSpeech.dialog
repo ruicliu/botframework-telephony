@@ -1,0 +1,52 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "gIYKoP",
+    "name": "EnterPhoneNumberSpeech",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "18r18q"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "pcgFi3"
+          },
+          "condition": "=isMatch(turn.activity.text, '^\\d{10}')",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "NkzWS5"
+              },
+              "property": "user.phoneNumber",
+              "value": "''"
+            }
+          ],
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "fB0UtL"
+              },
+              "property": "user.phoneNumber",
+              "value": "= turn.activity.text"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "EnterPhoneNumberSpeech.lg",
+  "recognizer": "EnterPhoneNumberSpeech.lu.qna",
+  "id": "EnterPhoneNumberSpeech"
+}

@@ -1,0 +1,17 @@
+[import](common.lg)
+
+
+# SendActivity_OrQuf1()
+[Activity
+    Text = Enter your ${conversation.phoneNumberLength} digit phone number including area code.
+]
+
+# SendActivity_wpZg6N()
+[Activity
+    Text = Got the phone number : ${user.phoneNumber}
+]
+
+# SendActivity_xdZ0Jf()
+[Activity
+    Text = Sorry, that was an valid 10 digit phone number.
+]

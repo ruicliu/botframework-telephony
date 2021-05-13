@@ -1,0 +1,106 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "MPVAGa",
+    "name": "EnterPhoneNumber",
+    "description": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "UBv0Pf"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "8yuB6X"
+          },
+          "property": "conversation.phoneNumberLength",
+          "value": "10"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "OrQuf1"
+          },
+          "activity": "${SendActivity_OrQuf1()}"
+        },
+        {
+          "$kind": "Microsoft.EndTurn",
+          "$designer": {
+            "id": "iVCPYD"
+          }
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnMessageActivity",
+      "$designer": {
+        "id": "nJLoBc"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "ILlDwS"
+          },
+          "actions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "nk8LEX"
+              },
+              "activityProcessed": false,
+              "dialog": "EnterPhoneNumberDTMF"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.BeginDialog",
+              "$designer": {
+                "id": "AUImdT"
+              },
+              "activityProcessed": true,
+              "dialog": "EnterPhoneNumberSpeech"
+            }
+          ],
+          "condition": "= count(where(turn.activity.entities, e, equals(e.type, 'DTMF'))) > 0"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "id8nb0"
+          },
+          "condition": "=length(user.phoneNumber) == conversation.phoneNumberLength",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "wpZg6N"
+              },
+              "activity": "${SendActivity_wpZg6N()}"
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "xdZ0Jf"
+              },
+              "activity": "${SendActivity_xdZ0Jf()}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "EnterPhoneNumber.lg",
+  "recognizer": "EnterPhoneNumber.lu.qna",
+  "id": "EnterPhoneNumber"
+}

@@ -1,0 +1,129 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "YLlU5q",
+    "name": "EnterPhoneNumberDTMF",
+    "description": "EnterPhoneNumber with Batched DTMF"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "suna98"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "PU3DBw"
+          },
+          "condition": "= and(isInteger(int(turn.activity.text)), (int(turn.activity.text) >= 0), (int(turn.activity.text) < 10))",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "ccKOOK"
+              },
+              "property": "user.phoneNumber",
+              "value": "=turn.activity.text"
+            },
+            {
+              "$kind": "Microsoft.EndTurn",
+              "$designer": {
+                "id": "RjpNyE"
+              }
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "4dDX8s"
+              },
+              "property": "user.phoneNumber",
+              "value": "''"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "AYOBEU"
+              },
+              "value": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnMessageActivity",
+      "$designer": {
+        "id": "AyZ7i5"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "PX6Oli"
+          },
+          "condition": "= and(isInteger(int(turn.activity.text)), (int(turn.activity.text) >= 0), (int(turn.activity.text) < 10))",
+          "actions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "KHx9O7"
+              },
+              "property": "user.phoneNumber",
+              "value": "=concat(user.phoneNumber, turn.activity.text)"
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "AIXVrb"
+              },
+              "condition": "=length(user.phoneNumber) == conversation.phoneNumberLength",
+              "actions": [
+                {
+                  "$kind": "Microsoft.EndDialog",
+                  "$designer": {
+                    "id": "Fy9x8A"
+                  }
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.EndTurn",
+                  "$designer": {
+                    "id": "uhcMII"
+                  }
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "4zjRUv"
+              },
+              "property": "user.phoneNumber",
+              "value": "''"
+            },
+            {
+              "$kind": "Microsoft.EndDialog",
+              "$designer": {
+                "id": "JZZTr4"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "EnterPhoneNumberDTMF.lg",
+  "recognizer": "EnterPhoneNumberDTMF.lu.qna",
+  "id": "EnterPhoneNumberDTMF"
+}
