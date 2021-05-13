@@ -10,7 +10,7 @@ The idea behind using the number pooling method is that while the number that is
 
 By reserving a phone number from a pool of number on transfer, and storing the context keyed on that number, when the target of the transfer receives the call on that number, they can then look up the context reliably.
 
-This however, is not a completely foolproof method. There exists a chance, however small, that a secondary caller manually calls and lands on the pooled number right after the transfer has been initiated. It is thus necessary to authenticate the caller. This can be done, for example, by asking the caller to provide information that that caller would have.
+This however, is not a completely foolproof method. There exists a chance, however small, that a secondary caller manually calls and lands on the pooled number right after the transfer has been initiated. It is thus necessary to authenticate the caller. This can be done, for example, by asking the caller to provide information that only that caller would have.
 
 ## Example
 
