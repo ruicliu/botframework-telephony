@@ -1,14 +1,14 @@
 # Telephony Channel
-Telephony Channel in Microsoft Bot Framework allows you to bind a Azure Communication Services' PSTN phone number with Microsoft Bot Framework bot.
+The Telephony channel in Microsoft Bot Framework allows you to bind an Azure Communication Services' PSTN phone number with a Microsoft Bot Framework bot.
 
-Telephony channel under the hood is built on Microsoft Speech Services to allow Speech to Text and Text to Speech capabilities crucial for enabling an audio interaction/conversation over phone lines.
+The Telephony channel under the hood is built on Microsoft Speech Services to allow Speech to Text and Text to Speech capabilities crucial for enabling an audio interaction/conversation over phone lines.
 
-Please follow these steps to enable a Telephony channel for your bot.
+Please follow these steps to enable the Telephony channel for your bot.
 
 ## Pre-requisites
 * [Step 1: Create a new bot](CreateBot.md). You can skip this step if you already have a working bot.
 * [Step 2: Get an Azure Communication Services Resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource) and [acquire a phone number in it](https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/get-phone-number).
-* [Step 3: Create a Cognitive Services Resource](CreateCogSvcsResource.md). Please note that Telephony channel is currently supported in WestUS2 and EastUS.
+* [Step 3: Create an Azure Cognitive Services Resource](CreateCogSvcsResource.md). Please note that Telephony is currently supported in WestUS2 and EastUS regions.
 
 ## Enable web sockets
 You will need to make a small configuration change so that your bot can communicate with the Telephony channel using web sockets. Follow these steps to enable web sockets:
@@ -18,27 +18,31 @@ You will need to make a small configuration change so that your bot can communic
 1. Click Save.
 1. In addition to this, ensure your bot code have enabled communication over web socket, for example in `dotnet` it is `app.UseWebSockets();` in `Startup.cs`.
 
-## Enable Telephony Channel in the bot
+## Enable the Telephony channel in the bot
 
-Once we have created a cognitive services resource, we are ready to use it and configure it using the information collected in previous sections.
+Once you have created an Azure Cognitive Services and Azure Communication Services resource, you are ready to configure Telephony.
 
-Go to the [Azure portal](https://portal.azure.com) > Bot (Created in previous [step](CreateBot.md)) > Channels
+1. Go to the [Azure portal](https://portal.azure.com) > Select the bot (Created in previous [step](CreateBot.md)) > Channels (Preview)
 
-![](images/create-a-bot/c015-click-on-channels.png)
+    ![](images/create-a-bot/telephony-channels.png)
 
-Click on the Telephony channel:
+1. Select the Telephony channel
+1. Select Connect in the command bar
 
-![](images/create-a-bot/c016-click-on-telephony.png)
+    <img src="images/create-a-bot/telephony-connect-button.png" width="400"/>
 
-Configure the channel with following information:
+1. In the "Connect Phone Numbers" pane, make sure you have the correct subscriptions selected, then choose an Azure Cognitive Services resource and an Azure Communication Services resource.
 
-* Azure Communication Services' PSTN number in [provisioning a new phone number for your bot in Azure Communication Services](https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/get-phone-number).
-* Azure Communication Service Access Key and Endpoint - Acquired while [creating a Azure Communication Services Resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource).
-* Cognitive Service Subscription account created during [Cognitive Service account creation](CreateCogSvcsResource.md).
+    <img src="images/create-a-bot/telephony-connect-pane.png" width="500"/>
 
->Make sure to specify the Telephony number in the E.164 format shown below.(+11234567890)
+1. Select one or many phone number(s) to connect to your bot, then select Connect
 
-![](images/create-a-bot/c017-fill-out-settings-click-save.png)
+    <img src="images/create-a-bot/telephony-select-numbers.png" width="500"/>
+    
+    - Repeat this step for any additional Azure Communication Service resources you'd like to connect.
 
-Click **Save**.
+1. Select Apply to save your changes and connect the selected number(s) to the bot.
 
+    <img src="images/create-a-bot/telephony-apply.png" width="400"/>
+
+### If you experience any issues, please use the pre-existing [Channels blade](EnableTelephonyLegacy.md).
