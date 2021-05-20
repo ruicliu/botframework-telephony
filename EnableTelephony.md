@@ -11,12 +11,17 @@ Please follow these steps to enable the Telephony channel for your bot.
 * [Step 3: Create an Azure Cognitive Services Resource](CreateCogSvcsResource.md). Please note that Telephony is currently supported in WestUS2 and EastUS regions.
 
 ## Enable web sockets
+**IMPORTANT**: If you do not enable this step, you will hear silence when calling the phone number.
+
 You will need to make a small configuration change so that your bot can communicate with the Telephony channel using web sockets. Follow these steps to enable web sockets:
 
 1. Navigate to the Azure portal > App Service hosting your bot > Configuration (in the left navigation pane) > open `General Settings` tab.
 1. Locate the toggle for Web sockets and set it to `On`.
+
+    <img src="images/create-a-bot/telephony-enable-websockets.png" width="550" alt="enable web sockets" />
+
 1. Click Save.
-1. In addition to this, ensure your bot code has enabled communication over web socket, for example in `dotnet` it is `app.UseWebSockets();` in `Startup.cs`, and in `JavaScript` it is `streamingAdapter.useWebSocket()` [see example](https://github.com/microsoft/BotBuilder-Samples/blob/main/samples/javascript_nodejs/02.echo-bot/index.js#L71-L85).
+1. In addition to this, ensure your bot code has enabled communication over web socket, for example in dotnet it is `app.UseWebSockets();` in `Startup.cs`, and in Node.js it is `streamingAdapter.useWebSocket()` [see example](https://github.com/microsoft/BotBuilder-Samples/blob/main/samples/javascript_nodejs/02.echo-bot/index.js#L71-L85).
 
 ## Enable the Telephony channel in the bot
 
