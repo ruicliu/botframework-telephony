@@ -45,4 +45,4 @@ Once you have created an Azure Cognitive Services and Azure Communication Servic
 
     <img src="images/create-a-bot/telephony-apply.png" width="400"/>
 
-### If you experience any issues, please use the pre-existing [Channels blade](EnableTelephonyLegacy.md).
+### If you experience any issues, please use the pre-existing [Channels blade](archive/EnableTelephonyLegacy.md).
