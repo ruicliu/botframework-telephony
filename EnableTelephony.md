@@ -16,7 +16,7 @@ You will need to make a small configuration change so that your bot can communic
 1. Navigate to the Azure portal > App Service hosting your bot > Configuration (in the left navigation pane) > open `General Settings` tab.
 1. Locate the toggle for Web sockets and set it to `On`.
 1. Click Save.
-1. In addition to this, ensure your bot code have enabled communication over web socket, for example in `dotnet` it is `app.UseWebSockets();` in `Startup.cs`.
+1. In addition to this, ensure your bot code has enabled communication over web socket, for example in `dotnet` it is `app.UseWebSockets();` in `Startup.cs`, and in `JavaScript` it is `streamingAdapter.useWebSocket()` [see example](https://github.com/microsoft/BotBuilder-Samples/blob/main/samples/javascript_nodejs/02.echo-bot/index.js#L71-L85).
 
 ## Enable the Telephony channel in the bot
 
