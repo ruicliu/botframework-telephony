@@ -24,25 +24,25 @@ Once you have created an Azure Cognitive Services and Azure Communication Servic
 
 1. Go to the [Azure portal](https://portal.azure.com) > Select the bot (Created in previous [step](CreateBot.md)) > Channels (Preview)
 
-    ![](images/create-a-bot/telephony-channels.png)
+    ![Select channels (Preview) blade](images/create-a-bot/telephony-channels.png)
 
 1. Select the Telephony channel
 1. Select Connect in the command bar
 
-    <img src="images/create-a-bot/telephony-connect-button.png" width="400"/>
+    <img src="images/create-a-bot/telephony-connect-button.png" width="400" alt="select connect" />
 
 1. In the "Connect Phone Numbers" pane, make sure you have the correct subscriptions selected, then choose an Azure Cognitive Services resource and an Azure Communication Services resource.
 
-    <img src="images/create-a-bot/telephony-connect-pane.png" width="500"/>
+    <img src="images/create-a-bot/telephony-connect-pane.png" width="500" alt="select resources" />
 
 1. Select one or many phone number(s) to connect to your bot, then select Connect
 
-    <img src="images/create-a-bot/telephony-select-numbers.png" width="500"/>
+    <img src="images/create-a-bot/telephony-select-numbers.png" width="500" alt="select phone number(s)" />
     
     - Repeat this step for any additional Azure Communication Service resources you'd like to connect.
 
 1. Select Apply to save your changes and connect the selected number(s) to the bot.
 
-    <img src="images/create-a-bot/telephony-apply.png" width="400"/>
+    <img src="images/create-a-bot/telephony-apply.png" width="400" alt="apply changes" />
 
-### If you experience any issues, please use the pre-existing [Channels blade](archive/EnableTelephonyLegacy.md).
+### If you experience any issues, please use the pre-existing [Channels blade](EnableTelephonyLegacy.md).
