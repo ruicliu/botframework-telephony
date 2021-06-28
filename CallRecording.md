@@ -5,17 +5,17 @@ __Disclaimer__: Call recording is temporarily available through the Telephony Ch
 > Many countries and states have laws and regulations that apply to the recording of PSTN, voice, and video calls, which often require that users consent to the recording of their communications. It is your responsibility to use the call recording capabilities in compliance with the law. You must obtain consent from the parties of recorded communications in a manner that complies with the laws applicable to each participant.
 
 ## Start recording, stop recording, and attach metadata to the recording
-Telephony extensions package offers _StartRecording_, _StopRecording_, and _ResumeRecording_ methods:
+Telephony extensions package offers _StartRecording_, _PauseRecording_, and _ResumeRecording_ methods:
 
 - _StartRecording_ starts recording of the conversation. 
-- _StopRecording_ stops recording of the conversation.
+- _PauseRecording_ pauses recording of the conversation.
 - _ResumeRecording_ resumes recording of the conversation, appending the new section of the recording to the previously started recording for this conversation.
 
-If _StopRecording_ is never called, the recording is stopped when the bot ends the conversation.
+The recording is automatically stopped when the bot/caller ends the conversation or if the call is transferred to an external phone number.
 
 If a recording is started for a conversation, another recording for the same conversation cannot be started. In such case, Telephony channel returns an error indicating that the "Recording is already in progress".
 
-If _StopRecording_ is called and there is no recording in progress, Telephony channel returns an error indicating that the "Recording has not started".
+If _PauseRecording_ is called and there is no recording in progress, Telephony channel returns an error indicating that the "Recording has not started".
 
 If a recording for a single conversation is paused and resumed again, the recordings are appended in storage.
 
@@ -26,14 +26,13 @@ The following is an example of starting call recording at the beginning of the c
 ```csharp
 public class TelephonyExtensions
 {
-    public static readonly string RecordingStart = "recording_start_command";
+    public static readonly string RecordingStart = "channel/vnd.microsoft.telephony.recording.start";
 
     public static Activity CreateRecordingStartCommand()
     {
         var startRecordingActivity = new Activity(ActivityTypesWithCommand.Command)
         {
-            Name = RecordingStart;
-            Value = new CommandValue<RecordingStartSettings>()
+            Name = RecordingStart            
         };
 
         return startRecordingActivity;
