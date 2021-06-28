@@ -57,14 +57,9 @@ namespace Microsoft.Bot.Schema.Telephony
 
             startRecordingActivity.Name = RecordingStart;
 
-            startRecordingActivity.Value = new CommandValue<RecordingStartSettings>()
+            startRecordingActivity.Value = new CommandValue<object>()
             {
-                CommandId = Guid.NewGuid().ToString(),
-                Data = new RecordingStartSettings()
-                {
-                    RecordingChannelType = RecordingChannelType.Mixed,
-                    RecordingContentType = RecordingContentType.AudioVideo
-                }
+                CommandId = Guid.NewGuid().ToString()
             };
 
             var response = await turnContext.SendActivityAsync(startRecordingActivity, cancellationToken).ConfigureAwait(false);
