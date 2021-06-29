@@ -23,7 +23,7 @@ Note that it is not required to call _StopRecording_ explicitly. The recording i
 - If a recording for a single conversation is paused and resumed again, the recordings are appended in storage.
 - If a recording for a single conversation is stopped and started again, the recordings appear as multiple recording sessions in the storage.
 
-- We do not recommend using the pattern StartRecording-StopRecording-StartRecording-StopRecording since it creates multiple recording files for a single conversation. Instead, we recommend using StartRecording-PauseRecording-ResumeRecording-EndCall to create a single recording file for the converastion.
+- We do not recommend using the pattern StartRecording-StopRecording-StartRecording-StopRecording since it creates multiple recording files for a single conversation. Instead, we recommend using StartRecording-PauseRecording-ResumeRecording-EndCall/StopRecording to create a single recording file for the converastion.
 
 The following is an example of starting call recording at the beginning of the conversation:
 
