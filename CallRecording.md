@@ -1,6 +1,6 @@
 # Call Recording
 
-__Disclaimer__: Call recording is temporarily available through the Telephony Channel public preview at no charge. Be aware that Azure billing for Call Recording will begin in April, at a rate of $0.01/minute of recorded content. Services in public preview are subject to future pricing changes.
+__Disclaimer__: Call recording is temporarily available through the Telephony Channel public preview at no charge. Be aware that Azure billing for Call Recording will begin in April 2021, at a rate of $0.01/minute of recorded content. Services in public preview are subject to future pricing changes.
 
 > Many countries and states have laws and regulations that apply to the recording of PSTN, voice, and video calls, which often require that users consent to the recording of their communications. It is your responsibility to use the call recording capabilities in compliance with the law. You must obtain consent from the parties of recorded communications in a manner that complies with the laws applicable to each participant.
 
@@ -10,16 +10,20 @@ Telephony extensions package offers _StartRecording_, _PauseRecording_, and _Res
 - _StartRecording_ starts recording of the conversation. 
 - _PauseRecording_ pauses recording of the conversation.
 - _ResumeRecording_ resumes recording of the conversation, appending the new section of the recording to the previously started recording for this conversation.
+- _StopRecording_ stops recording of the conversation. 
 
-The recording is automatically stopped when the bot/caller ends the conversation or if the call is transferred to an external phone number.
+Note that it is not required to call _StopRecording_ explicitly. The recording is always stopped when the bot/caller ends the conversation or if the call is transferred to an external phone number.
 
-If a recording is started for a conversation, another recording for the same conversation cannot be started. In such case, Telephony channel returns an error indicating that the "Recording is already in progress".
+### Validation
+- If a recording is started for a conversation, another recording for the same conversation cannot be started. In such case, Telephony channel returns an error indicating that the "Recording is already in progress".
 
-If _PauseRecording_ is called and there is no recording in progress, Telephony channel returns an error indicating that the "Recording has not started".
+- If _PauseRecording_ is called and there is no recording in progress, Telephony channel returns an error indicating that the "Recording has not started".
 
-If a recording for a single conversation is paused and resumed again, the recordings are appended in storage.
+### Recording Sessions
+- If a recording for a single conversation is paused and resumed again, the recordings are appended in storage.
+- If a recording for a single conversation is stopped and started again, the recordings appear as multiple recording sessions in the storage.
 
-If a recording for a single conversation is stopped and started again, the recordings appear as multiple recording sessions in the storage.
+- We do not recommend using the pattern StartRecording-StopRecording-StartRecording-StopRecording since it creates multiple recording files for a single conversation. Instead, we recommend using StartRecording-PauseRecording-ResumeRecording-EndCall to create a single recording file for the converastion.
 
 The following is an example of starting call recording at the beginning of the conversation:
 
