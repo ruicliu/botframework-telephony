@@ -60,10 +60,32 @@ namespace Microsoft.BotBuilderSamples.Bots
                 return;
             }
 
+#if CONTOSO
+            var replyText = $"I don't understand.";
+            var userTextL = userText.ToLowerInvariant();
+            if (userTextL.Contains("problem"))
+            {
+                replyText = "Unplug it and plug it back in";
+            }
+            else if (userTextL.Contains("frustrated"))
+            {
+                replyText = "I'm sorry that I wasn't able to help you";
+            }
+            else if (userTextL.Contains("happy") || userTextL.Contains("works now"))
+            {
+                replyText = "Great! I'm glad it worked";
+            }
+            else if (userTextL.Contains("goodbye") || userTextL.Contains("bye"))
+            {
+                replyText = "Goodbye!";
+            }
+#else
+
             // Echo what the caller says
             //var replyText = $"You said {userText}";
             var replyText = eliza.ProcessInput(userText);
-            await turnContext.SendActivityAsync(
+#endif
+                await turnContext.SendActivityAsync(
                     VoiceFactory.TextAndVoice(replyText, InputHints.IgnoringInput),
                     cancellationToken);
 
@@ -89,8 +111,11 @@ namespace Microsoft.BotBuilderSamples.Bots
             conversationData.RecordingState = RecordingState.Recording;
 
             // Send a consent message to the user to let them know the call may be recorded.
+#if CONTOSO
+            var consentText = "OK, in your own words, tell me what you're calling about";
+#else
             var consentText = "If you don't mind, I will be recording this call for quality assurance purposes. OK, tell me what you're calling about!";
-
+#endif
             await turnContext.SendActivityAsync(
                     VoiceFactory.TextAndVoice(consentText, InputHints.IgnoringInput),
                     cancellationToken);
@@ -146,7 +171,11 @@ namespace Microsoft.BotBuilderSamples.Bots
                 {
                     // Welcome message that will not be recorded
                     // Played to minimize initial silence till call recording starts
+#if CONTOSO
+                    var welcome = "Hello, this is Contoso Home Appliance. Hold on a second while I start recording your call";
+#else
                     var welcome = "Hello, my name is Eliza. I'm an online therapist";
+#endif
                     await turnContext.SendActivityAsync(
                         VoiceFactory.TextAndVoice(welcome, InputHints.IgnoringInput),
                         cancellationToken);

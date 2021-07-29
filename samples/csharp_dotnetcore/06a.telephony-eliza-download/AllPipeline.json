@@ -1,0 +1,47 @@
+{
+    "definition": {
+        "nodes": {
+            "transcription": {
+                "type": "Speech",
+                "publish": "true"
+            },
+            "hotPhrases": {
+                "type": "HotPhrase",
+                "publish": true,
+                "inputs": [
+                    "transcription"
+                ],
+                "parameters": {
+                    "hotphraselist": [
+                        "credit card",
+                        "contoso",
+                        "refrigerator",
+                        "dishwasher"
+                    ]
+                }
+            },
+            "sentiment": {
+                "type": "Sentiment",
+                "publish": "true",
+                "inputs": [
+                    "transcription"
+                ]
+            },
+            "callReason": {
+                "type": "ReasonForCall",
+                "publish": "true"
+            },
+            "piiRedaction": {
+                "type": "PII",
+                "publish": "true"
+            }
+        },
+        "outputs": [
+            {
+                "type": "Realtime"
+            }
+        ]
+    },
+    "name": "AllPipeline",
+    "Description": "Configuration pipeline that defines usage of all features of Project Frankfurt"
+}

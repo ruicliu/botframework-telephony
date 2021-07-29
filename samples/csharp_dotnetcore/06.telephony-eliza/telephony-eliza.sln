@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElizaLib", "..\ElizaLib\Eli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "telephony-eliza-download", "..\06a.telephony-eliza-download\telephony-eliza-download.csproj", "{7046A973-D918-4872-AD7B-C2FAB9A38070}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataWriter", "..\DataWriter\DataWriter.csproj", "{38F9525A-8347-4115-99DC-F5750FAEFE3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallAnalyzer", "..\CallAnalyzer\CallAnalyzer.csproj", "{696EF504-B19E-4F5C-941E-9C46A8B12259}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{7046A973-D918-4872-AD7B-C2FAB9A38070}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7046A973-D918-4872-AD7B-C2FAB9A38070}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7046A973-D918-4872-AD7B-C2FAB9A38070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38F9525A-8347-4115-99DC-F5750FAEFE3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38F9525A-8347-4115-99DC-F5750FAEFE3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38F9525A-8347-4115-99DC-F5750FAEFE3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38F9525A-8347-4115-99DC-F5750FAEFE3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{696EF504-B19E-4F5C-941E-9C46A8B12259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{696EF504-B19E-4F5C-941E-9C46A8B12259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{696EF504-B19E-4F5C-941E-9C46A8B12259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{696EF504-B19E-4F5C-941E-9C46A8B12259}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
