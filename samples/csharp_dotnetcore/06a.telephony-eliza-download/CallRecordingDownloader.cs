@@ -377,7 +377,7 @@ namespace BotFramework.Telephony.Samples
             int countSentiments = 0;
 
             //Endpoints & Keys
-            string pfSubscriptionKey = "b53e8279cd0f4b929743b346b01526ba";
+            string pfSubscriptionKey = "...";
             string pfRegion = "westcentralus";
             string pfEndpoint = $"https://{pfRegion}.orchestration.speech.microsoft.com";
             string signalREndpoint = $"{pfEndpoint}/signalrhub";
