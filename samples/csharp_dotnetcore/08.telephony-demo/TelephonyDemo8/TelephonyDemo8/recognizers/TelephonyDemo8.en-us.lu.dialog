@@ -1,0 +1,8 @@
+{
+  "$kind": "Microsoft.LuisRecognizer",
+  "id": "LUIS_TelephonyDemo8",
+  "applicationId": "=settings.luis.TelephonyDemo8_en_us_lu.appId",
+  "version": "=settings.luis.TelephonyDemo8_en_us_lu.version",
+  "endpoint": "=settings.luis.endpoint",
+  "endpointKey": "=settings.luis.endpointKey"
+}
