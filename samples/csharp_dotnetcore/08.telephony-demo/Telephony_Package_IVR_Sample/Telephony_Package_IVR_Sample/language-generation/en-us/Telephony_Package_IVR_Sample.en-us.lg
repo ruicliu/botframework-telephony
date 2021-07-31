@@ -1,0 +1,25 @@
+[import](common.lg)
+
+# SendActivity_DidNotUnderstand()
+[Activity
+    Text = ${SendActivity_DidNotUnderstand_text()}
+]
+
+# SendActivity_DidNotUnderstand_text()
+- Sorry, I didn't get that.
+# TextInput_Prompt_EujFfX()
+[Activity
+    Text = ${TextInput_Prompt_EujFfX_text()}
+]
+
+# TextInput_Prompt_EujFfX_text()
+- Thank you for calling. To reach customer service please enter or say one. To reach employee resources please enter or say two.
+# SendActivity_CtpDb9()
+[ Activity 
+     type = delay
+     value = 5000 
+]
+# SendActivity_pBGbzv()
+[ Activity 
+ Type = endOfConversation
+]

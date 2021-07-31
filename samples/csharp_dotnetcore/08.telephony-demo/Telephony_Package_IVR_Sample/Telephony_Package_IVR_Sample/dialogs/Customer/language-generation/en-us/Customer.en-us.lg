@@ -1,0 +1,16 @@
+[import](common.lg)
+
+# SendActivity_V2rPbo()
+[Activity
+    Text = ${SendActivity_V2rPbo_text()}
+]
+
+# SendActivity_V2rPbo_text()
+- - Thank you valued customer.
+# TextInput_Prompt_qptBQQ()
+[Activity
+    Text = ${TextInput_Prompt_qptBQQ_text()}
+]
+
+# TextInput_Prompt_qptBQQ_text()
+- -Would you like to find a store near you or ask about the status of an order?

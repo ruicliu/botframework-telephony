@@ -1,0 +1,66 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "TlQuvm",
+    "name": "Store",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "zalbQt"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "0OsG5D"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "prompt": "${TextInput_Prompt_0OsG5D()}",
+          "property": "user.state"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "0DGkcB",
+            "comment": ""
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "prompt": "${TextInput_Prompt_0DGkcB()}",
+          "property": "user.city"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "bjNhj0"
+          },
+          "activity": "${SendActivity_bjNhj0()}"
+        }
+      ]
+    }
+  ],
+  "generator": "Store.lg",
+  "recognizer": {
+    "$kind": "Microsoft.RegexRecognizer",
+    "intents": []
+  },
+  "id": "Store"
+}

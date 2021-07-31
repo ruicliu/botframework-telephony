@@ -1,0 +1,55 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "AxQExG",
+    "name": "PurchaseOrder",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "tXaJcs"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "UUabpP"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_UUabpP()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "property": "dialog.purchaseorder"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "7QpYE1"
+          },
+          "activity": "${SendActivity_7QpYE1()}"
+        },
+        {
+          "$kind": "Microsoft.Telephony.CallTransfer",
+          "$designer": {
+            "id": "YnkHWS"
+          }
+        }
+      ]
+    }
+  ],
+  "generator": "PurchaseOrder.lg",
+  "recognizer": {
+    "$kind": "Microsoft.RegexRecognizer",
+    "intents": []
+  },
+  "id": "PurchaseOrder"
+}

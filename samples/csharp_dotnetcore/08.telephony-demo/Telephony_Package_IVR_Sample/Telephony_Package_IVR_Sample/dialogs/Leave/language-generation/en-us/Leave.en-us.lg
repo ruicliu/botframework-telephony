@@ -1,0 +1,30 @@
+[import](common.lg)
+
+# ChoiceInput_Prompt_uvW5n0()
+[Activity
+    Text = ${ChoiceInput_Prompt_uvW5n0_text()}
+]
+
+# ChoiceInput_Prompt_uvW5n0_text()
+- -  Are you asking about parental leave, sabbaticals or breavement leave
+# SendActivity_7werH5()
+[Activity
+    Text = ${SendActivity_7werH5_text()}
+]
+
+# SendActivity_7werH5_text()
+- - Both our parental leave and sabbatical policies are 12 weeks.
+# SendActivity_suwBvG()
+[Activity
+    Text = ${SendActivity_suwBvG_text()}
+]
+
+# SendActivity_suwBvG_text()
+- - Both our parental leave and sabbatical policies are 12 weeks.
+# SendActivity_z0APpA()
+[Activity
+    Text = ${SendActivity_z0APpA_text()}
+]
+
+# SendActivity_z0APpA_text()
+- - In line with federal mandate, we offer three days of paid bereavement leave. If you need someone to talk to, stay on the line and we will put you in touch with our on site bereavement counciler.

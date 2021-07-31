@@ -1,0 +1,16 @@
+[import](common.lg)
+
+# TextInput_Prompt_UUabpP()
+[Activity
+    Text = ${TextInput_Prompt_UUabpP_text()}
+]
+
+# TextInput_Prompt_UUabpP_text()
+- - Please state your purchase order code like ‘J12345’.
+# SendActivity_7QpYE1()
+[Activity
+    Text = ${SendActivity_7QpYE1_text()}
+]
+
+# SendActivity_7QpYE1_text()
+- - For information about purchase order ${dialog.purchaseorder}, stay on the line and we will transfer you to a skilled representative

@@ -1,0 +1,134 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "name": "Telephony_Package_IVR_Sample",
+    "description": "",
+    "id": "A79tBe"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "518944",
+            "name": "Loop: for each item"
+          },
+          "itemsProperty": "turn.Activity.membersAdded",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "641773",
+                "name": "Branch: if/else"
+              },
+              "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.TextInput",
+                  "$designer": {
+                    "id": "EujFfX"
+                  },
+                  "disabled": false,
+                  "maxTurnCount": 3,
+                  "alwaysPrompt": false,
+                  "allowInterruptions": true,
+                  "unrecognizedPrompt": "",
+                  "invalidPrompt": "",
+                  "prompt": "${TextInput_Prompt_EujFfX()}",
+                  "property": "dialog.option"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "mb2n1u"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "kMjqz1"
+          },
+          "activity": "${SendActivity_DidNotUnderstand()}"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "CtpDb9"
+          },
+          "activity": "${SendActivity_CtpDb9()}"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "pBGbzv"
+          },
+          "activity": "${SendActivity_pBGbzv()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "alxWg6",
+        "name": "Customer"
+      },
+      "intent": "Customer",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "2nR0JV"
+          },
+          "activityProcessed": true,
+          "dialog": "Customer"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "920tvC",
+        "name": "Employee"
+      },
+      "intent": "Employee",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "fc1izi"
+          },
+          "activityProcessed": true,
+          "dialog": "Employee"
+        }
+      ]
+    }
+  ],
+  "generator": "Telephony_Package_IVR_Sample.lg",
+  "id": "Telephony_Package_IVR_Sample",
+  "recognizer": {
+    "$kind": "Microsoft.RegexRecognizer",
+    "intents": [
+      {
+        "intent": "Customer",
+        "pattern": "1|one|customer"
+      },
+      {
+        "intent": "Employee",
+        "pattern": "2|two|employee"
+      }
+    ]
+  }
+}
