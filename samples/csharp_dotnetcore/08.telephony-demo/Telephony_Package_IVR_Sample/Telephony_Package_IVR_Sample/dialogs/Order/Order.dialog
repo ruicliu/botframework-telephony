@@ -1,0 +1,52 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "EynC8h",
+    "name": "Order",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "sCctsv"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "IsNAs1"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_IsNAs1()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "${TextInput_InvalidPrompt_IsNAs1()}",
+          "property": "dialog.ordernumber",
+          "validations": [
+            "length(this.value) == 5"
+          ]
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "u3DWqj"
+          },
+          "activity": "${SendActivity_u3DWqj()}"
+        }
+      ]
+    }
+  ],
+  "generator": "Order.lg",
+  "recognizer": {
+    "$kind": "Microsoft.RegexRecognizer",
+    "intents": []
+  },
+  "id": "Order"
+}

@@ -1,0 +1,115 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "vtMnnP",
+    "name": "Employee",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "FKjwJl"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "yqNQSW"
+          },
+          "activity": "${SendActivity_yqNQSW()}"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "PzP8Cw"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": true,
+          "prompt": "${TextInput_Prompt_PzP8Cw()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "property": "dialog.employeeoption"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "suVR7X",
+        "name": "Leave"
+      },
+      "intent": "Leave",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "XenIDA"
+          },
+          "activityProcessed": true,
+          "dialog": "Leave"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "pPl0j5",
+        "name": "Tax"
+      },
+      "intent": "Tax",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "Zf5YYn"
+          },
+          "activity": "${SendActivity_Zf5YYn()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "yBHOqJ",
+        "name": "PurchaseOrder"
+      },
+      "intent": "PurchaseOrder",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "LegMpY"
+          },
+          "activityProcessed": true,
+          "dialog": "PurchaseOrder"
+        }
+      ]
+    }
+  ],
+  "generator": "Employee.lg",
+  "recognizer": {
+    "$kind": "Microsoft.RegexRecognizer",
+    "intents": [
+      {
+        "intent": "Leave",
+        "pattern": "leave"
+      },
+      {
+        "intent": "Tax",
+        "pattern": "tax"
+      },
+      {
+        "intent": "PurchaseOrder",
+        "pattern": "purchase|order|purchaseorder"
+      }
+    ]
+  },
+  "id": "Employee"
+}

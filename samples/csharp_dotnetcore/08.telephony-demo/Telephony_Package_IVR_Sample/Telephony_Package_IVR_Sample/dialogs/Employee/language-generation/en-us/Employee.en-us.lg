@@ -1,0 +1,23 @@
+[import](common.lg)
+
+# SendActivity_yqNQSW()
+[Activity
+    Text = ${SendActivity_yqNQSW_text()}
+]
+
+# SendActivity_yqNQSW_text()
+- - You have selected employee resources.
+# TextInput_Prompt_PzP8Cw()
+[Activity
+    Text = ${TextInput_Prompt_PzP8Cw_text()}
+]
+
+# TextInput_Prompt_PzP8Cw_text()
+- - Ask about when tax forms will be delivered, leave policies, or the status of your purchase order.
+# SendActivity_Zf5YYn()
+[Activity
+    Text = ${SendActivity_Zf5YYn_text()}
+]
+
+# SendActivity_Zf5YYn_text()
+- - Tax forms will be mailed in February.

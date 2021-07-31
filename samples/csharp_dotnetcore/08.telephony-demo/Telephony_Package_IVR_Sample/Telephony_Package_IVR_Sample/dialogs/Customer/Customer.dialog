@@ -1,0 +1,95 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "c14npW",
+    "name": "Customer",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "U2Galr"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "V2rPbo"
+          },
+          "activity": "${SendActivity_V2rPbo()}"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "qptBQQ",
+            "comment": ""
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": true,
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "property": "dialog.customeroption",
+          "prompt": "${TextInput_Prompt_qptBQQ()}"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "2Wpvg1",
+        "name": "Store"
+      },
+      "intent": "Store",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "rrTNY5"
+          },
+          "activityProcessed": true,
+          "dialog": "Store"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "3QJ4Yn",
+        "name": "Order"
+      },
+      "intent": "Order",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "tKRfFa"
+          },
+          "activityProcessed": true,
+          "dialog": "Order"
+        }
+      ]
+    }
+  ],
+  "generator": "Customer.lg",
+  "recognizer": {
+    "$kind": "Microsoft.RegexRecognizer",
+    "intents": [
+      {
+        "intent": "Store",
+        "pattern": "store"
+      },
+      {
+        "intent": "Order",
+        "pattern": "order"
+      }
+    ]
+  },
+  "id": "Customer"
+}

@@ -1,0 +1,97 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "YQ4XP1",
+    "name": "Leave",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "OsYJqo"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "uvW5n0"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "prompt": "${ChoiceInput_Prompt_uvW5n0()}",
+          "choiceOptions": {
+            "includeNumbers": true
+          },
+          "property": "dialog.leavetype",
+          "choices": [
+            "parental leave",
+            "sabbatical",
+            "bereavement leave"
+          ]
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "nOnVxS"
+          },
+          "condition": "dialog.leavetype",
+          "cases": [
+            {
+              "value": "parental leave",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "7werH5"
+                  },
+                  "activity": "${SendActivity_7werH5()}"
+                }
+              ]
+            },
+            {
+              "value": "sabbatical",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "suwBvG"
+                  },
+                  "activity": "${SendActivity_suwBvG()}"
+                }
+              ]
+            },
+            {
+              "value": "bereavement leave",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "z0APpA"
+                  },
+                  "activity": "${SendActivity_z0APpA()}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "Leave.lg",
+  "recognizer": {
+    "$kind": "Microsoft.RegexRecognizer",
+    "intents": []
+  },
+  "id": "Leave"
+}
