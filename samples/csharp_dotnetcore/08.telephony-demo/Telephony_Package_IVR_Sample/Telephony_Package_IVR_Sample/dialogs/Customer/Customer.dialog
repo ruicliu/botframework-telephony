@@ -24,6 +24,13 @@
           "activity": "${SendActivity_V2rPbo()}"
         },
         {
+          "$kind": "Microsoft.Telephony.StartRecording",
+          "$designer": {
+            "id": "STtll6"
+          },
+          "allowInterruptions": false
+        },
+        {
           "$kind": "Microsoft.TextInput",
           "$designer": {
             "id": "qptBQQ",
