@@ -8923,7 +8923,7 @@
       },
       "$package": {
         "name": "Microsoft.Bot.Components.Telephony",
-        "version": "1.0.0-preview0"
+        "version": "1.0.0"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8998,7 +8998,7 @@
       },
       "$package": {
         "name": "Microsoft.Bot.Components.Telephony",
-        "version": "1.0.0-preview0"
+        "version": "1.0.0"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9068,7 +9068,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Components.Telephony",
-        "version": "1.0.0-preview0"
+        "version": "1.0.0"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9107,7 +9107,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Components.Telephony",
-        "version": "1.0.0-preview0"
+        "version": "1.0.0"
       },
       "required": [
         "$kind"
@@ -9146,7 +9146,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Components.Telephony",
-        "version": "1.0.0-preview0"
+        "version": "1.0.0"
       },
       "required": [
         "$kind"
@@ -9185,7 +9185,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Components.Telephony",
-        "version": "1.0.0-preview0"
+        "version": "1.0.0"
       },
       "required": [
         "$kind"

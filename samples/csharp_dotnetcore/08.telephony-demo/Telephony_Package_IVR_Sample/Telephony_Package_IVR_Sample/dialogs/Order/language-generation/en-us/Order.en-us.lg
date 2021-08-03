@@ -1,23 +1,16 @@
 [import](common.lg)
 
-# TextInput_Prompt_IsNAs1()
-[Activity
-    Text = ${TextInput_Prompt_IsNAs1_text()}
-]
-
-# TextInput_Prompt_IsNAs1_text()
-- - What is your five digit order number?
 # SendActivity_u3DWqj()
 [Activity
     Text = ${SendActivity_u3DWqj_text()}
 ]
 
 # SendActivity_u3DWqj_text()
-- - Order ${dialog.ordernumber} will arrive Wednesday.
-# TextInput_InvalidPrompt_IsNAs1()
+- - Order ${dialog.orderNumber} will arrive Wednesday.
+# TelephonyBatchFixedLengthInput_Prompt_B4uxRX()
 [Activity
-    Text = ${TextInput_InvalidPrompt_IsNAs1_text()}
+    Text = ${TelephonyBatchFixedLengthInput_Prompt_B4uxRX_text()}
 ]
 
-# TextInput_InvalidPrompt_IsNAs1_text()
-- - I’m sorry, I didn’t get that. Please state your five digit order number like ‘12345’
+# TelephonyBatchFixedLengthInput_Prompt_B4uxRX_text()
+- Please enter your 5 digit order number

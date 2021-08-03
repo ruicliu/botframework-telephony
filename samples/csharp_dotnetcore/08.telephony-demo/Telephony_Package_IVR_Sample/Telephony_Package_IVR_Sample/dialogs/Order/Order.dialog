@@ -17,21 +17,15 @@
       },
       "actions": [
         {
-          "$kind": "Microsoft.TextInput",
+          "$kind": "Microsoft.Telephony.BatchFixedLengthInput",
           "$designer": {
-            "id": "IsNAs1"
+            "id": "B4uxRX"
           },
-          "disabled": false,
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "allowInterruptions": false,
-          "prompt": "${TextInput_Prompt_IsNAs1()}",
-          "unrecognizedPrompt": "",
-          "invalidPrompt": "${TextInput_InvalidPrompt_IsNAs1()}",
-          "property": "dialog.ordernumber",
-          "validations": [
-            "length(this.value) == 5"
-          ]
+          "batchLength": 5,
+          "property": "dialog.orderNumber",
+          "prompt": "${TelephonyBatchFixedLengthInput_Prompt_B4uxRX()}",
+          "allowInterruptions": true,
+          "alwaysPrompt": true
         },
         {
           "$kind": "Microsoft.SendActivity",

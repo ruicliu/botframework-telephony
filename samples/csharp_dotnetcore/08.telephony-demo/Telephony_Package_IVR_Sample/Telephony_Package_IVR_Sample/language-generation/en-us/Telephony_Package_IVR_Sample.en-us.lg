@@ -13,7 +13,7 @@
 ]
 
 # TextInput_Prompt_EujFfX_text()
-- Thank you for calling. To reach customer service please enter or say one. To reach employee resources please enter or say two.
+- Thank you for calling. Are you calling to reach customer service or employee resources?
 # SendActivity_CtpDb9()
 [ Activity 
      type = delay
