@@ -24,7 +24,7 @@
           "batchLength": 5,
           "property": "dialog.orderNumber",
           "prompt": "${TelephonyBatchFixedLengthInput_Prompt_B4uxRX()}",
-          "allowInterruptions": true,
+          "allowInterruptions": false,
           "alwaysPrompt": true
         },
         {
