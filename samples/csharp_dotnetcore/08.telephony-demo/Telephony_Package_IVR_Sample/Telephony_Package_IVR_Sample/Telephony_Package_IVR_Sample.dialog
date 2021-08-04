@@ -114,6 +114,62 @@
           "dialog": "Employee"
         }
       ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "XRVyux",
+        "name": "Operator"
+      },
+      "intent": "Operator",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "MCk5tG"
+          },
+          "activityProcessed": true,
+          "dialog": "TransferToOperator"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnEventActivity",
+      "$designer": {
+        "id": "ebw9au",
+        "name": "Event received (Event activity)"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "o0z3XC"
+          },
+          "activity": "${SendActivity_o0z3XC()}"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "9zw0my"
+          },
+          "activity": "${SendActivity_9zw0my()}"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "okeqVq"
+          },
+          "activity": "${SendActivity_okeqVq()}"
+        },
+        {
+          "$kind": "Microsoft.ThrowException",
+          "$designer": {
+            "id": "lK91tI"
+          },
+          "errorValue": "turn.activity.message"
+        }
+      ],
+      "condition": "turn.activity.name == 'handoff.status'"
     }
   ],
   "generator": "Telephony_Package_IVR_Sample.lg",
@@ -123,11 +179,15 @@
     "intents": [
       {
         "intent": "Customer",
-        "pattern": "1|one|customer"
+        "pattern": "customer"
       },
       {
         "intent": "Employee",
-        "pattern": "2|two|employee"
+        "pattern": "employee"
+      },
+      {
+        "intent": "Operator",
+        "pattern": "0"
       }
     ]
   }
