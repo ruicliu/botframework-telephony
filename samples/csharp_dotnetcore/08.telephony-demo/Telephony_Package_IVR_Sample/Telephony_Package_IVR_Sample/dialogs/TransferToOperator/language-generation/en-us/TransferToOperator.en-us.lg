@@ -1,0 +1,9 @@
+[import](common.lg)
+
+# SendActivity_XwyDFv()
+[Activity
+    Text = ${SendActivity_XwyDFv_text()}
+]
+
+# SendActivity_XwyDFv_text()
+- You will be transferred to the next available customer service professional.

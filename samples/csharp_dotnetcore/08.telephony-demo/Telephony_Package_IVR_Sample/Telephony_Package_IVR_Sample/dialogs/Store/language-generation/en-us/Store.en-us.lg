@@ -1,0 +1,23 @@
+[import](common.lg)
+
+# TextInput_Prompt_0OsG5D()
+[Activity
+    Text = ${TextInput_Prompt_0OsG5D_text()}
+]
+
+# TextInput_Prompt_0OsG5D_text()
+- - What state are you in?
+# TextInput_Prompt_0DGkcB()
+[Activity
+    Text = ${TextInput_Prompt_0DGkcB_text()}
+]
+
+# TextInput_Prompt_0DGkcB_text()
+- - What city are you in?
+# SendActivity_bjNhj0()
+[Activity
+    Text = ${SendActivity_bjNhj0_text()}
+]
+
+# SendActivity_bjNhj0_text()
+- -The nearest store to ${user.city}, ${user.state} is at 16600 NE 1st Avenue
