@@ -44,3 +44,15 @@
 
 # SendActivity_okeqVq_text()
 - Received event message ${turn.activity.message}
+# SendActivity_ELOsGl()
+[Activity
+    Text = ${SendActivity_ELOsGl_text()}
+]
+
+# SendActivity_ELOsGl_text()
+- Have a nice day
+- Goodbye
+# SendActivity_qgpgf3()
+[Activity 
+    Type = endOfConversation
+]

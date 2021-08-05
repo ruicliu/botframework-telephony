@@ -24,11 +24,35 @@
           "activity": "${SendActivity_V2rPbo()}"
         },
         {
-          "$kind": "Microsoft.Telephony.StartRecording",
+          "$kind": "Microsoft.IfCondition",
           "$designer": {
-            "id": "STtll6"
+            "id": "2FsAwF"
           },
-          "allowInterruptions": false
+          "condition": "=conversation.recordingStarted",
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "hLETRd"
+              },
+              "activity": "${SendActivity_hLETRd()}"
+            },
+            {
+              "$kind": "Microsoft.Telephony.StartRecording",
+              "$designer": {
+                "id": "VcXhQw"
+              }
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "BquU0h"
+              },
+              "property": "conversation.recordingStarted",
+              "value": "true"
+            }
+          ],
+          "actions": []
         },
         {
           "$kind": "Microsoft.TextInput",

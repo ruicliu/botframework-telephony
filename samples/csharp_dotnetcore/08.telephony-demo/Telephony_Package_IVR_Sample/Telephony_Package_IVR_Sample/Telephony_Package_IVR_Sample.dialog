@@ -170,6 +170,30 @@
         }
       ],
       "condition": "turn.activity.name == 'handoff.status'"
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "OiYoso",
+        "name": "EndOfConversation"
+      },
+      "intent": "EndOfConversation",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "ELOsGl"
+          },
+          "activity": "${SendActivity_ELOsGl()}"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "qgpgf3"
+          },
+          "activity": "${SendActivity_qgpgf3()}"
+        }
+      ]
     }
   ],
   "generator": "Telephony_Package_IVR_Sample.lg",
@@ -188,6 +212,10 @@
       {
         "intent": "Operator",
         "pattern": "0"
+      },
+      {
+        "intent": "EndOfConversation",
+        "pattern": "good bye|goodbye|bye|sayonara|ciao"
       }
     ]
   }

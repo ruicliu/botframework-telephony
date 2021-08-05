@@ -31,7 +31,8 @@
           "defaultValueResponse": "",
           "prompt": "${ChoiceInput_Prompt_uvW5n0()}",
           "choiceOptions": {
-            "includeNumbers": true
+            "includeNumbers": true,
+            "inlineOrMore": ", or "
           },
           "property": "dialog.leavetype",
           "choices": [
