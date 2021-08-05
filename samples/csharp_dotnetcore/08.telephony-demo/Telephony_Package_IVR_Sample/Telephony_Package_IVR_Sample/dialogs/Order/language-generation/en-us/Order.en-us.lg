@@ -1,0 +1,16 @@
+[import](common.lg)
+
+# SendActivity_u3DWqj()
+[Activity
+    Text = ${SendActivity_u3DWqj_text()}
+]
+
+# SendActivity_u3DWqj_text()
+- - Order ${dialog.orderNumber} will arrive Wednesday.
+# TelephonyBatchFixedLengthInput_Prompt_B4uxRX()
+[Activity
+    Text = ${TelephonyBatchFixedLengthInput_Prompt_B4uxRX_text()}
+]
+
+# TelephonyBatchFixedLengthInput_Prompt_B4uxRX_text()
+- Please enter your 5 digit order number
