@@ -26,7 +26,7 @@ protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivi
           If you are a current customer, press 1.  
           If you are a new customer, press 2.";
           
-        responseMessage = SimpleConvertToSSML(responseText, "en-US", "en-US-JessaNeural");
+        responseMessage = SimpleConvertToSSML(responseText, "en-US", "en-US-AriaNeural");
     }
     else
     {
