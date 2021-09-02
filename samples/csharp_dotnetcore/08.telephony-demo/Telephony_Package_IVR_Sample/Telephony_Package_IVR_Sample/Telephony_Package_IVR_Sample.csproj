@@ -15,6 +15,6 @@
     <PackageReference Include="Microsoft.Bot.Builder.AI.Luis" Version="4.14.1" />
     <PackageReference Include="Microsoft.Bot.Builder.AI.QnA" Version="4.14.1" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs.Adaptive.Runtime" Version="4.14.1" />
-    <PackageReference Include="Microsoft.Bot.Components.Telephony" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Bot.Components.Telephony" Version="1.0.0-preview.20210816.6bc6617" />
   </ItemGroup>
 </Project>

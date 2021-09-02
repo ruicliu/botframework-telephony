@@ -1,28 +1,5 @@
 [import](common.lg)
 
-# SendActivity_DidNotUnderstand()
-[Activity
-    Text = ${SendActivity_DidNotUnderstand_text()}
-]
-
-# SendActivity_DidNotUnderstand_text()
-- Sorry, I didn't get that.
-# TextInput_Prompt_EujFfX()
-[Activity
-    Text = ${TextInput_Prompt_EujFfX_text()}
-]
-
-# TextInput_Prompt_EujFfX_text()
-- Thank you for calling. Are you calling to reach customer service or employee resources? You can also press 0 at any moment to speak directly with our customer service representative
-# SendActivity_CtpDb9()
-[ Activity 
-     type = delay
-     value = 5000 
-]
-# SendActivity_pBGbzv()
-[ Activity 
- Type = endOfConversation
-]
 # SendActivity_o0z3XC()
 [Activity
     Text = ${SendActivity_o0z3XC_text()}
@@ -56,3 +33,17 @@
 [Activity 
     Type = endOfConversation
 ]
+# SendActivity_9ddSTY()
+[Activity
+    Text = ${SendActivity_9ddSTY_text()}
+]
+
+# SendActivity_9ddSTY_text()
+- Sorry I don't understand. You can ask to reach customer service or employee resources.
+# SendActivity_I38uTe()
+[Activity
+    Text = ${SendActivity_I38uTe_text()}
+]
+
+# SendActivity_I38uTe_text()
+- Thank you for calling. Are you calling to reach customer service or employee resources? You can also press 0 at any moment to speak directly with our customer service representative

@@ -6,14 +6,14 @@
 ]
 
 # TextInput_Prompt_0OsG5D_text()
-- - What state are you in?
+- What state are you in?
 # TextInput_Prompt_0DGkcB()
 [Activity
     Text = ${TextInput_Prompt_0DGkcB_text()}
 ]
 
 # TextInput_Prompt_0DGkcB_text()
-- - What city are you in?
+- What city are you in?
 # SendActivity_bjNhj0()
 [Activity
     Text = ${SendActivity_bjNhj0_text()}

@@ -31,18 +31,11 @@
               "condition": "string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
               "actions": [
                 {
-                  "$kind": "Microsoft.TextInput",
+                  "$kind": "Microsoft.SendActivity",
                   "$designer": {
-                    "id": "EujFfX"
+                    "id": "I38uTe"
                   },
-                  "disabled": false,
-                  "maxTurnCount": 3,
-                  "alwaysPrompt": false,
-                  "allowInterruptions": true,
-                  "unrecognizedPrompt": "",
-                  "invalidPrompt": "",
-                  "prompt": "${TextInput_Prompt_EujFfX()}",
-                  "property": "dialog.option"
+                  "activity": "${SendActivity_I38uTe()}"
                 }
               ]
             }
@@ -59,23 +52,9 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "kMjqz1"
+            "id": "9ddSTY"
           },
-          "activity": "${SendActivity_DidNotUnderstand()}"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "CtpDb9"
-          },
-          "activity": "${SendActivity_CtpDb9()}"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
-            "id": "pBGbzv"
-          },
-          "activity": "${SendActivity_pBGbzv()}"
+          "activity": "${SendActivity_9ddSTY()}"
         }
       ]
     },
