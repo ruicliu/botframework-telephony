@@ -5,7 +5,7 @@
     "name": "Customer",
     "comment": ""
   },
-  "autoEndDialog": true,
+  "autoEndDialog": false,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -55,19 +55,11 @@
           "actions": []
         },
         {
-          "$kind": "Microsoft.TextInput",
+          "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "qptBQQ",
-            "comment": ""
+            "id": "t0rG0g"
           },
-          "disabled": false,
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "allowInterruptions": true,
-          "unrecognizedPrompt": "",
-          "invalidPrompt": "",
-          "property": "dialog.customeroption",
-          "prompt": "${TextInput_Prompt_qptBQQ()}"
+          "activity": "${SendActivity_t0rG0g()}"
         }
       ]
     },
@@ -104,6 +96,22 @@
           },
           "activityProcessed": true,
           "dialog": "Order"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "9xKQQw",
+        "name": "Unknown intent"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "g7NNzS"
+          },
+          "activity": "${SendActivity_g7NNzS()}"
         }
       ]
     }

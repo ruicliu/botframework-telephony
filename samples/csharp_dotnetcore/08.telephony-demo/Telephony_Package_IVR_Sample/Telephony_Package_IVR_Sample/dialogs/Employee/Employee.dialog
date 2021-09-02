@@ -24,18 +24,11 @@
           "activity": "${SendActivity_yqNQSW()}"
         },
         {
-          "$kind": "Microsoft.TextInput",
+          "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "PzP8Cw"
+            "id": "fDfxiu"
           },
-          "disabled": false,
-          "maxTurnCount": 3,
-          "alwaysPrompt": false,
-          "allowInterruptions": true,
-          "prompt": "${TextInput_Prompt_PzP8Cw()}",
-          "unrecognizedPrompt": "",
-          "invalidPrompt": "",
-          "property": "dialog.employeeoption"
+          "activity": "${SendActivity_fDfxiu()}"
         }
       ]
     },
