@@ -5,7 +5,7 @@
     "name": "Employee",
     "comment": ""
   },
-  "autoEndDialog": true,
+  "autoEndDialog": false,
   "defaultResultProperty": "dialog.result",
   "triggers": [
     {
@@ -82,6 +82,22 @@
           },
           "activityProcessed": true,
           "dialog": "PurchaseOrder"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "VEiM3t",
+        "name": "Unknown intent"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "L9vmSh"
+          },
+          "activity": "${SendActivity_L9vmSh()}"
         }
       ]
     }
