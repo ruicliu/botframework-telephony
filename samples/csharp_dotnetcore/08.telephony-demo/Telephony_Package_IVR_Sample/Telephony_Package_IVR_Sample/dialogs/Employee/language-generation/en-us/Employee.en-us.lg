@@ -6,7 +6,7 @@
 ]
 
 # SendActivity_yqNQSW_text()
-- - You have selected employee resources.
+- You have selected employee resources.
 # SendActivity_Zf5YYn()
 [Activity
     Text = ${SendActivity_Zf5YYn_text()}
@@ -21,3 +21,10 @@
 
 # SendActivity_fDfxiu_text()
 - Ask about when tax forms will be delivered, leave policies, or the status of your purchase order.
+# SendActivity_L9vmSh()
+[Activity
+    Text = ${SendActivity_L9vmSh_text()}
+]
+
+# SendActivity_L9vmSh_text()
+- Sorry I could not understand. You can ask about when tax forms will be delivered, leave policies, or the status of your purchase order.
