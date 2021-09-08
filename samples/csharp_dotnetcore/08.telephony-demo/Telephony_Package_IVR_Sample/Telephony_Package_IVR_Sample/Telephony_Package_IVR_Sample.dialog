@@ -122,13 +122,6 @@
         {
           "$kind": "Microsoft.SendActivity",
           "$designer": {
-            "id": "o0z3XC"
-          },
-          "activity": "${SendActivity_o0z3XC()}"
-        },
-        {
-          "$kind": "Microsoft.SendActivity",
-          "$designer": {
             "id": "9zw0my"
           },
           "activity": "${SendActivity_9zw0my()}"
