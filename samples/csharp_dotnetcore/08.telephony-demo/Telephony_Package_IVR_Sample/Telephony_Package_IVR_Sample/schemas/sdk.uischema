@@ -1465,7 +1465,13 @@
       "order": [
         "*"
       ],
-      "properties": {},
+      "properties": {
+        "allowInterruptions": {
+          "intellisenseScopes": [
+            "variable-scopes"
+          ]
+        }
+      },
       "subtitle": "Pauses recording the current conversation"
     },
     "menu": {
@@ -1481,7 +1487,13 @@
       "order": [
         "*"
       ],
-      "properties": {},
+      "properties": {
+        "allowInterruptions": {
+          "intellisenseScopes": [
+            "variable-scopes"
+          ]
+        }
+      },
       "subtitle": "Resumes recording the current conversation"
     },
     "menu": {
@@ -1495,9 +1507,16 @@
     "form": {
       "label": "Recording Start",
       "order": [
+        "allowInterruptions",
         "*"
       ],
-      "properties": {},
+      "properties": {
+        "allowInterruptions": {
+          "intellisenseScopes": [
+            "variable-scopes"
+          ]
+        }
+      },
       "subtitle": "Starts recording the current conversation"
     },
     "menu": {
