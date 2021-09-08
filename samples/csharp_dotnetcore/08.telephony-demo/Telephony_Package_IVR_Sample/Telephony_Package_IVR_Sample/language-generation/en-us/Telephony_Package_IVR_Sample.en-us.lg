@@ -1,26 +1,19 @@
 [import](common.lg)
 
-# SendActivity_o0z3XC()
-[Activity
-    Text = ${SendActivity_o0z3XC_text()}
-]
-
-# SendActivity_o0z3XC_text()
-- Received an event at top level with name ${turn.activity.name}
 # SendActivity_9zw0my()
 [Activity
     Text = ${SendActivity_9zw0my_text()}
 ]
 
 # SendActivity_9zw0my_text()
-- Received event value ${turn.activity.value}
+- Received handoff status event with value ${turn.activity.value}
 # SendActivity_okeqVq()
 [Activity
     Text = ${SendActivity_okeqVq_text()}
 ]
 
 # SendActivity_okeqVq_text()
-- Received event message ${turn.activity.message}
+- Event message is ${turn.activity.message}
 # SendActivity_ELOsGl()
 [Activity
     Text = ${SendActivity_ELOsGl_text()}
