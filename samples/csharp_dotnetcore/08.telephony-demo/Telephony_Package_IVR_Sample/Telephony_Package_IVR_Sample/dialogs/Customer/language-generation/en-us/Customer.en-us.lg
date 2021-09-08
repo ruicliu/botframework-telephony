@@ -6,14 +6,7 @@
 ]
 
 # SendActivity_V2rPbo_text()
-- - Thank you valued customer. 
-# TextInput_Prompt_qptBQQ()
-[Activity
-    Text = ${TextInput_Prompt_qptBQQ_text()}
-]
-
-# TextInput_Prompt_qptBQQ_text()
-- -Would you like to find a store near you or ask about the status of an order?
+- Thank you valued customer.
 # SendActivity_hLETRd()
 [Activity
     Text = ${SendActivity_hLETRd_text()}
@@ -21,3 +14,17 @@
 
 # SendActivity_hLETRd_text()
 - Your call will be monitored for quality assurance purposes.
+# SendActivity_g7NNzS()
+[Activity
+    Text = ${SendActivity_g7NNzS_text()}
+]
+
+# SendActivity_g7NNzS_text()
+- Sorry, I don't understand. You can ask to find a store near you or ask about the status of an order?
+# SendActivity_t0rG0g()
+[Activity
+    Text = ${SendActivity_t0rG0g_text()}
+]
+
+# SendActivity_t0rG0g_text()
+- Would you like to find a store near you or ask about the status of an order?

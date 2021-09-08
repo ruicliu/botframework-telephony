@@ -8923,7 +8923,7 @@
       },
       "$package": {
         "name": "Microsoft.Bot.Components.Telephony",
-        "version": "1.0.0"
+        "version": "1.0.0-preview.20210816.6bc6617"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -8961,7 +8961,12 @@
         "allowInterruptions": {
           "$ref": "#/definitions/booleanExpression",
           "title": "Allow Interruptions",
-          "description": "Allow the parent dialog to receive messages to handle while the aggregation is underway."
+          "description": "Allow the parent dialog to receive messages to handle while the aggregation is underway.",
+          "default": false,
+          "examples": [
+            true,
+            "=user.xyz"
+          ]
         },
         "alwaysPrompt": {
           "$ref": "#/definitions/booleanExpression",
@@ -8998,7 +9003,7 @@
       },
       "$package": {
         "name": "Microsoft.Bot.Components.Telephony",
-        "version": "1.0.0"
+        "version": "1.0.0-preview.20210816.6bc6617"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9036,7 +9041,12 @@
         "allowInterruptions": {
           "$ref": "#/definitions/booleanExpression",
           "title": "Allow Interruptions",
-          "description": "Allow the parent dialog to receive messages to handle while the aggregation is underway."
+          "description": "Allow the parent dialog to receive messages to handle while the aggregation is underway.",
+          "default": false,
+          "examples": [
+            true,
+            "=user.xyz"
+          ]
         },
         "alwaysPrompt": {
           "$ref": "#/definitions/booleanExpression",
@@ -9068,7 +9078,7 @@
       ],
       "$package": {
         "name": "Microsoft.Bot.Components.Telephony",
-        "version": "1.0.0"
+        "version": "1.0.0-preview.20210816.6bc6617"
       },
       "additionalProperties": false,
       "patternProperties": {
@@ -9107,7 +9117,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Components.Telephony",
-        "version": "1.0.0"
+        "version": "1.0.0-preview.20210816.6bc6617"
       },
       "required": [
         "$kind"
@@ -9123,7 +9133,12 @@
         "allowInterruptions": {
           "$ref": "#/definitions/booleanExpression",
           "title": "Allow Interruptions",
-          "description": "Allow the dialog to continue when recording pause operation is in progress"
+          "description": "Allow the dialog to continue when recording pause operation is in progress",
+          "default": false,
+          "examples": [
+            true,
+            "=user.xyz"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -9146,7 +9161,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Components.Telephony",
-        "version": "1.0.0"
+        "version": "1.0.0-preview.20210816.6bc6617"
       },
       "required": [
         "$kind"
@@ -9162,7 +9177,12 @@
         "allowInterruptions": {
           "$ref": "#/definitions/booleanExpression",
           "title": "Allow Interruptions",
-          "description": "Allow the dialog to continue when recording resume operation is in progress"
+          "description": "Allow the dialog to continue when recording resume operation is in progress",
+          "default": false,
+          "examples": [
+            true,
+            "=user.xyz"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
@@ -9185,7 +9205,7 @@
       "type": "object",
       "$package": {
         "name": "Microsoft.Bot.Components.Telephony",
-        "version": "1.0.0"
+        "version": "1.0.0-preview.20210816.6bc6617"
       },
       "required": [
         "$kind"
@@ -9201,7 +9221,12 @@
         "allowInterruptions": {
           "$ref": "#/definitions/booleanExpression",
           "title": "Allow Interruptions",
-          "description": "Allow the dialog to continue when recording start operation is in progress"
+          "description": "Allow the dialog to continue when recording start operation is in progress",
+          "default": false,
+          "examples": [
+            true,
+            "=user.xyz"
+          ]
         },
         "$kind": {
           "title": "Kind of dialog object",
