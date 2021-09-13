@@ -89,9 +89,7 @@ protected override async Task OnRecordingStartResultAsync(ITurnContext<ICommandR
 ## Retrieve call recordings
 Azure Communication Services (ACS) provides short term media storage for recordings, please export any recorded content, you wish to preserve, within 48 hours. After 48 hours, recordings will no longer be available.
 
-An Event Grid notification `Call Recording File Status Updated` is published when a recording is ready for retrieval, typically 1-2 minutes after the recording process has completed (i.e. meeting ended, recording stopped). Read more about these notifications on [ACS Call Recording documentation](https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/call-recording#event-grid-notifications). Recording event notifications include a document ID, which can be used to retrieve both recorded media and a recording meta-data file:
-- <Azure_Communication_Service_Endpoint>/recording/download/{documentId}
-- <Azure_Communication_Service_Endpoint>/recording/download/{documentId}/metadata
+An Event Grid notification `Call Recording File Status Updated` is published when a recording is ready for retrieval, typically 1-2 minutes after the recording process has completed (i.e. meeting ended, recording stopped). Read more about these notifications on [ACS Call Recording documentation](https://docs.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/call-recording#event-grid-notifications).
 
 There are two documented ways to retrieve the call recording
 * `[Recommended]` Through the `DownloadStreamingAsync` API in ACS SDK as documented [here](https://docs.microsoft.com/azure/communication-services/quickstarts/voice-video-calling/call-recording-sample?pivots=programming-language-csharp#download-recording-file-using-downloadstreamingasync-server-api). In-depth sample code is available on ACS [GitHub repo](https://github.com/Azure-Samples/communication-services-dotnet-quickstarts/blob/main/ServerRecording/Controller/CallRecordingController.cs#L258).
