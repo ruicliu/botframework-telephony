@@ -52,6 +52,9 @@ Copy the following script into a file called `template.json`. This file is calle
         },
         "cognitiveServiceRegion": {
             "type": "String"
+        },
+        "offerType": {
+            "type": "String"
         }
     },
     "variables": {},
@@ -73,7 +76,8 @@ Copy the following script into a file called `template.json`. This file is calle
                             "cognitiveServiceResourceId": "[parameters('cognitiveServiceResourceId')]",
                             "cognitiveServiceSubscriptionKey": "[parameters('cognitiveServiceSubscriptionKey')]",
                             "cognitiveServiceRegion": "[parameters('cognitiveServiceRegion')]",
-                            "defaultLocale": null
+                            "defaultLocale": null,
+                            "offerType": "[parameters('offerType')]"
                         }
                     ],
                     "premiumSKU": null
@@ -124,6 +128,9 @@ As you can see, the template file does not contain any actual data, such as the 
         },
         "cognitiveServiceRegion": {
             "value": "eastus" // REPLACE: The region of the Cognitive Services resource
+        },
+        "offerType": {
+            "value": null // REPLACE: leave empty for phone numbers purchased from ACS or use "directRouting" for phone numbers configured via ACS Direct Routing
         }
     }
 }
