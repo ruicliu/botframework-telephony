@@ -7,7 +7,7 @@ Please follow these steps to enable the Telephony channel for your bot.
 
 ## Pre-requisites
 * [Step 1: Create a new bot](CreateBot.md). You can skip this step if you already have a working bot.
-* [Step 2: Get an Azure Communication Services Resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource) and [acquire a phone number in it](https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/get-phone-number).
+* [Step 2: Get an Azure Communication Services Resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource) and [acquire a phone number in it](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number).
 * [Step 3: Create an Azure Cognitive Services Resource](CreateCogSvcsResource.md). Please note that Telephony is currently supported in WestUS2 and EastUS regions.
 
 ## Enable web sockets
