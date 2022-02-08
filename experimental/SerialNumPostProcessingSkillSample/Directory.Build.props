@@ -19,13 +19,13 @@
   <PropertyGroup>
     <Company>Microsoft</Company>
     <Authors>Microsoft</Authors>
-    <Product>Microsoft BotFramework Solutions</Product>
+    <Product>Microsoft BotFramework Telephony Channel</Product>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
   </PropertyGroup>
 
   <PropertyGroup>
-    <RepositoryUrl>https://github.com/microsoft/botframework-solutions</RepositoryUrl>
-    <LicenseUrl>https://github.com/microsoft/botframework-solutions/blob/master/LICENSE</LicenseUrl>
+    <RepositoryUrl>https://github.com/microsoft/botframework-telephony</RepositoryUrl>
+    <LicenseUrl>https://github.com/microsoft/botframework-telephony/blob/main/LICENSE</LicenseUrl>
     <RepositoryType />
     <NeutralLanguage>en-US</NeutralLanguage>
     <NoWarn>$(NoWarn);NU5125;NU1701;8002</NoWarn>
