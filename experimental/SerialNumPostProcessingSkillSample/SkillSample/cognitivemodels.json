@@ -1,0 +1,8 @@
+{
+  "defaultLocale": "en-us",
+  "cognitiveModels": {
+    "en-us": {
+      "languageModels": []
+    }
+  }
+}
