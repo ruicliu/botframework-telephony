@@ -17,38 +17,22 @@
     {
       "name": "production",
       "protocol": "BotFrameworkV3",
-      "description": "Production endpoint for the SampleSkill",
+      "description": "Production endpoint for the PostProcessingSkill",
       "endpointUrl": "https://{YOUR_SKILL_URL}/api/messages",
       "msAppId": "{YOUR_SKILL_APPID}"
     }
   ],
   "activities": {
     "serialNumPostProcessAction": {
-      "description": "Action that accepts an alphanumeric input and post process it",
+      "description": "Prompts for serial number and processes it into correct format",
       "type": "event",
       "name": "SerialNumPostProcessAction",
-      "value": {
-        "$ref": "#/definitions/inputObject"
-      },
       "resultValue": {
         "$ref": "#/definitions/responseObject"
       }
-    },
-    "message": {
-      "type": "message",
-      "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
     }
   },
   "definitions": {
-    "inputObject": {
-      "type": "object",
-      "properties": {
-        "preProcessedSerialNum": {
-          "type": "string",
-          "description": "The user's alphanumeric input."
-        }
-      }
-    },
     "responseObject": {
       "type": "object",
       "properties": {
