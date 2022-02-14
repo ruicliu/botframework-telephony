@@ -1,0 +1,2 @@
+This is a skill for post processing serial number. If you want to add this skill to your own bot, simply clone this sample and start following the instructions here [Skill Template documentation](https://microsoft.github.io/botframework-solutions/skills/tutorials/create-skill/csharp/3-create-your-skill/) for resource provision, deployment and customization instructions. Please refer to [Known Issues](https://microsoft.github.io/botframework-solutions/help/known-issues/#http-500-error-when-invoking-a-skill) for known issues when invoking a skill.
+
