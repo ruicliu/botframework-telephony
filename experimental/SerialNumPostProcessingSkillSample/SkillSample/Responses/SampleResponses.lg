@@ -1,0 +1,40 @@
+﻿> ------------ Activity templates ------------
+
+# NamePrompt
+[Activity
+    Text = ${NamePromptText()}
+    InputHint = expectingInput
+]
+
+# SerialNumPrompt
+[Activity
+    Text = ${SerialNumPromptText()}
+    InputHint = expectingInput
+]
+
+# HaveNameMessage
+[Activity
+    Text = ${HaveNameMessageText()}
+    InputHint = acceptingInput
+]
+
+# OutputSerialNumMessage
+[Activity
+    Text = ${OutputSerialNumMessageText()}
+    InputHint = acceptingInput
+]
+
+> ------------ Text templates ------------
+
+# NamePromptText
+- What is your name?
+
+# SerialNumPromptText
+- What is your serial number?
+
+# HaveNameMessageText
+- Hi, ${Name}!
+- Nice to meet you, ${Name}!
+
+# OutputSerialNumMessageText
+- I see that you have inputed ${SerialNum}!
