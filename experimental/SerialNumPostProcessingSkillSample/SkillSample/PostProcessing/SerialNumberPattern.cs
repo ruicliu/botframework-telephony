@@ -1,6 +1,8 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 
@@ -8,11 +10,13 @@ namespace SpeechSerialNumber
 {
     public class SerialNumberPattern
     {
-        private static readonly Dictionary<char, char> AlphabetReplacementsTable = new Dictionary<char, char> { };
-        private static readonly Dictionary<char, char> DigitReplacementsTable = new Dictionary<char, char>
+        private static readonly char[] GroupEndDelimiter = new char[] { ')' };
+        private static readonly Dictionary<char, char> AlphabetReplacementsTable = new Dictionary<char, char>
         {
-            { 'A', '8' }
+            { '8', 'A' }
         };
+
+        private static readonly Dictionary<char, char> DigitReplacementsTable = new Dictionary<char, char>();
 
         private static readonly Dictionary<string, char> DigitWordReplacementsTable = new Dictionary<string, char>
         {
@@ -29,22 +33,30 @@ namespace SpeechSerialNumber
             { "NINE", '9' }
         };
 
-        public SerialNumberPattern(IReadOnlyCollection<TextGroup> textGroups, string input)
+        public SerialNumberPattern(IReadOnlyCollection<SerialNumberTextGroup> textGroups)
         {
             Groups = textGroups;
-            InputString = input;
 
-            foreach (TextGroup group in Groups)
+            foreach (SerialNumberTextGroup group in Groups)
             {
                 PatternLength += group.LengthInChars;
             }
         }
 
-        public SerialNumberPattern(string input)
+        public SerialNumberPattern(string regex, bool allowBatching = false)
         {
-            // TODO: Make/set groups from input regex
-            Groups = new ReadOnlyCollection<TextGroup>(new List<TextGroup>());
-            InputString = input;
+            AllowBatching = allowBatching;
+            List<SerialNumberTextGroup> groups = new List<SerialNumberTextGroup>();
+            string[] regexGroups = regex.Split(GroupEndDelimiter, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string regexGroup in regexGroups)
+            {
+                SerialNumberTextGroup group = new SerialNumberTextGroup($"{regexGroup})");
+                PatternLength += group.LengthInChars;
+                groups.Add(group);
+            }
+
+            Groups = groups.AsReadOnly();
         }
 
         /// <summary>
@@ -104,7 +116,7 @@ namespace SpeechSerialNumber
             get
             {
                 string result = string.Empty;
-                foreach (TextGroup group in Groups)
+                foreach (SerialNumberTextGroup group in Groups)
                 {
                     result += group.RegexString;
                 }
@@ -113,21 +125,24 @@ namespace SpeechSerialNumber
             }
         }
 
-        public string InputString { get; set; }
-
-        public IReadOnlyCollection<TextGroup> Groups { get; set; }
+        public IReadOnlyCollection<SerialNumberTextGroup> Groups { get; set; }
 
         public int PatternLength { get; set; }
 
-        public Token PatternAt(int patternIndex)
+        public string InputString { get; private set; }
+
+        public bool AllowBatching { get; set; }
+
+        public Token PatternAt(int patternIndex, out HashSet<char> invalidChars)
         {
             int cumulativeIndex = 0;
             int prevGroupCumulative = 0;
-            foreach (TextGroup group in Groups)
+            foreach (SerialNumberTextGroup group in Groups)
             {
                 cumulativeIndex += group.LengthInChars;
                 if (cumulativeIndex > patternIndex)
                 {
+                    invalidChars = group.InvalidChars;
                     if (group.AcceptsDigits && group.AcceptsAlphabet)
                     {
                         return Token.Both;
@@ -147,13 +162,14 @@ namespace SpeechSerialNumber
                 prevGroupCumulative += group.LengthInChars;
             }
 
+            invalidChars = new HashSet<char>();
             return Token.Invalid;
         }
 
-        public (char First, char Second) AmbiguousOptions(int inputIndex)
+        public (char First, char Second) AmbiguousOptions(string inputString, int inputIndex)
         {
             (char, char) result = ('*', '*');
-            char input = InputString[inputIndex];
+            char input = inputString[inputIndex];
 
             switch (input)
             {
@@ -168,12 +184,12 @@ namespace SpeechSerialNumber
             return result;
         }
 
-        public bool DetectDigitFixup(int inputIndex)
+        public bool DetectDigitFixup(string inputString, int inputIndex)
         {
-            char ch = InputString[inputIndex];
+            char ch = inputString[inputIndex];
 
             // Handle (One) = 1
-            string restOfInput = InputString.Substring(inputIndex);
+            string restOfInput = inputString.Substring(inputIndex);
             string firstToken = restOfInput.Split(' ').FirstOrDefault();
             if (!string.IsNullOrWhiteSpace(firstToken))
             {
@@ -216,10 +232,10 @@ namespace SpeechSerialNumber
             return replacement;
         }
 
-        public FixupType DetectAlphabetFixup(int inputIndex)
+        public FixupType DetectAlphabetFixup(string inputString, int inputIndex)
         {
-            char ch = InputString[inputIndex];
-            string restOfInput = InputString.Substring(inputIndex);
+            char ch = inputString[inputIndex];
+            string restOfInput = inputString.Substring(inputIndex);
 
             // (A as in Apple)BC
             // ABC, as in Charlie Z as in Zeta.  
@@ -239,13 +255,12 @@ namespace SpeechSerialNumber
             char ch = InputString[inputIndex];
             string restOfInput = InputString.Substring(inputIndex);
             offset = 1;
-            switch (DetectAlphabetFixup(inputIndex))
+            switch (DetectAlphabetFixup(InputString, inputIndex))
             {
                 case FixupType.None:
                     return ch;
                 case FixupType.AlphaMapping:
                     char replacement = AlphabetReplacementsTable[ch];
-                    Console.WriteLine($"Alphabetic Character {ch} was replaced by digit {replacement}");
                     return replacement;
                 case FixupType.AsIn:
                     AsInResult asInResult;
@@ -266,16 +281,15 @@ namespace SpeechSerialNumber
 
         // Pattern : 2 alphabetic, 1 numeric
         // Input:    katie 4
-        public string[] Inference()
+        public string[] Inference(string inputString)
         {
+            InputString = inputString;
+
             List<string> results = new List<string>();
-            Console.WriteLine($"Original text      : '{InputString}'");
-            Console.WriteLine($"Regular Expression : '{Regexp}'");
 
             // Trivial Length check - must be at least pattern length (most likely longer).
-            if (InputString.Length < PatternLength)
+            if (inputString.Length < PatternLength && !AllowBatching)
             {
-                Console.WriteLine($"Input string is too short!  Must be at least {PatternLength} characters/digits.");
                 return results.ToArray();
             }
 
@@ -287,10 +301,11 @@ namespace SpeechSerialNumber
             string fixedUpString = string.Empty;
 
             // Initial Scan to see how many things to correct
-            while (patternIndex < PatternLength && inputIndex < InputString.Length)
+            while (patternIndex < PatternLength && inputIndex < inputString.Length)
             {
-                var elementType = PatternAt(patternIndex);    // What type the pattern is expecting
-                var inputElement = InputString[inputIndex];
+                HashSet<char> invalidChars;
+                var elementType = PatternAt(patternIndex, out invalidChars);    // What type the pattern is expecting
+                var inputElement = inputString[inputIndex];
 
                 // Skip white space, period, comma, dash if not expected
                 if (inputElement == ' ' || inputElement == '.' || inputElement == ',' ||
@@ -305,7 +320,7 @@ namespace SpeechSerialNumber
 
                 patternIndex++;  // Bump to next element in pattern.
 
-                var inferResult = InferMatch(inputIndex, elementType);
+                var inferResult = InferMatch(inputIndex, elementType, invalidChars);
 
                 if (inferResult.IsAmbiguous)
                 {
@@ -325,7 +340,6 @@ namespace SpeechSerialNumber
 
                 if (inferResult.IsNoMatch)
                 {
-                    Console.WriteLine("ERROR: No match");
                     isMatch = false;
                     break;
                 }
@@ -342,7 +356,7 @@ namespace SpeechSerialNumber
             if (ambiguousInputIndexes.Count > 0)
             {
 #pragma warning disable IDE0042 // Deconstruct variable declaration
-                var options = AmbiguousOptions(ambiguousInputIndexes.FirstOrDefault());
+                var options = AmbiguousOptions(inputString, ambiguousInputIndexes.FirstOrDefault());
 #pragma warning restore IDE0042 // Deconstruct variable declaration
                 results.Add(fixedUpString.Replace('*', options.First));
                 results.Add(fixedUpString.Replace('*', options.Second));
@@ -397,7 +411,7 @@ namespace SpeechSerialNumber
             return result;
         }
 
-        private InferResult InferMatch(int inputIndex, Token elementType)
+        private InferResult InferMatch(int inputIndex, Token elementType, HashSet<char> invalidChars)
         {
             InferResult result = new InferResult();
             char currentInputChar = InputString[inputIndex];
@@ -406,19 +420,26 @@ namespace SpeechSerialNumber
             switch (elementType)
             {
                 case Token.Digit:
-                    TryFixupDigit(inputIndex, currentInputChar, elementType, result);
+                    TryFixupDigit(inputIndex, currentInputChar, elementType, result, invalidChars);
                     break;
                 case Token.Alpha:
-                    if (char.IsLetter(currentInputChar) == false && DetectAlphabetFixup(inputIndex) == FixupType.None)
+                    if (char.IsLetter(currentInputChar) == false && DetectAlphabetFixup(InputString, inputIndex) == FixupType.None)
                     {
-                        Console.WriteLine($"ERROR: Element index {inputIndex + 1} (character {currentInputChar}) is not alpha (Pattern wants {elementType})");
                         result.IsNoMatch = true;
                     }
                     else
                     {
                         int newOffset = 1;
                         result.IsFixedUp = true;
-                        result.Ch = AlphabetFixup(inputIndex, ref newOffset);
+                        char ch = AlphabetFixup(inputIndex, ref newOffset);
+                        if (invalidChars.Contains(ch))
+                        {
+                            result.IsFixedUp = false;
+                            result.IsNoMatch = true;
+                            return result;
+                        }
+
+                        result.Ch = ch;
                         result.NewOffset = newOffset;
                     }
 
@@ -429,39 +450,44 @@ namespace SpeechSerialNumber
                     if (ambiguousResult.IsAmbiguous)
                     {
                         result.IsAmbiguous = true;
-                        Console.WriteLine($"INFO: Element index {inputIndex + 1}(character {InputString[inputIndex]}) is ambiguous (Pattern wants {elementType})");
                     }
                     else
                     {
-                        TryFixupDigit(inputIndex, currentInputChar, elementType, result);
+                        TryFixupDigit(inputIndex, currentInputChar, elementType, result, invalidChars);
                     }
 
                     break;
                 default:
-                    Console.WriteLine("Error");
                     break;
             }
 
             return result;
         }
 
-        private void TryFixupDigit(int inputIndex, char currentInputChar, Token elementType, InferResult result)
+        private void TryFixupDigit(int inputIndex, char currentInputChar, Token elementType, InferResult result, HashSet<char> invalidChars)
         {
             int newOffset = 1;
-            result.IsFixedUp = DetectDigitFixup(inputIndex);
+            result.IsFixedUp = DetectDigitFixup(InputString, inputIndex);
 
             if (char.IsDigit(currentInputChar) == false && !result.IsFixedUp)
             {
                 if (elementType == Token.Digit)
                 {
-                    Console.WriteLine($"ERROR: Element index {inputIndex + 1} (character {currentInputChar}) is not digit (Pattern wants {elementType})");
                     result.IsNoMatch = true;
                 }
             }
             else if (result.IsFixedUp)
             {
-                result.Ch = DigitFixup(inputIndex, ref newOffset);
-                result.NewOffset = newOffset;
+                char ch = DigitFixup(inputIndex, ref newOffset);
+                if (invalidChars.Contains(ch))
+                {
+                    result.IsNoMatch = true;
+                }
+                else
+                {
+                    result.Ch = ch;
+                    result.NewOffset = newOffset;
+                }
             }
         }
 
