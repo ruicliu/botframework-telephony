@@ -96,6 +96,7 @@ namespace SkillSample
             {
                 services.AddSingleton<TelemetryLoggerMiddleware>();
             }
+
             // Configure bot services
             services.AddSingleton<BotServices>();
 
@@ -113,7 +114,7 @@ namespace SkillSample
             // Configure localized responses
             var localizedTemplates = new Dictionary<string, string>();
             var templateFile = "AllResponses";
-            var supportedLocales = new List<string>() { "en-us", "de-de", "es-es", "fr-fr", "it-it", "zh-cn" };
+            var supportedLocales = new List<string>() { "en-us" };
 
             foreach (var locale in supportedLocales)
             {
@@ -128,15 +129,13 @@ namespace SkillSample
             services.AddSingleton(new LocaleTemplateManager(localizedTemplates, settings.DefaultLocale ?? "en-us"));
 
             // Register dialogs
-            services.AddTransient<SampleDialog>();
-            services.AddTransient<SerialNumPostProcessAction>();
-            services.AddTransient<MainDialog>();
+            services.AddSingleton<SerialNumPostProcessAction>();
 
             // Configure adapters
             services.AddSingleton<IBotFrameworkHttpAdapter, DefaultAdapter>();
 
             // Configure bot
-            services.AddTransient<IBot, DefaultActivityHandler<MainDialog>>();
+            services.AddTransient<IBot, DefaultActivityHandler<SerialNumPostProcessAction>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

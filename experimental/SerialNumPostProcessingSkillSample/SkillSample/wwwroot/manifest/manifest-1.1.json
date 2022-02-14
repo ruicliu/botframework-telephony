@@ -1,8 +1,8 @@
 {
   "$schema": "https://schemas.botframework.com/schemas/skills/v2.1/skill-manifest.json",
-  "$id": "SampleSkill",
-  "name": "SampleSkill",
-  "description": "SampleSkill description",
+  "$id": "PostProcessingSkill",
+  "name": "PostProcessingSkill",
+  "description": "This is a skill that specializes in post processing alphanumeric input",
   "publisherName": "Your Company",
   "version": "1.1",
   "iconUrl": "https://{YOUR_SKILL_URL}/SampleSkill.png",
@@ -17,7 +17,7 @@
     {
       "name": "production",
       "protocol": "BotFrameworkV3",
-      "description": "Production endpoint for the SampleSkill",
+      "description": "Production endpoint for the PostProcessingSkill",
       "endpointUrl": "https://{YOUR_SKILL_URL}/api/messages",
       "msAppId": "{YOUR_SKILL_APPID}"
     }
@@ -85,38 +85,34 @@
     }
   },
   "activities": {
-    "sampleAction": {
-      "description": "Sample action which accepts an input object and returns an object back.",
+    "serialNumPostProcessAction": {
+      "description": "Action that accepts an alphanumeric input and post process it",
       "type": "event",
-      "name": "SampleAction",
+      "name": "SerialNumPostProcessAction",
       "value": {
         "$ref": "#/definitions/inputObject"
       },
       "resultValue": {
         "$ref": "#/definitions/responseObject"
       }
-    },
-    "message": {
-      "type": "message",
-      "description": "Receives the users utterance and attempts to resolve it using the skill's LU models"
     }
   },
   "definitions": {
     "inputObject": {
       "type": "object",
       "properties": {
-        "name": {
+        "preProcessedSerialNum": {
           "type": "string",
-          "description": "The users name."
+          "description": "The user's alphanumeric input."
         }
       }
     },
     "responseObject": {
       "type": "object",
       "properties": {
-        "customerId": {
-          "type": "integer",
-          "description": "A customer identifier."
+        "postProcessedSerialNum": {
+          "type": "string",
+          "description": "Serial number after post-processing"
         }
       }
     }
