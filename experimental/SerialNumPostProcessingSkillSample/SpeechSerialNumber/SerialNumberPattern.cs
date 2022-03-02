@@ -61,7 +61,7 @@ namespace SpeechSerialNumber
                 }
             };
 
-        public SerialNumberPattern(IReadOnlyCollection<SerialNumberTextGroup> textGroups, string language = "en")
+        public SerialNumberPattern(IReadOnlyCollection<SerialNumberTextGroup> textGroups, bool allowBatching = false, string language = "en")
         {
             Groups = textGroups;
 
@@ -73,7 +73,7 @@ namespace SpeechSerialNumber
             Language = language;
         }
 
-        public SerialNumberPattern(string regex, string language = "en")
+        public SerialNumberPattern(string regex, bool allowBatching = false, string language = "en")
         {
             List<SerialNumberTextGroup> groups = new List<SerialNumberTextGroup>();
             string[] regexGroups = regex.Split(GroupEndDelimiter, StringSplitOptions.RemoveEmptyEntries);

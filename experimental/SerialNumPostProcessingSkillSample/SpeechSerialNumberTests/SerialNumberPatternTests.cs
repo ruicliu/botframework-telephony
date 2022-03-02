@@ -13,8 +13,8 @@ namespace SpeechSerialNumberTests
         [TestMethod]
         public void MilitaryCodeTest()
         {
-            var groups = new List<TextGroup>();
-            var g1 = new TextGroup
+            var groups = new List<SerialNumberTextGroup>();
+            var g1 = new SerialNumberTextGroup
             {
                 AcceptsDigits = false,
                 AcceptsAlphabet = true,
@@ -46,8 +46,8 @@ namespace SpeechSerialNumberTests
         [TestMethod]
         public void ReplacementAndInvalidTest()
         {
-            var groups = new List<TextGroup>();
-            var g1 = new TextGroup
+            var groups = new List<SerialNumberTextGroup>();
+            var g1 = new SerialNumberTextGroup
             {
                 AcceptsDigits = false,
                 AcceptsAlphabet = true,
@@ -55,7 +55,7 @@ namespace SpeechSerialNumberTests
             };
             groups.Add(g1);
 
-            var g2 = new TextGroup
+            var g2 = new SerialNumberTextGroup
             {
                 AcceptsAlphabet = true,
                 AcceptsDigits = true,
