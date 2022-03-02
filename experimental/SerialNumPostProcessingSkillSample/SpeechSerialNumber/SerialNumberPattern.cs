@@ -11,29 +11,57 @@ namespace SpeechSerialNumber
     public class SerialNumberPattern
     {
         private static readonly char[] GroupEndDelimiter = new char[] { ')' };
-        private static readonly Dictionary<char, char> AlphabetReplacementsTable = new Dictionary<char, char>
-        {
-            { '8', 'A' }
-        };
+        private static readonly Dictionary<string, Dictionary<char, char>> AlphabetReplacementsTable =
+            new Dictionary<string, Dictionary<char, char>>
+            {
+                { "en", new Dictionary<char, char> { { '8', 'A' } } }
+            };
 
         private static readonly Dictionary<char, char> DigitReplacementsTable = new Dictionary<char, char>();
 
-        private static readonly Dictionary<string, char> DigitWordReplacementsTable = new Dictionary<string, char>
-        {
-            { "ZER0", '0' },
-            { "ONE", '1' },
-            { "TWO", '2' },
-            { "THREE", '3' },
-            { "FOR", '4' },
-            { "FOUR", '4' },
-            { "FIVE", '5' },
-            { "SIX", '6' },
-            { "SEVEN", '7' },
-            { "EIGHT", '8' },
-            { "NINE", '9' }
-        };
+        private static readonly Dictionary<string, Dictionary<string, char>> DigitWordReplacementsTable =
+            new Dictionary<string, Dictionary<string, char>>
+            {
+                {
+                    "en", new Dictionary<string, char>
+                    {
+                        { "ZER0", '0' },
+                        { "ONE", '1' },
+                        { "TWO", '2' },
+                        { "THREE", '3' },
+                        { "FOR", '4' },
+                        { "FOUR", '4' },
+                        { "FIVE", '5' },
+                        { "SIX", '6' },
+                        { "SEVEN", '7' },
+                        { "EIGHT", '8' },
+                        { "NINE", '9' }
+                    }
+                },
+                {
+                    "es", new Dictionary<string, char>
+                    {
+                        { "CERO", '0' },
+                        { "ZERO", '0' },
+                        { "UN", '1' },
+                        { "UNA", '1' },
+                        { "UNO", '1' },
+                        { "DOS", '2' },
+                        { "CUATRO", '4' },
+                        { "SIN CO", '5' },
+                        { "SE", 'C' },
+                        { "EL", 'L' },
+                        { "EN", 'N' },
+                        { "VOLTIOS", 'V' },
+                        { "VATIO", 'W' },
+                        { "VATIOS", 'W' },
+                        { "SIGLO", 'S' },
+                        { "SIGLOS", 'S' }
+                    }
+                }
+            };
 
-        public SerialNumberPattern(IReadOnlyCollection<SerialNumberTextGroup> textGroups)
+        public SerialNumberPattern(IReadOnlyCollection<SerialNumberTextGroup> textGroups, string language = "en")
         {
             Groups = textGroups;
 
@@ -41,11 +69,12 @@ namespace SpeechSerialNumber
             {
                 PatternLength += group.LengthInChars;
             }
+
+            Language = language;
         }
 
-        public SerialNumberPattern(string regex, bool allowBatching = false)
+        public SerialNumberPattern(string regex, string language = "en")
         {
-            AllowBatching = allowBatching;
             List<SerialNumberTextGroup> groups = new List<SerialNumberTextGroup>();
             string[] regexGroups = regex.Split(GroupEndDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
@@ -57,6 +86,7 @@ namespace SpeechSerialNumber
             }
 
             Groups = groups.AsReadOnly();
+            Language = language;
         }
 
         /// <summary>
@@ -125,13 +155,13 @@ namespace SpeechSerialNumber
             }
         }
 
+        public string Language { get; set; }
+
         public IReadOnlyCollection<SerialNumberTextGroup> Groups { get; set; }
 
         public int PatternLength { get; set; }
 
-        public string InputString { get; private set; }
-
-        public bool AllowBatching { get; set; }
+        public string InputString { get; private set; } = string.Empty;
 
         public Token PatternAt(int patternIndex, out HashSet<char> invalidChars)
         {
@@ -217,7 +247,7 @@ namespace SpeechSerialNumber
                 string token = firstToken;
                 if (DigitWordReplacementsTable.ContainsKey(token))
                 {
-                    replacement = DigitWordReplacementsTable[token];
+                    replacement = DigitWordReplacementsTable[Language][token];
                     newOffset = inputIndex + token.Length;
                 }
             }
@@ -238,7 +268,7 @@ namespace SpeechSerialNumber
             string restOfInput = inputString.Substring(inputIndex);
 
             // (A as in Apple)BC
-            // ABC, as in Charlie Z as in Zeta.  
+            // ABC, as in Charlie Z as in Zeta.
             // [A-Z]{3}
             var asInResult = FindAsInFixup(restOfInput);
             if (asInResult.FixedUp)
@@ -247,7 +277,7 @@ namespace SpeechSerialNumber
             }
 
             // Find direct letter mapping
-            return AlphabetReplacementsTable.ContainsKey(ch) ? FixupType.AlphaMapping : FixupType.None;
+            return AlphabetReplacementsTable[Language].ContainsKey(ch) ? FixupType.AlphaMapping : FixupType.None;
         }
 
         public char AlphabetFixup(int inputIndex, ref int offset)
@@ -260,7 +290,8 @@ namespace SpeechSerialNumber
                 case FixupType.None:
                     return ch;
                 case FixupType.AlphaMapping:
-                    char replacement = AlphabetReplacementsTable[ch];
+                    char replacement = AlphabetReplacementsTable[Language][ch];
+                    Console.WriteLine($"Alphabetic Character {ch} was replaced by digit {replacement}");
                     return replacement;
                 case FixupType.AsIn:
                     AsInResult asInResult;
@@ -286,10 +317,13 @@ namespace SpeechSerialNumber
             InputString = inputString;
 
             List<string> results = new List<string>();
+            Console.WriteLine($"Original text      : '{inputString}'");
+            Console.WriteLine($"Regular Expression : '{Regexp}'");
 
             // Trivial Length check - must be at least pattern length (most likely longer).
-            if (inputString.Length < PatternLength && !AllowBatching)
+            if (inputString.Length < PatternLength)
             {
+                Console.WriteLine($"Input string is too short!  Must be at least {PatternLength} characters/digits.");
                 return results.ToArray();
             }
 
@@ -340,6 +374,7 @@ namespace SpeechSerialNumber
 
                 if (inferResult.IsNoMatch)
                 {
+                    Console.WriteLine("ERROR: No match");
                     isMatch = false;
                     break;
                 }
@@ -401,10 +436,9 @@ namespace SpeechSerialNumber
                     proposedChar = tokens[3][0];
                 }
 
-                Debug.WriteLine($"'as in' detected character {proposedChar} as the proposed character replacement.");
                 result.FixedUp = true;
                 result.Char = proposedChar;
-                int initialOffset = input.IndexOf(" in ", StringComparison.Ordinal);
+                int initialOffset = input.IndexOf(" in ", StringComparison.OrdinalIgnoreCase);
                 result.NewOffset = initialOffset + 4 + tokens[3].Length;
             }
 
