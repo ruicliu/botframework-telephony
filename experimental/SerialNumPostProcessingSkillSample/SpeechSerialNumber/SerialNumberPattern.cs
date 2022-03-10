@@ -63,6 +63,7 @@ namespace SpeechSerialNumber
 
         public SerialNumberPattern(IReadOnlyCollection<SerialNumberTextGroup> textGroups, bool allowBatching = false, string language = "en")
         {
+            AllowBatching = allowBatching;
             Groups = textGroups;
 
             foreach (SerialNumberTextGroup group in Groups)
@@ -75,6 +76,7 @@ namespace SpeechSerialNumber
 
         public SerialNumberPattern(string regex, bool allowBatching = false, string language = "en")
         {
+            AllowBatching = allowBatching;
             List<SerialNumberTextGroup> groups = new List<SerialNumberTextGroup>();
             string[] regexGroups = regex.Split(GroupEndDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
@@ -162,6 +164,8 @@ namespace SpeechSerialNumber
         public int PatternLength { get; set; }
 
         public string InputString { get; private set; } = string.Empty;
+
+        public bool AllowBatching { get; set; }
 
         public Token PatternAt(int patternIndex, out HashSet<char> invalidChars)
         {
@@ -321,7 +325,7 @@ namespace SpeechSerialNumber
             Console.WriteLine($"Regular Expression : '{Regexp}'");
 
             // Trivial Length check - must be at least pattern length (most likely longer).
-            if (inputString.Length < PatternLength)
+            if (inputString.Length < PatternLength && !AllowBatching)
             {
                 Console.WriteLine($"Input string is too short!  Must be at least {PatternLength} characters/digits.");
                 return results.ToArray();
