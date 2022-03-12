@@ -77,14 +77,39 @@ namespace SpeechSerialNumberTests
         public void IntializeWithRegexTest()
         {
             var pattern = new SerialNumberPattern("([a-zA-Z]{2})([0-9a-zA-Z][^125AEIOULNSZ]{5})");
-            var result = pattern.Inference("8E1LO98");
+            var result = pattern.Inference("8E1B098");
 
             // The last character could be 8 or A
             Assert.IsTrue(result.Length == 2);
+            Assert.AreEqual(result[0], "AE1B09A");
+            Assert.AreEqual(result[1], "AE1B098");
 
             // test invalid pattern
             result = pattern.Inference("3E1LO98");
             Assert.IsTrue(result.Length == 0);
+        }
+
+        [TestMethod]
+        public void HPSerialNumberTest()
+        {
+            var groups = new List<SerialNumberTextGroup>();
+            var g1 = new SerialNumberTextGroup
+            {
+                AcceptsDigits = true,
+                AcceptsAlphabet = true,
+                LengthInChars = 10,
+            };
+            groups.Add(g1);
+
+            var pattern = new SerialNumberPattern(groups.AsReadOnly());
+            var result = pattern.Inference("A as in Apple 123456789");
+            Assert.IsTrue(result.Length == 2);
+            Assert.AreEqual(result[0], "A1234567A9");
+            Assert.AreEqual(result[1], "A123456789");
+
+            result = pattern.Inference("ONE CR 00703 F 3.");
+            Assert.IsTrue(result.Length == 1);
+            Assert.AreEqual(result[0], "1CR00703F3");
         }
     }
 }
