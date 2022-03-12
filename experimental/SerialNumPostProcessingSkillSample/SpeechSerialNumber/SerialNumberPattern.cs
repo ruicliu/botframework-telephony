@@ -14,10 +14,16 @@ namespace SpeechSerialNumber
         private static readonly Dictionary<string, Dictionary<char, char>> AlphabetReplacementsTable =
             new Dictionary<string, Dictionary<char, char>>
             {
-                { "en", new Dictionary<char, char> { { '8', 'A' } } }
+                { "en", new Dictionary<char, char> { { '8', 'A' } } },
+                { "es", new Dictionary<char, char>() }
             };
 
-        private static readonly Dictionary<char, char> DigitReplacementsTable = new Dictionary<char, char>();
+        private static readonly Dictionary<string, Dictionary<char, char>> DigitReplacementsTable =
+            new Dictionary<string, Dictionary<char, char>>
+            {
+                { "en", new Dictionary<char, char>() },
+                { "es", new Dictionary<char, char>() }
+            };
 
         private static readonly Dictionary<string, Dictionary<string, char>> DigitWordReplacementsTable =
             new Dictionary<string, Dictionary<string, char>>
@@ -157,7 +163,7 @@ namespace SpeechSerialNumber
             }
         }
 
-        public string Language { get; set; }
+        public string Language { get; set; } = "en";
 
         public IReadOnlyCollection<SerialNumberTextGroup> Groups { get; set; }
 
@@ -228,14 +234,14 @@ namespace SpeechSerialNumber
             if (!string.IsNullOrWhiteSpace(firstToken))
             {
                 string token = firstToken;
-                if (DigitWordReplacementsTable.ContainsKey(token))
+                if (DigitWordReplacementsTable[Language].ContainsKey(token))
                 {
                     return true;
                 }
             }
 
             // Handle (A) = 8
-            return DigitReplacementsTable.ContainsKey(ch);
+            return DigitReplacementsTable[Language].ContainsKey(ch);
         }
 
         public char DigitFixup(int inputIndex, ref int newOffset)
@@ -249,7 +255,7 @@ namespace SpeechSerialNumber
             if (!string.IsNullOrWhiteSpace(firstToken))
             {
                 string token = firstToken;
-                if (DigitWordReplacementsTable.ContainsKey(token))
+                if (DigitWordReplacementsTable[Language].ContainsKey(token))
                 {
                     replacement = DigitWordReplacementsTable[Language][token];
                     newOffset = inputIndex + token.Length;
@@ -257,9 +263,9 @@ namespace SpeechSerialNumber
             }
 
             // Handle (A) = 8
-            if (DigitReplacementsTable.ContainsKey(ch))
+            if (DigitReplacementsTable[Language].ContainsKey(ch))
             {
-                replacement = DigitReplacementsTable[ch];
+                replacement = DigitReplacementsTable[Language][ch];
             }
 
             Debug.WriteLine($"Digit {ch} was replaced by character {replacement}");
@@ -438,12 +444,11 @@ namespace SpeechSerialNumber
                 if (tokens[1].ToLowerInvariant() == "as" && tokens[2].ToLowerInvariant() == "in")
                 {
                     proposedChar = tokens[3][0];
+                    result.FixedUp = true;
+                    result.Char = proposedChar;
+                    int initialOffset = input.IndexOf(" in ", StringComparison.OrdinalIgnoreCase);
+                    result.NewOffset = initialOffset + 4 + tokens[3].Length;
                 }
-
-                result.FixedUp = true;
-                result.Char = proposedChar;
-                int initialOffset = input.IndexOf(" in ", StringComparison.OrdinalIgnoreCase);
-                result.NewOffset = initialOffset + 4 + tokens[3].Length;
             }
 
             return result;
@@ -461,26 +466,7 @@ namespace SpeechSerialNumber
                     TryFixupDigit(inputIndex, currentInputChar, elementType, result, invalidChars);
                     break;
                 case Token.Alpha:
-                    if (char.IsLetter(currentInputChar) == false && DetectAlphabetFixup(InputString, inputIndex) == FixupType.None)
-                    {
-                        result.IsNoMatch = true;
-                    }
-                    else
-                    {
-                        int newOffset = 1;
-                        result.IsFixedUp = true;
-                        char ch = AlphabetFixup(inputIndex, ref newOffset);
-                        if (invalidChars.Contains(ch))
-                        {
-                            result.IsFixedUp = false;
-                            result.IsNoMatch = true;
-                            return result;
-                        }
-
-                        result.Ch = ch;
-                        result.NewOffset = newOffset;
-                    }
-
+                    TryFixupAlpha(inputIndex, currentInputChar, elementType, result, invalidChars);
                     break;
                 case Token.Both:
                     AmbiguousResult ambiguousResult = CheckAmbiguous(ref inputIndex);
@@ -492,6 +478,10 @@ namespace SpeechSerialNumber
                     else
                     {
                         TryFixupDigit(inputIndex, currentInputChar, elementType, result, invalidChars);
+                        if (!result.IsFixedUp)
+                        {
+                            TryFixupAlpha(inputIndex, currentInputChar, elementType, result, invalidChars);
+                        }
                     }
 
                     break;
@@ -500,6 +490,32 @@ namespace SpeechSerialNumber
             }
 
             return result;
+        }
+
+        private void TryFixupAlpha(int inputIndex, char currentInputChar, Token elementType, InferResult result, HashSet<char> invalidChars)
+        {
+            if (char.IsLetter(currentInputChar) == false && DetectAlphabetFixup(InputString, inputIndex) == FixupType.None)
+            {
+                if (elementType == Token.Alpha)
+                {
+                    result.IsNoMatch = true;
+                }
+            }
+            else
+            {
+                int newOffset = 1;
+                result.IsFixedUp = true;
+                char ch = AlphabetFixup(inputIndex, ref newOffset);
+                if (invalidChars.Contains(ch))
+                {
+                    result.IsFixedUp = false;
+                    result.IsNoMatch = true;
+                    return;
+                }
+
+                result.Ch = ch;
+                result.NewOffset = newOffset;
+            }
         }
 
         private void TryFixupDigit(int inputIndex, char currentInputChar, Token elementType, InferResult result, HashSet<char> invalidChars)
