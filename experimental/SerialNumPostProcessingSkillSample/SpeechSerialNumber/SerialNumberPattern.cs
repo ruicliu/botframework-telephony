@@ -258,7 +258,7 @@ namespace SpeechSerialNumber
                 if (DigitWordReplacementsTable[Language].ContainsKey(token))
                 {
                     replacement = DigitWordReplacementsTable[Language][token];
-                    newOffset = inputIndex + token.Length;
+                    newOffset = token.Length;
                 }
             }
 
@@ -268,7 +268,6 @@ namespace SpeechSerialNumber
                 replacement = DigitReplacementsTable[Language][ch];
             }
 
-            Debug.WriteLine($"Digit {ch} was replaced by character {replacement}");
             return replacement;
         }
 
@@ -301,14 +300,12 @@ namespace SpeechSerialNumber
                     return ch;
                 case FixupType.AlphaMapping:
                     char replacement = AlphabetReplacementsTable[Language][ch];
-                    Console.WriteLine($"Alphabetic Character {ch} was replaced by digit {replacement}");
                     return replacement;
                 case FixupType.AsIn:
                     AsInResult asInResult;
                     asInResult = FindAsInFixup(restOfInput);
                     if (asInResult.FixedUp)
                     {
-                        Debug.WriteLine($"'as in' fixed up {restOfInput} to letter {asInResult.Char}");
                         offset = asInResult.NewOffset;
                         return asInResult.Char;
                     }
@@ -337,6 +334,7 @@ namespace SpeechSerialNumber
                 return results.ToArray();
             }
 
+            bool appendSpacer = inputString.Length < PatternLength && AllowBatching;
             int patternIndex = 0;
             int inputIndex = 0;
 
@@ -356,11 +354,14 @@ namespace SpeechSerialNumber
                     (inputElement == '-' && elementType != Token.Dash))
                 {
                     inputIndex++;
+                    if (appendSpacer)
+                    {
+                        // append to fixedUpString
+                        fixedUpString += inputElement;
+                    }
+
                     continue;
                 }
-
-                Debug.WriteLine($"Token at index {patternIndex} is {elementType}");
-                Debug.WriteLine($"Input at index {inputIndex} is {inputElement}");
 
                 patternIndex++;  // Bump to next element in pattern.
 
@@ -494,14 +495,15 @@ namespace SpeechSerialNumber
 
         private void TryFixupAlpha(int inputIndex, char currentInputChar, Token elementType, InferResult result, HashSet<char> invalidChars)
         {
-            if (char.IsLetter(currentInputChar) == false && DetectAlphabetFixup(InputString, inputIndex) == FixupType.None)
+            var alphabetFixup = DetectAlphabetFixup(InputString, inputIndex);
+            if (char.IsLetter(currentInputChar) == false && alphabetFixup == FixupType.None)
             {
                 if (elementType == Token.Alpha)
                 {
                     result.IsNoMatch = true;
                 }
             }
-            else
+            else if (alphabetFixup != FixupType.None)
             {
                 int newOffset = 1;
                 result.IsFixedUp = true;
