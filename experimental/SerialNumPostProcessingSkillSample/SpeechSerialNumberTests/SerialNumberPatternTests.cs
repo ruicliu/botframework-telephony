@@ -111,5 +111,29 @@ namespace SpeechSerialNumberTests
             Assert.IsTrue(result.Length == 1);
             Assert.AreEqual(result[0], "1CR00703F3");
         }
+
+        [TestMethod]
+        public void BatchingTest()
+        {
+            var groups = new List<SerialNumberTextGroup>();
+            var g1 = new SerialNumberTextGroup
+            {
+                AcceptsDigits = true,
+                AcceptsAlphabet = true,
+                LengthInChars = 10,
+            };
+            groups.Add(g1);
+
+            // Inference should return result even if length is less than pattern length
+            // when batching is set to true
+            var pattern = new SerialNumberPattern(groups.AsReadOnly(), true);
+            var result = pattern.Inference("A as in");
+            Assert.IsTrue(result.Length == 1);
+            Assert.AreEqual(result[0], "A as in");
+
+            result = pattern.Inference("A as in Apple ONE CR 00703 F");
+            Assert.IsTrue(result.Length == 1);
+            Assert.AreEqual(result[0], "A1CR00703F");
+        }
     }
 }
