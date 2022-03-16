@@ -135,5 +135,27 @@ namespace SpeechSerialNumberTests
             Assert.IsTrue(result.Length == 1);
             Assert.AreEqual(result[0], "A1CR00703F");
         }
+
+        [TestMethod]
+        public void HPSerialNumberTest_fr()
+        {
+            var groups = new List<SerialNumberTextGroup>();
+            var g1 = new SerialNumberTextGroup
+            {
+                AcceptsDigits = true,
+                AcceptsAlphabet = true,
+                LengthInChars = 10,
+            };
+            groups.Add(g1);
+
+            var pattern = new SerialNumberPattern(groups.AsReadOnly(), false, "fr");
+            var result = pattern.Inference("UN CR 14 1 L 8 C UN.");
+            Assert.AreEqual(result.Length, 1);
+            Assert.AreEqual(result[0], "1CR141L8C1");
+
+            result = pattern.Inference("1CZ 00100 WATTS W.");
+            Assert.AreEqual(result.Length, 1);
+            Assert.AreEqual(result[0], "1CZ00100WW");
+        }
     }
 }
