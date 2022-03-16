@@ -106,28 +106,28 @@ For example, for substitutions in English, please make a file with the name: sub
   "substitutions": [
     {
       "substring": "DENIED",
-      "replace_with": "D9"
+      "replacement": "D9"
     },
     {
       "substring": "DENY",
-      "replace_with": "D9"
+      "replacement": "D9"
     },
     {
       "substring": "SEE",
-      "replace_with": "C"
+      "replacement": "C"
     },
     {
       "substring": "SEA",
-      "replace_with": "C"
+      "replacement": "C"
     },
     {
       "substring": "SEEN",
-      "replace_with": "CN"
+      "replacement": "CN"
     }
   ]
 }
 
-Please ensure that the values for "substring" and "replace_with" for English substitutions are all in capital letters where appropriate.
+The values in "substring" and "replacement" for English substitutions should all be in capital letters where appropriate.
 
 Currently, post processing for English language is supported.  We are working to add support for Spanish and French.
 
