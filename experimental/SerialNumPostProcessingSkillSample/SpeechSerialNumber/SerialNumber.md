@@ -101,7 +101,7 @@ Sample usage:
 We now offer the ability for developers to define their own substitutions as a JSON file and SerialNumberPattern will try to replace all matching input occurrences with the desired character(s).
 This is right now only available when developers have a skill that focuses on post-processing, and is using SerialNumberPattern and SerialNumberTextGroup.
 To make this work, be sure to include all the substitutions for a particular language in a file name like this "substitution-<language code>.json" in the same directory as appsettings.json.
-For example, for substitutions in English, please make a file with the name: substitution.en.json, and have the content as below:
+For example, for substitutions in English, please make a file with the name: substitution-en.json, and have the content as below:
 {
   "substitutions": [
     {
