@@ -10,13 +10,13 @@ namespace SpeechSerialNumber
         [JsonProperty("substring")]
         public string Substring { get; } = string.Empty;
 
-        [JsonProperty("replace_with")]
-        public string ReplaceWith { get; } = string.Empty;
+        [JsonProperty("replacement")]
+        public string Replacement { get; } = string.Empty;
 
-        public Substitution(string substring, string replaceWith)
+        public Substitution(string substring, string replacement)
         {
             this.Substring = substring;
-            this.ReplaceWith = replaceWith;
+            this.Replacement = replacement;
         }
     }
 }
