@@ -97,6 +97,37 @@ Sample usage:
     
     // invalid input, result.Length is 0
 
+## Custom Substitution
+We now offer the ability for developers to define their own substitutions as a JSON file and SerialNumberPattern will try to replace all matching input occurrences with the desired character(s).
+This is right now only available when developers have a skill that focuses on post-processing, and is using SerialNumberPattern and SerialNumberTextGroup.
+To make this work, be sure to include all the substitutions for a particular language in a file name like this "substitution-<language code>.json" in the same directory as appsettings.json.
+For example, for substitutions in English, please make a file with the name: substitution.en.json, and have the content as below:
+{
+  "substitutions": [
+    {
+      "substring": "DENIED",
+      "replace_with": "D9"
+    },
+    {
+      "substring": "DENY",
+      "replace_with": "D9"
+    },
+    {
+      "substring": "SEE",
+      "replace_with": "C"
+    },
+    {
+      "substring": "SEA",
+      "replace_with": "C"
+    },
+    {
+      "substring": "SEEN",
+      "replace_with": "CN"
+    }
+  ]
+}
+
+Please ensure that the values for "substring" and "replace_with" for English substitutions are all in capital letters where appropriate.
 
 Currently, post processing for English language is supported.  We are working to add support for Spanish and French.
 
