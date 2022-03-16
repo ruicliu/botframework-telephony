@@ -77,7 +77,8 @@ namespace SpeechSerialNumber
                 }
             };
 
-        private ConcurrentDictionary<string, ConcurrentDictionary<string, string>> substitutionMapping;
+        private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, string>> SubstitutionMapping = 
+            new ConcurrentDictionary<string, ConcurrentDictionary<string, string>>();
 
         public SerialNumberPattern(IReadOnlyCollection<SerialNumberTextGroup> textGroups, bool allowBatching = false, string language = "en")
         {
@@ -91,7 +92,6 @@ namespace SpeechSerialNumber
 
             Language = language;
 
-            this.substitutionMapping = new ConcurrentDictionary<string, ConcurrentDictionary<string, string>>();
             TryParseCustomSubstitutionsFromFile(language);
         }
 
@@ -111,7 +111,6 @@ namespace SpeechSerialNumber
             Groups = groups.AsReadOnly();
             Language = language;
 
-            this.substitutionMapping = new ConcurrentDictionary<string, ConcurrentDictionary<string, string>>();
             TryParseCustomSubstitutionsFromFile(language);
         }
 
@@ -347,7 +346,7 @@ namespace SpeechSerialNumber
             if (DetectCustomSubstitutionFixup(inputString, inputIndex) == FixupType.Custom)
             {
                 newOffset = inputIndex + firstToken.Length;
-                return this.substitutionMapping[Language][firstToken];
+                return SubstitutionMapping[Language][firstToken];
             }
 
             return string.Empty;
@@ -355,13 +354,13 @@ namespace SpeechSerialNumber
 
         public FixupType DetectCustomSubstitutionFixup(string inputString, int inputIndex)
         {
-            if (this.substitutionMapping.ContainsKey(Language))
+            if (SubstitutionMapping.ContainsKey(Language))
             {
                 // DENIED -> D9
                 string restOfInput = inputString.Substring(inputIndex);
                 string firstToken = restOfInput.Split(' ').FirstOrDefault();
 
-                return this.substitutionMapping[Language].ContainsKey(firstToken) ? FixupType.Custom : FixupType.None;
+                return SubstitutionMapping[Language].ContainsKey(firstToken) ? FixupType.Custom : FixupType.None;
             }
 
             return FixupType.None;
@@ -616,9 +615,9 @@ namespace SpeechSerialNumber
         {
             if (SubstitutionFilePath.ContainsKey(language))
             {
-                if (!this.substitutionMapping.ContainsKey(language))
+                if (!SubstitutionMapping.ContainsKey(language))
                 {
-                    this.substitutionMapping.TryAdd(language, new ConcurrentDictionary<string, string>());
+                    SubstitutionMapping.TryAdd(language, new ConcurrentDictionary<string, string>());
                 }
 
                 string path = SubstitutionFilePath[language];
@@ -633,14 +632,14 @@ namespace SpeechSerialNumber
                     Dictionary<string, Substitution[]> substitutionKVP = JsonConvert.DeserializeObject<Dictionary<string, Substitution[]>>(json);
                     if (substitutionKVP.TryGetValue("substitutions", out var substitutions))
                     {
-                        if (substitutions.Length == this.substitutionMapping[language].Count)
+                        if (substitutions.Length == SubstitutionMapping[language].Count)
                         {
                             return;
                         }
 
                         foreach (var substitution in substitutions)
                         {
-                            this.substitutionMapping[language].TryAdd(substitution.Substring, substitution.ReplaceWith);
+                            SubstitutionMapping[language].TryAdd(substitution.Substring, substitution.Replacement);
                         }
                     }
                 }
