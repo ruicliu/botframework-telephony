@@ -2,15 +2,25 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace SpeechSerialNumber
 {
     public class SerialNumberPattern
     {
         private static readonly char[] GroupEndDelimiter = new char[] { ')' };
+        private static readonly Dictionary<string, string> SubstitutionFilePath = new Dictionary<string, string>
+        {
+            { "en", Path.Combine(".", "substitution-en.json") },
+            { "es", Path.Combine(".", "substitution-es.json") }
+        };
+
         private static readonly Dictionary<string, HashSet<char>> AmbiguousTable =
             new Dictionary<string, HashSet<char>>
             {
@@ -157,6 +167,9 @@ namespace SpeechSerialNumber
 
         private static readonly char[] TrimChars = new char[] { '.' };
 
+        private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, string>> SubstitutionMapping =
+            new ConcurrentDictionary<string, ConcurrentDictionary<string, string>>();
+
         public SerialNumberPattern(IReadOnlyCollection<SerialNumberTextGroup> textGroups, bool allowBatching = false, string language = "en")
         {
             AllowBatching = allowBatching;
@@ -168,6 +181,8 @@ namespace SpeechSerialNumber
             }
 
             Language = language;
+
+            TryParseCustomSubstitutionsFromFile(language);
         }
 
         public SerialNumberPattern(string regex, bool allowBatching = false, string language = "en")
@@ -185,6 +200,8 @@ namespace SpeechSerialNumber
 
             Groups = groups.AsReadOnly();
             Language = language;
+
+            TryParseCustomSubstitutionsFromFile(language);
         }
 
         /// <summary>
@@ -237,6 +254,11 @@ namespace SpeechSerialNumber
             /// As in replacement.
             /// </summary>
             AsIn = 2,
+
+            /// <summary>
+            /// Custom substitution from user supplied file.
+            /// </summary>
+            Custom = 2,
         }
 
         public string Regexp
@@ -415,6 +437,30 @@ namespace SpeechSerialNumber
             return ch.ToString();
         }
 
+        public string TryCustomSubstitutionFixup(string inputString, int inputIndex, ref int newOffset)
+        {
+            // Assuming that we have already checked that SubstitutionMapping consists of the substring
+            string restOfInput = inputString.Substring(inputIndex);
+            string firstToken = restOfInput.Split(' ').FirstOrDefault();
+
+            newOffset = firstToken.Length;
+            return SubstitutionMapping[Language][firstToken];
+        }
+
+        public FixupType DetectCustomSubstitutionFixup(string inputString, int inputIndex)
+        {
+            if (SubstitutionMapping.ContainsKey(Language))
+            {
+                // DENIED -> D9
+                string restOfInput = inputString.Substring(inputIndex);
+                string firstToken = restOfInput.Split(' ').FirstOrDefault();
+
+                return SubstitutionMapping[Language].ContainsKey(firstToken) ? FixupType.Custom : FixupType.None;
+            }
+
+            return FixupType.None;
+        }
+
         // Pattern : 2 alphabetic, 1 numeric
         // Input:    katie 4
         public string[] Inference(string inputString)
@@ -489,6 +535,12 @@ namespace SpeechSerialNumber
                 }
 
                 inputIndex++;
+            }
+
+            if (fixedUpString.Length > PatternLength)
+            {
+                // truncates any characters that exceeds PatternLength, truncation starts at the last index inclusively
+                fixedUpString = fixedUpString.Remove(PatternLength);
             }
 
             if (!isMatch)
@@ -585,6 +637,15 @@ namespace SpeechSerialNumber
                     TryFixupDigit(inputIndex, currentInputChar, elementType, result, invalidChars);
                     break;
                 case Token.Alpha:
+                    if (DetectCustomSubstitutionFixup(InputString, inputIndex) == FixupType.Custom)
+                    {
+                        int offset = 0;
+                        result.Value = TryCustomSubstitutionFixup(InputString, inputIndex, ref offset);
+                        result.NewOffset = offset;
+                        result.IsFixedUp = true;
+                        break;
+                    }
+
                     TryFixupAlpha(inputIndex, currentInputChar, elementType, result, invalidChars);
                     break;
                 case Token.Both:
@@ -599,6 +660,15 @@ namespace SpeechSerialNumber
                         TryFixupDigit(inputIndex, currentInputChar, elementType, result, invalidChars);
                         if (!result.IsFixedUp)
                         {
+                            if (DetectCustomSubstitutionFixup(InputString, inputIndex) == FixupType.Custom)
+                            {
+                                int offset = 0;
+                                result.Value = TryCustomSubstitutionFixup(InputString, inputIndex, ref offset);
+                                result.NewOffset = offset;
+                                result.IsFixedUp = true;
+                                break;
+                            }
+
                             TryFixupAlpha(inputIndex, currentInputChar, elementType, result, invalidChars);
                         }
                     }
@@ -661,6 +731,41 @@ namespace SpeechSerialNumber
                 {
                     result.Value = ch.ToString();
                     result.NewOffset = newOffset;
+                }
+            }
+        }
+
+        private void TryParseCustomSubstitutionsFromFile(string language)
+        {
+            if (SubstitutionFilePath.ContainsKey(language))
+            {
+                if (!SubstitutionMapping.ContainsKey(language))
+                {
+                    SubstitutionMapping.TryAdd(language, new ConcurrentDictionary<string, string>());
+                }
+
+                string path = SubstitutionFilePath[language];
+                if (path == null || !File.Exists(path))
+                {
+                    return;
+                }
+
+                using (StreamReader sr = new StreamReader(path))
+                {
+                    string json = sr.ReadToEnd();
+                    Dictionary<string, Substitution[]> substitutionKVP = JsonConvert.DeserializeObject<Dictionary<string, Substitution[]>>(json);
+                    if (substitutionKVP.TryGetValue("substitutions", out var substitutions))
+                    {
+                        if (substitutions.Length == SubstitutionMapping[language].Count)
+                        {
+                            return;
+                        }
+
+                        foreach (var substitution in substitutions)
+                        {
+                            SubstitutionMapping[language].TryAdd(substitution.Substring, substitution.Replacement);
+                        }
+                    }
                 }
             }
         }
