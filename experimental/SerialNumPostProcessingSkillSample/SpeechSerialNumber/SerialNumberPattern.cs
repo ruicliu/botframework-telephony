@@ -17,7 +17,8 @@ namespace SpeechSerialNumber
         private static readonly char[] GroupEndDelimiter = new char[] { ')' };
         private static readonly Dictionary<string, string> SubstitutionFilePath = new Dictionary<string, string>
         {
-            { "en", Path.Combine(".", "substitution-en-us.json") }
+            { "en", Path.Combine(".", "substitution-en.json") },
+            { "es", Path.Combine(".", "substitution-es.json") }
         };
 
         private static readonly Dictionary<string, Dictionary<char, char>> AlphabetReplacementsTable =
@@ -354,11 +355,16 @@ namespace SpeechSerialNumber
 
         public FixupType DetectCustomSubstitutionFixup(string inputString, int inputIndex)
         {
-            // DENIED -> D9
-            string restOfInput = inputString.Substring(inputIndex);
-            string firstToken = restOfInput.Split(' ').FirstOrDefault();
+            if (this.substitutionMapping.ContainsKey(Language))
+            {
+                // DENIED -> D9
+                string restOfInput = inputString.Substring(inputIndex);
+                string firstToken = restOfInput.Split(' ').FirstOrDefault();
 
-            return this.substitutionMapping[Language].ContainsKey(firstToken) ? FixupType.Custom : FixupType.None;
+                return this.substitutionMapping[Language].ContainsKey(firstToken) ? FixupType.Custom : FixupType.None;
+            }
+
+            return FixupType.None;
         }
 
         // Pattern : 2 alphabetic, 1 numeric
@@ -606,7 +612,7 @@ namespace SpeechSerialNumber
             }
         }
 
-        private bool TryParseCustomSubstitutionsFromFile(string language)
+        private void TryParseCustomSubstitutionsFromFile(string language)
         {
             if (SubstitutionFilePath.ContainsKey(language))
             {
@@ -618,32 +624,27 @@ namespace SpeechSerialNumber
                 string path = SubstitutionFilePath[language];
                 if (path == null || !File.Exists(path))
                 {
-                    return false;
+                    return;
                 }
 
                 using (StreamReader sr = new StreamReader(path))
                 {
                     string json = sr.ReadToEnd();
-                    var sub = JsonConvert.DeserializeObject<JObject>(json);
-                    Dictionary<string, Substitution[]> substitution = JsonConvert.DeserializeObject<Dictionary<string, Substitution[]>>(json);
-                    if (substitution.TryGetValue("substitutions", out var configElementsFromJSON))
+                    Dictionary<string, Substitution[]> substitutionKVP = JsonConvert.DeserializeObject<Dictionary<string, Substitution[]>>(json);
+                    if (substitutionKVP.TryGetValue("substitutions", out var substitutions))
                     {
-                        if (configElementsFromJSON.Length == this.substitutionMapping[language].Count)
+                        if (substitutions.Length == this.substitutionMapping[language].Count)
                         {
-                            return true;
+                            return;
                         }
 
-                        foreach (var configElement in configElementsFromJSON)
+                        foreach (var substitution in substitutions)
                         {
-                            this.substitutionMapping[language].TryAdd(configElement.Substring, configElement.ReplaceWith);
+                            this.substitutionMapping[language].TryAdd(substitution.Substring, substitution.ReplaceWith);
                         }
                     }
                 }
-
-                return true;
             }
-
-            return false;
         }
 
         private class AmbiguousResult

@@ -12,7 +12,7 @@ namespace SpeechSerialNumberTests
     [TestClass]
     public class SerialNumberPatternTests
     {
-        private static readonly string SubstitutionEnglishFilePath = Path.Combine(".", "substitution-en-us.json");
+        private static readonly string SubstitutionEnglishFilePath = Path.Combine(".", "substitution-en.json");
 
         [TestInitialize]
         public void CreateEnglishSubstitutionFile()
