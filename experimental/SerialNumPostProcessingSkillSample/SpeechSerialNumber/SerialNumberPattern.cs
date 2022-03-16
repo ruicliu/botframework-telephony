@@ -2,15 +2,24 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace SpeechSerialNumber
 {
     public class SerialNumberPattern
     {
         private static readonly char[] GroupEndDelimiter = new char[] { ')' };
+        private static readonly Dictionary<string, string> SubstitutionFilePath = new Dictionary<string, string>
+        {
+            { "en", Path.Combine(".", "substitution-en-us.json") }
+        };
+
         private static readonly Dictionary<string, Dictionary<char, char>> AlphabetReplacementsTable =
             new Dictionary<string, Dictionary<char, char>>
             {
@@ -67,6 +76,8 @@ namespace SpeechSerialNumber
                 }
             };
 
+        private ConcurrentDictionary<string, ConcurrentDictionary<string, string>> substitutionMapping;
+
         public SerialNumberPattern(IReadOnlyCollection<SerialNumberTextGroup> textGroups, bool allowBatching = false, string language = "en")
         {
             AllowBatching = allowBatching;
@@ -78,6 +89,9 @@ namespace SpeechSerialNumber
             }
 
             Language = language;
+
+            this.substitutionMapping = new ConcurrentDictionary<string, ConcurrentDictionary<string, string>>();
+            TryParseCustomSubstitutionsFromFile(language);
         }
 
         public SerialNumberPattern(string regex, bool allowBatching = false, string language = "en")
@@ -95,6 +109,9 @@ namespace SpeechSerialNumber
 
             Groups = groups.AsReadOnly();
             Language = language;
+
+            this.substitutionMapping = new ConcurrentDictionary<string, ConcurrentDictionary<string, string>>();
+            TryParseCustomSubstitutionsFromFile(language);
         }
 
         /// <summary>
@@ -147,6 +164,11 @@ namespace SpeechSerialNumber
             /// As in replacement.
             /// </summary>
             AsIn = 2,
+
+            /// <summary>
+            /// Custom substitution from user supplied file.
+            /// </summary>
+            Custom = 2,
         }
 
         public string Regexp
@@ -317,6 +339,28 @@ namespace SpeechSerialNumber
             return ch;
         }
 
+        public string TryCustomSubstitutionFixup(string inputString, int inputIndex, ref int newOffset)
+        {
+            string restOfInput = inputString.Substring(inputIndex);
+            string firstToken = restOfInput.Split(' ').FirstOrDefault();
+            if (DetectCustomSubstitutionFixup(inputString, inputIndex) == FixupType.Custom)
+            {
+                newOffset = inputIndex + firstToken.Length;
+                return this.substitutionMapping[Language][firstToken];
+            }
+
+            return string.Empty;
+        }
+
+        public FixupType DetectCustomSubstitutionFixup(string inputString, int inputIndex)
+        {
+            // DENIED -> D9
+            string restOfInput = inputString.Substring(inputIndex);
+            string firstToken = restOfInput.Split(' ').FirstOrDefault();
+
+            return this.substitutionMapping[Language].ContainsKey(firstToken) ? FixupType.Custom : FixupType.None;
+        }
+
         // Pattern : 2 alphabetic, 1 numeric
         // Input:    katie 4
         public string[] Inference(string inputString)
@@ -372,6 +416,21 @@ namespace SpeechSerialNumber
                     // Store ambiguity index from original string.
                     ambiguousInputIndexes.Add(inputIndex);
                     fixedUpString += '*'; // Mark ambiguity
+                }
+                else if (DetectCustomSubstitutionFixup(InputString, inputIndex) == FixupType.Custom)
+                {
+                    int newOffset = 0;
+                    string replacementString = TryCustomSubstitutionFixup(InputString, inputIndex, ref newOffset);
+                    fixedUpString += replacementString;
+                    inputIndex = newOffset - 1;
+
+                    patternIndex += replacementString.Length - 1; // Bump based on the replacement string
+
+                    if (patternIndex >= PatternLength && fixedUpString.Length > PatternLength)
+                    {
+                        // truncates any characters that exceeds PatternLength, truncation starts at the last index inclusively
+                        fixedUpString = fixedUpString.Remove(PatternLength);
+                    }
                 }
                 else if (inferResult.IsFixedUp)
                 {
@@ -545,6 +604,46 @@ namespace SpeechSerialNumber
                     result.NewOffset = newOffset;
                 }
             }
+        }
+
+        private bool TryParseCustomSubstitutionsFromFile(string language)
+        {
+            if (SubstitutionFilePath.ContainsKey(language))
+            {
+                if (!this.substitutionMapping.ContainsKey(language))
+                {
+                    this.substitutionMapping.TryAdd(language, new ConcurrentDictionary<string, string>());
+                }
+
+                string path = SubstitutionFilePath[language];
+                if (path == null || !File.Exists(path))
+                {
+                    return false;
+                }
+
+                using (StreamReader sr = new StreamReader(path))
+                {
+                    string json = sr.ReadToEnd();
+                    var sub = JsonConvert.DeserializeObject<JObject>(json);
+                    Dictionary<string, Substitution[]> substitution = JsonConvert.DeserializeObject<Dictionary<string, Substitution[]>>(json);
+                    if (substitution.TryGetValue("substitutions", out var configElementsFromJSON))
+                    {
+                        if (configElementsFromJSON.Length == this.substitutionMapping[language].Count)
+                        {
+                            return true;
+                        }
+
+                        foreach (var configElement in configElementsFromJSON)
+                        {
+                            this.substitutionMapping[language].TryAdd(configElement.Substring, configElement.ReplaceWith);
+                        }
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         private class AmbiguousResult
