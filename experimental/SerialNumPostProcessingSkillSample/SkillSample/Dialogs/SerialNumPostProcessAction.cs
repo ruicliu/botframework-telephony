@@ -2,14 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Collections;
+using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Newtonsoft.Json;
 using SpeechSerialNumber;
-using System.Collections.Generic;
-using Microsoft.Bot.Builder;
 
 namespace SkillSample.Dialogs
 {
@@ -17,10 +16,28 @@ namespace SkillSample.Dialogs
     {
         [JsonProperty("postProcessedSerialNum")]
         public string PostProcessedSerialNum { get; set; }
+
+        public PostProcessedSerialNumOutput(string output)
+        {
+            PostProcessedSerialNum = output;
+        }
     }
 
     public class SerialNumPostProcessAction : SkillDialogBase
     {
+        protected const string AggregationDialogMemory = "aggregation";
+
+        private SerialNumberTextGroup g1 = new SerialNumberTextGroup
+        {
+            AcceptsDigits = true,
+            AcceptsAlphabet = true,
+            LengthInChars = 10,
+        };
+
+        private List<SerialNumberTextGroup> groups = new List<SerialNumberTextGroup>();
+
+        private SerialNumberPattern snp;
+
         public SerialNumPostProcessAction(
             IServiceProvider serviceProvider)
             : base(nameof(SerialNumPostProcessAction), serviceProvider)
@@ -28,18 +45,17 @@ namespace SkillSample.Dialogs
             var sample = new WaterfallStep[]
             {
                 PromptForSerialNumAsync,
-                PostProcessSerialNumber,
-                EndAsync,
             };
 
             AddDialog(new WaterfallDialog(nameof(SerialNumPostProcessAction), sample));
             AddDialog(new TextPrompt(DialogIds.SerialNumPrompt));
-            AddDialog(new NumberPrompt<int>(DialogIds.SerialNumConfirmationPrompt, SerialNumValidation));
 
             InitialDialogId = nameof(SerialNumPostProcessAction);
+            groups.Add(g1);
+            snp = new SerialNumberPattern(groups.AsReadOnly(), true);
         }
 
-        private async Task<DialogTurnResult> PromptForSerialNumAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        public async Task<DialogTurnResult> PromptForSerialNumAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             return await stepContext.PromptAsync(DialogIds.SerialNumPrompt, new PromptOptions
             {
@@ -47,106 +63,88 @@ namespace SkillSample.Dialogs
             }, cancellationToken);
         }
 
-        private async Task<DialogTurnResult> PostProcessSerialNumber(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        public override async Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
         {
-            // e.g. input: ONE CR 00703 F 3, after post processing: 1CR00703F3
-            var possiblePostProcessedSerialNums = TestHPSerialNumber(stepContext.Result.ToString().ToUpper());
-
-            // Create an object that persists the user's post processed serial number(s) within the dialog
-            stepContext.Values["SerialNums"] = possiblePostProcessedSerialNums;
-
-            if (stepContext.Values["SerialNums"] == null)
+            if (dc.ActiveDialog.State.ContainsKey("this.ambiguousChoices"))
             {
-                // Pass int.MaxValue which is the flag telling the next step that we could not process serial number
-                return await stepContext.NextAsync(int.MaxValue, cancellationToken: cancellationToken);
+                string[] choices = (string[])dc.ActiveDialog.State["this.ambiguousChoices"];
+                bool isAmbiguousPrompt = choices != null && choices.Length >= 2;
+                if (isAmbiguousPrompt)
+                {
+                    dc.ActiveDialog.State["this.ambiguousChoices"] = null;
+                    string choice = dc.Context.Activity.Text;
+                    string result = string.Empty;
+                    switch (choice)
+                    {
+                        case "1":
+                            result = choices[0];
+                            break;
+                        case "2":
+                            result = choices[1];
+                            break;
+                        default:
+                            await dc.Context.SendActivityAsync("Sorry we could not process your input");
+                            return await dc.EndDialogAsync(new PostProcessedSerialNumOutput("Sorry"), cancellationToken);
+                    }
+
+                    if (snp.PatternLength == result.Length)
+                    {
+                        // End this dialog
+                        await dc.Context.SendActivityAsync($"I got that your serial number is {result}");
+                        return await dc.EndDialogAsync(new PostProcessedSerialNumOutput(result), cancellationToken: cancellationToken);
+                    }
+                    else
+                    {
+                        dc.ActiveDialog.State[AggregationDialogMemory] = result;
+                        await dc.Context.SendActivityAsync("Please continue with the next letter or digit");
+                        return new DialogTurnResult(DialogTurnStatus.Waiting);
+                    }
+                }
             }
 
-            var finalOptionNum = possiblePostProcessedSerialNums.Length + 1;
-            await stepContext.Context.SendActivityAsync("There are " + finalOptionNum + " options to choose from");
-            for (int i = 0; i < possiblePostProcessedSerialNums.Length; i++)
+            // append the message to the aggregation memory state
+            var existingAggregation = dc.ActiveDialog.State.ContainsKey(AggregationDialogMemory) == true ? dc.ActiveDialog.State[AggregationDialogMemory].ToString() : string.Empty;
+            existingAggregation += dc.Context.Activity.Text;
+
+            string[] results = snp.Inference(existingAggregation.ToUpper());
+
+            // Is the current aggregated message the termination string?
+            if (results.Length == 1)
             {
-                var curOptionNum = i + 1;
-                await stepContext.Context.SendActivityAsync("Option " + curOptionNum + " is " + possiblePostProcessedSerialNums[i]);
+                if (snp.PatternLength == results[0].Length)
+                {
+                    // End the dialog
+                    await dc.Context.SendActivityAsync($"I got that your serial number is {results[0]}");
+                    return await dc.EndDialogAsync(new PostProcessedSerialNumOutput(results[0]), cancellationToken: cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    dc.ActiveDialog.State[AggregationDialogMemory] = results[0];
+                    string promptMsg = "Please continue with next letter or digit";
+                    await dc.Context.SendActivityAsync(promptMsg, promptMsg).ConfigureAwait(false);
+                    return new DialogTurnResult(DialogTurnStatus.Waiting);
+                }
             }
-
-            await stepContext.Context.SendActivityAsync("Final Option is " + finalOptionNum + " and it means that none of the above serial number is correct");
-
-            return await stepContext.PromptAsync(DialogIds.SerialNumConfirmationPrompt, new PromptOptions
+            else if (results.Length >= 2)
             {
-                Prompt = MessageFactory.Text("Please tell us the numeric number option by saying the single digit number ranging from 1 to " + finalOptionNum),
-                RetryPrompt = MessageFactory.Text("Please retry")
-            }, cancellationToken);
-        }
-
-        private Task<bool> SerialNumValidation(PromptValidatorContext<int> promptContext, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(true);
-        }
-
-        private async Task<DialogTurnResult> EndAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {
-            // Logic to figure out which serial number the user has chosen
-            var chosenSerialNum = "Sorry we could not correctly process your serial number.";
-            var possibleSerialNums = (string[])stepContext.Values["SerialNums"];
-
-            var userInputOption = (int)stepContext.Result;
-
-            if (possibleSerialNums != null && userInputOption <= possibleSerialNums.Length && userInputOption > 0)
-            {
-                chosenSerialNum = possibleSerialNums[userInputOption - 1];
-            }
-
-            // Simulate a response object payload
-            var actionResponse = new PostProcessedSerialNumOutput
-            {
-                PostProcessedSerialNum = chosenSerialNum
-            };
-
-            if (chosenSerialNum.Contains("Sorry"))
-            {
-                // tell C2 that we weren't able to properly process the serial number
-                await stepContext.Context.SendActivityAsync(chosenSerialNum);
+                dc.ActiveDialog.State["this.ambiguousChoices"] = results;
+                string promptMsg = "Say or type 1 for " + results[0] + " or 2 for " + results[1];
+                await dc.Context.SendActivityAsync(promptMsg, promptMsg).ConfigureAwait(false);
+                return new DialogTurnResult(DialogTurnStatus.Waiting);
             }
             else
             {
-                await stepContext.Context.SendActivityAsync("I got that your serial number is " + chosenSerialNum);
+                // else, save the updated aggregation and end the turn
+                dc.ActiveDialog.State[AggregationDialogMemory] = existingAggregation;
+                string promptMsg = "Please continue with next letter or digit";
+                await dc.Context.SendActivityAsync(promptMsg, promptMsg).ConfigureAwait(false);
+                return new DialogTurnResult(DialogTurnStatus.Waiting);
             }
-
-            // We end the dialog (generating an EndOfConversation event) which will serialize the result object in the Value field of the Activity
-            return await stepContext.EndDialogAsync(actionResponse, cancellationToken);
-        }
-
-        private static string[] TestHPSerialNumber(string? input = null)
-        {
-            var groups = new List<SerialNumberTextGroup>();
-            var g1 = new SerialNumberTextGroup
-            {
-                AcceptsDigits = true,
-                AcceptsAlphabet = true,
-                LengthInChars = 10,
-            };
-            groups.Add(g1);
-
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                return null;
-            }
-
-            var pattern = new SerialNumberPattern(groups.AsReadOnly()); // can also customize the pattern by inputting a string regex
-            var result = pattern.Inference(input);
-
-            if (result == null || result.Length == 0)
-            {
-                return null;
-            }
-
-            return result;
         }
 
         private static class DialogIds
         {
             public const string SerialNumPrompt = "serialNumPrompt";
-            public const string SerialNumConfirmationPrompt = "Choose valid serial numbers";
         }
     }
 }
