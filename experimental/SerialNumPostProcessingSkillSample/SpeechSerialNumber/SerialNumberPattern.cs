@@ -18,7 +18,8 @@ namespace SpeechSerialNumber
         private static readonly Dictionary<string, string> SubstitutionFilePath = new Dictionary<string, string>
         {
             { "en", Path.Combine(".", "substitution-en.json") },
-            { "es", Path.Combine(".", "substitution-es.json") }
+            { "es", Path.Combine(".", "substitution-es.json") },
+            { "fr", Path.Combine(".", "substitution-fr.json") }
         };
 
         private static readonly Dictionary<string, HashSet<char>> AmbiguousTable =
@@ -27,80 +28,6 @@ namespace SpeechSerialNumber
                 { "en", new HashSet<char> { '8' } },
                 { "es", new HashSet<char>() },
                 { "fr", new HashSet<char>() }
-            };
-
-        private static readonly Dictionary<string, Dictionary<char, char>> AlphabetReplacementsTable =
-            new Dictionary<string, Dictionary<char, char>>
-            {
-                { "en", new Dictionary<char, char> { { '8', 'A' } } },
-                { "es", new Dictionary<char, char>() },
-                { "fr", new Dictionary<char, char>() }
-            };
-
-        private static readonly Dictionary<string, Dictionary<string, string>> AlphabetWordReplacementsTable =
-            new Dictionary<string, Dictionary<string, string>>
-            {
-                {
-                    "en", new Dictionary<string, string>
-                    {
-                        { "ARTIE", "RT" },
-                        { "BEE", "B" },
-                        { "BEFORE", "B4" },
-                        { "CUTIE", "QT" },
-                        { "KATIE", "KT" },
-                        { "EMPTY", "MT" }
-                    }
-                },
-                {
-                    "es", new Dictionary<string, string>()
-                    {
-                        { "SE", "C" },
-                        { "EL", "L" },
-                        { "EN", "N" },
-                        { "VOLTIOS", "V" },
-                        { "VATIO", "W" },
-                        { "VATIOS", "W" },
-                        { "SIGLO", "S" },
-                        { "SIGLOS", "S" },
-                        { "ZEROZEROZERO", "000" },
-                        { "CERODOSBÉ", "02B" },
-                    }
-                },
-                {
-                    "fr", new Dictionary<string, string>
-                    {
-                        { "BÉBÉ", "BB" },
-                        { "C'EST", "C" },
-                        { "CÉGEPS", "CG" },
-                        { "CYBER", "6B" },
-                        { "CUL", "Q" },
-                        { "DE", "D" },
-                        { "DES", "D" },
-                        { "DÈS", "D" },
-                        { "DÉCÈS", "DC" },
-                        { "ÈMES", "M" },
-                        { "EN", "N" },
-                        { "ELLE", "L" },
-                        { "J'AI", "G" },
-                        { "HAINE", "N" },
-                        { "PAIX", "P" },
-                        { "SICM", "6CM" },
-                        { "SCÈNE", "CN" },
-                        { "SÉCU", "CQ" },
-                        { "SIERRE", "6R" },
-                        { "SIDÈ", "6D" },
-                        { "SIKA", "6K" },
-                        { "T'ES", "T" },
-                        { "TÊT", "T" },
-                        { "UNE", "N" },
-                        { "VEN", "VN" },
-                        { "VÉCU", "VQ" },
-                        { "VAIS", "V" },
-                        { "WATT", "W" },
-                        { "WATTS", "W" },
-                        { "WHATSAPPS", "WP" },
-                    }
-                }
             };
 
         private static readonly Dictionary<string, Dictionary<char, char>> DigitReplacementsTable =
@@ -397,18 +324,7 @@ namespace SpeechSerialNumber
                 return FixupType.AsIn;
             }
 
-            string firstToken = restOfInput.Split(' ').FirstOrDefault().Trim(TrimChars);
-            if (!string.IsNullOrWhiteSpace(firstToken))
-            {
-                string token = firstToken;
-                if (AlphabetWordReplacementsTable[Language].ContainsKey(token))
-                {
-                    return FixupType.AlphaMapping;
-                }
-            }
-
-            // Find direct letter mapping
-            return AlphabetReplacementsTable[Language].ContainsKey(ch) ? FixupType.AlphaMapping : FixupType.None;
+            return FixupType.None;
         }
 
         public string AlphabetFixup(int inputIndex, ref int offset)
@@ -420,8 +336,6 @@ namespace SpeechSerialNumber
             {
                 case FixupType.None:
                     return ch.ToString();
-                case FixupType.AlphaMapping:
-                    return GetAlphabetReplacement(ch, restOfInput, ref offset);
                 case FixupType.AsIn:
                     AsInResult asInResult;
                     asInResult = FindAsInFixup(restOfInput);
@@ -439,6 +353,13 @@ namespace SpeechSerialNumber
 
         public string TryCustomSubstitutionFixup(string inputString, int inputIndex, ref int newOffset)
         {
+            // 8 -> A case
+            if (SubstitutionMapping[Language].TryGetValue(inputString[inputIndex].ToString(), out string replacement))
+            {
+                newOffset = replacement.Length;
+                return replacement;
+            }
+
             // Assuming that we have already checked that SubstitutionMapping consists of the substring
             string restOfInput = inputString.Substring(inputIndex);
             string firstToken = restOfInput.Split(' ').FirstOrDefault();
@@ -451,6 +372,12 @@ namespace SpeechSerialNumber
         {
             if (SubstitutionMapping.ContainsKey(Language))
             {
+                // 8 -> A
+                if (SubstitutionMapping[Language].ContainsKey(inputString[inputIndex].ToString()))
+                {
+                    return FixupType.Custom;
+                }
+
                 // DENIED -> D9
                 string restOfInput = inputString.Substring(inputIndex);
                 string firstToken = restOfInput.Split(' ').FirstOrDefault();
@@ -563,28 +490,6 @@ namespace SpeechSerialNumber
             }
 
             return results.ToArray();
-        }
-
-        private string GetAlphabetReplacement(char ch, string restOfInput, ref int offset)
-        {
-            if (AlphabetReplacementsTable.ContainsKey(Language) &&
-                AlphabetReplacementsTable[Language].ContainsKey(ch))
-            {
-                return AlphabetReplacementsTable[Language][ch].ToString();
-            }
-
-            string firstToken = restOfInput.Split(' ').FirstOrDefault().Trim(TrimChars);
-            if (!string.IsNullOrWhiteSpace(firstToken))
-            {
-                if (AlphabetWordReplacementsTable.ContainsKey(Language) &&
-                    AlphabetWordReplacementsTable[Language].ContainsKey(firstToken))
-                {
-                    offset = firstToken.Length;
-                    return AlphabetWordReplacementsTable[Language][firstToken];
-                }
-            }
-
-            return ch.ToString();
         }
 
         private AmbiguousResult CheckAmbiguous(ref int inputIndex)
