@@ -1,0 +1,124 @@
+{
+  "substitutions": [
+    {
+      "substring": "BÉBÉ",
+      "replacement": "BB"
+    },
+    {
+      "substring": "C'EST",
+      "replacement": "C"
+    },
+    {
+      "substring": "CÉGEPS",
+      "replacement": "CG"
+    },
+    {
+      "substring": "CYBER",
+      "replacement": "6B"
+    },
+    {
+      "substring": "CUL",
+      "replacement": "Q"
+    },
+    {
+      "substring": "DE",
+      "replacement": "D"
+    },
+    {
+      "substring": "DES",
+      "replacement": "D"
+    },
+    {
+      "substring": "DÈS",
+      "replacement": "D"
+    },
+    {
+      "substring": "DÉCÈS",
+      "replacement": "DC"
+    },
+    {
+      "substring": "ÈMES",
+      "replacement": "M"
+    },
+    {
+      "substring": "EN",
+      "replacement": "N"
+    },
+    {
+      "substring": "ELLE",
+      "replacement": "L"
+    },
+    {
+      "substring": "J'AI",
+      "replacement": "G"
+    },
+    {
+      "substring": "HAINE",
+      "replacement": "N"
+    },
+    {
+      "substring": "PAIX",
+      "replacement": "P"
+    },
+    {
+      "substring": "SICM",
+      "replacement": "6CM"
+    },
+    {
+      "substring": "SCÈNE",
+      "replacement": "CN"
+    },
+    {
+      "substring": "SÉCU",
+      "replacement": "CQ"
+    },
+    {
+      "substring": "SIERRE",
+      "replacement": "6R"
+    },
+    {
+      "substring": "SIDÈ",
+      "replacement": "6D"
+    },
+    {
+      "substring": "SIKA",
+      "replacement": "6K"
+    },
+    {
+      "substring": "T'ES",
+      "replacement": "T"
+    },
+    {
+      "substring": "TÊT",
+      "replacement": "T"
+    },
+    {
+      "substring": "UNE",
+      "replacement": "N"
+    },
+    {
+      "substring": "VEN",
+      "replacement": "VN"
+    },
+    {
+      "substring": "VÉCU",
+      "replacement": "VQ"
+    },
+    {
+      "substring": "VAIS",
+      "replacement": "V"
+    },
+    {
+      "substring": "WATT",
+      "replacement": "W"
+    },
+    {
+      "substring": "WATTS",
+      "replacement": "W"
+    },
+    {
+      "substring": "WHATSAPPS",
+      "replacement": "WP"
+    }
+  ]
+}

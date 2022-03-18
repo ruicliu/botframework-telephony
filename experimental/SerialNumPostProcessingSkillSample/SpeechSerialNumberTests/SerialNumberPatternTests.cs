@@ -13,25 +13,61 @@ namespace SpeechSerialNumberTests
     public class SerialNumberPatternTests
     {
         private static readonly string SubstitutionEnglishFilePath = Path.Combine(".", "substitution-en.json");
+        private static readonly string SubstitutionSpanishFilePath = Path.Combine(".", "substitution-es.json");
+        private static readonly string SubstitutionFrenchFilePath = Path.Combine(".", "substitution-fr.json");
 
         [TestInitialize]
-        public void CreateEnglishSubstitutionFile()
+        public void CreateSubstitutionFiles()
         {
-            Substitution[] substitutions = { new Substitution("DENIED", "D9"), new Substitution("SEE", "C") };
-            Dictionary<string, Substitution[]> substitutionsJsonKVP = new Dictionary<string, Substitution[]>();
-            substitutionsJsonKVP.Add("substitutions", substitutions);
+            // English
+            Substitution[] substitutionsForEn = { new Substitution("DENIED", "D9"), new Substitution("SEE", "C"),
+                new Substitution("8", "A"), new Substitution("KATIE", "KT") };
+            Dictionary<string, Substitution[]> substitutionsEnJsonKVP = new Dictionary<string, Substitution[]>
+            {
+                { "substitutions", substitutionsForEn }
+            };
 
             using (StreamWriter fs = File.CreateText(SubstitutionEnglishFilePath))
             {
                 JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(fs, substitutionsJsonKVP);
+                serializer.Serialize(fs, substitutionsEnJsonKVP);
+            }
+
+            // Spanish
+            Substitution[] substitutionsForEs = { new Substitution("SE", "C"), new Substitution("EL", "L"),
+                new Substitution("EN", "N"), new Substitution("SIGLOS", "S") };
+            Dictionary<string, Substitution[]> substitutionsEsJsonKVP = new Dictionary<string, Substitution[]>
+            {
+                { "substitutions", substitutionsForEs }
+            };
+
+            using (StreamWriter fs = File.CreateText(SubstitutionSpanishFilePath))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(fs, substitutionsEsJsonKVP);
+            }
+
+            // French
+            Substitution[] substitutionsForFr = { new Substitution("UNE", "N"), new Substitution("WATT", "W"),
+                new Substitution("WATTS", "W"), new Substitution("SÉCU", "CQ") };
+            Dictionary<string, Substitution[]> substitutionsFrJsonKVP = new Dictionary<string, Substitution[]>
+            {
+                { "substitutions", substitutionsForFr }
+            };
+
+            using (StreamWriter fs = File.CreateText(SubstitutionFrenchFilePath))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(fs, substitutionsFrJsonKVP);
             }
         }
 
         [TestCleanup]
-        public void DeleteEnglishSubstitutionFile()
+        public void DeleteSubstitutionFile()
         {
-            this.DeleteSubstitutionFileForEnglish();
+            this.DeleteEnglishSubstitutionFile();
+            this.DeleteSpanishSubstitutionFile();
+            this.DeleteFrenchSubstitutionFile();
         }
 
         [TestMethod]
@@ -185,7 +221,7 @@ namespace SpeechSerialNumberTests
         [TestMethod]
         public void HPSerialNumberTestWithoutCustomSubstitutionFile()
         {
-            this.DeleteSubstitutionFileForEnglish();
+            this.DeleteEnglishSubstitutionFile();
 
             var groups = new List<SerialNumberTextGroup>();
             var g1 = new SerialNumberTextGroup
@@ -304,11 +340,27 @@ namespace SpeechSerialNumberTests
             Assert.AreEqual(result[0], "1D9A456C1D");
         }
 
-        private void DeleteSubstitutionFileForEnglish()
+        private void DeleteEnglishSubstitutionFile()
         {
             if (File.Exists(SubstitutionEnglishFilePath))
             {
                 File.Delete(SubstitutionEnglishFilePath);
+            }
+        }
+
+        private void DeleteSpanishSubstitutionFile()
+        {
+            if (File.Exists(SubstitutionSpanishFilePath))
+            {
+                File.Delete(SubstitutionSpanishFilePath);
+            }
+        }
+
+        private void DeleteFrenchSubstitutionFile()
+        {
+            if (File.Exists(SubstitutionFrenchFilePath))
+            {
+                File.Delete(SubstitutionFrenchFilePath);
             }
         }
     }
