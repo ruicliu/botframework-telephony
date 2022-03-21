@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpeechSerialNumber\SpeechAlphanumericPostProcessing.csproj" />
+    <ProjectReference Include="..\SpeechAlphanumericPostProcessing\SpeechAlphanumericPostProcessing.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
