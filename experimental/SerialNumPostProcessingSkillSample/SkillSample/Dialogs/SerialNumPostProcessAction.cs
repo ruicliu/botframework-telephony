@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Newtonsoft.Json;
-using SpeechSerialNumber;
+using SpeechAlphanumericPostProcessing;
 
 namespace SkillSample.Dialogs
 {
@@ -27,16 +27,16 @@ namespace SkillSample.Dialogs
     {
         protected const string AggregationDialogMemory = "aggregation";
 
-        private SerialNumberTextGroup g1 = new SerialNumberTextGroup
+        private AlphaNumericTextGroup g1 = new AlphaNumericTextGroup
         {
             AcceptsDigits = true,
             AcceptsAlphabet = true,
             LengthInChars = 10,
         };
 
-        private List<SerialNumberTextGroup> groups = new List<SerialNumberTextGroup>();
+        private List<AlphaNumericTextGroup> groups = new List<AlphaNumericTextGroup>();
 
-        private SerialNumberPattern snp;
+        private AlphaNumericSequencePostProcessor snp;
 
         public SerialNumPostProcessAction(
             IServiceProvider serviceProvider)
@@ -52,7 +52,7 @@ namespace SkillSample.Dialogs
 
             InitialDialogId = nameof(SerialNumPostProcessAction);
             groups.Add(g1);
-            snp = new SerialNumberPattern(groups.AsReadOnly(), true);
+            snp = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), true);
         }
 
         public async Task<DialogTurnResult> PromptForSerialNumAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)

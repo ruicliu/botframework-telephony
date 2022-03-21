@@ -13,12 +13,12 @@ using Microsoft.Bot.Builder.Dialogs.Adaptive;
 using Microsoft.Bot.Builder.Dialogs.Adaptive.Templates;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
-using SpeechSerialNumber;
+using SpeechAlphanumericPostProcessing;
 
 namespace Microsoft.Bot.Components.Telephony.Actions
 {
     /// <summary>
-    /// Aggregates input until it matches a SerialNumberPattern and then stores the result in an output property.
+    /// Aggregates input until it matches a AlphaNumericSequencePostProcessor and then stores the result in an output property.
     /// </summary>
     public class SerialNumberInput : Dialog
     {
@@ -122,7 +122,7 @@ namespace Microsoft.Bot.Components.Telephony.Actions
 
             // Get value of termination string from expression
             string regexPattern = this.RegexPattern?.GetValue(dc.State);
-            SerialNumberPattern snp = new SerialNumberPattern(regexPattern, true);
+            AlphaNumericSequencePostProcessor snp = new AlphaNumericSequencePostProcessor(regexPattern, true);
 
             string[] choices = dc.State.GetValue<string[]>("this.ambiguousChoices");
             bool isAmbiguousPrompt = choices != null && choices.Length >= 2;
