@@ -21,6 +21,10 @@
       "replacement": "W"
     },
     {
+      "substring": "VATIOS",
+      "replacement": "W"
+    },
+    {
       "substring": "SIGLO",
       "replacement": "S"
     },
@@ -33,7 +37,7 @@
       "replacement": "000"
     },
     {
-      "substring": "CERODOSBE",
+      "substring": "CERODOSBÉ",
       "replacement": "02B"
     }
   ]
