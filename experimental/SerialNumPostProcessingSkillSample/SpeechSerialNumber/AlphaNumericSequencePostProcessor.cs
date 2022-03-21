@@ -10,9 +10,9 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace SpeechSerialNumber
+namespace SpeechAlphanumericPostProcessing
 {
-    public class SerialNumberPattern
+    public class AlphaNumericSequencePostProcessor
     {
         private static readonly char[] GroupEndDelimiter = new char[] { ')' };
         private static readonly Dictionary<string, string> SubstitutionFilePath = new Dictionary<string, string>
@@ -97,12 +97,12 @@ namespace SpeechSerialNumber
         private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, string>> SubstitutionMapping =
             new ConcurrentDictionary<string, ConcurrentDictionary<string, string>>();
 
-        public SerialNumberPattern(IReadOnlyCollection<SerialNumberTextGroup> textGroups, bool allowBatching = false, string language = "en")
+        public AlphaNumericSequencePostProcessor(IReadOnlyCollection<AlphaNumericTextGroup> textGroups, bool allowBatching = false, string language = "en")
         {
             AllowBatching = allowBatching;
             Groups = textGroups;
 
-            foreach (SerialNumberTextGroup group in Groups)
+            foreach (AlphaNumericTextGroup group in Groups)
             {
                 PatternLength += group.LengthInChars;
             }
@@ -112,15 +112,15 @@ namespace SpeechSerialNumber
             TryParseCustomSubstitutionsFromFile(language);
         }
 
-        public SerialNumberPattern(string regex, bool allowBatching = false, string language = "en")
+        public AlphaNumericSequencePostProcessor(string regex, bool allowBatching = false, string language = "en")
         {
             AllowBatching = allowBatching;
-            List<SerialNumberTextGroup> groups = new List<SerialNumberTextGroup>();
+            List<AlphaNumericTextGroup> groups = new List<AlphaNumericTextGroup>();
             string[] regexGroups = regex.Split(GroupEndDelimiter, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string regexGroup in regexGroups)
             {
-                SerialNumberTextGroup group = new SerialNumberTextGroup($"{regexGroup})");
+                AlphaNumericTextGroup group = new AlphaNumericTextGroup($"{regexGroup})");
                 PatternLength += group.LengthInChars;
                 groups.Add(group);
             }
@@ -193,7 +193,7 @@ namespace SpeechSerialNumber
             get
             {
                 string result = string.Empty;
-                foreach (SerialNumberTextGroup group in Groups)
+                foreach (AlphaNumericTextGroup group in Groups)
                 {
                     result += group.RegexString;
                 }
@@ -204,7 +204,7 @@ namespace SpeechSerialNumber
 
         public string Language { get; set; } = "en";
 
-        public IReadOnlyCollection<SerialNumberTextGroup> Groups { get; set; }
+        public IReadOnlyCollection<AlphaNumericTextGroup> Groups { get; set; }
 
         public int PatternLength { get; set; }
 
@@ -216,7 +216,7 @@ namespace SpeechSerialNumber
         {
             int cumulativeIndex = 0;
             int prevGroupCumulative = 0;
-            foreach (SerialNumberTextGroup group in Groups)
+            foreach (AlphaNumericTextGroup group in Groups)
             {
                 cumulativeIndex += group.LengthInChars;
                 if (cumulativeIndex > patternIndex)
