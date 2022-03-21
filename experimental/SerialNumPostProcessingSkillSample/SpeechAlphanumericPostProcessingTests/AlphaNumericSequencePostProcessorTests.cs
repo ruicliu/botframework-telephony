@@ -5,40 +5,76 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using SpeechSerialNumber;
+using SpeechAlphanumericPostProcessing;
 
-namespace SpeechSerialNumberTests
+namespace SpeechAlphanumericPostProcessingTests
 {
     [TestClass]
-    public class SerialNumberPatternTests
+    public class AlphaNumericSequencePostProcessorTests
     {
         private static readonly string SubstitutionEnglishFilePath = Path.Combine(".", "substitution-en.json");
+        private static readonly string SubstitutionSpanishFilePath = Path.Combine(".", "substitution-es.json");
+        private static readonly string SubstitutionFrenchFilePath = Path.Combine(".", "substitution-fr.json");
 
         [TestInitialize]
-        public void CreateEnglishSubstitutionFile()
+        public void CreateSubstitutionFiles()
         {
-            Substitution[] substitutions = { new Substitution("DENIED", "D9"), new Substitution("SEE", "C") };
-            Dictionary<string, Substitution[]> substitutionsJsonKVP = new Dictionary<string, Substitution[]>();
-            substitutionsJsonKVP.Add("substitutions", substitutions);
+            // English
+            Substitution[] substitutionsForEn = { new Substitution("DENIED", "D9"), new Substitution("SEE", "C"),
+                new Substitution("8", "A"), new Substitution("KATIE", "KT") };
+            Dictionary<string, Substitution[]> substitutionsEnJsonKVP = new Dictionary<string, Substitution[]>
+            {
+                { "substitutions", substitutionsForEn }
+            };
 
             using (StreamWriter fs = File.CreateText(SubstitutionEnglishFilePath))
             {
                 JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(fs, substitutionsJsonKVP);
+                serializer.Serialize(fs, substitutionsEnJsonKVP);
+            }
+
+            // Spanish
+            Substitution[] substitutionsForEs = { new Substitution("SE", "C"), new Substitution("EL", "L"),
+                new Substitution("EN", "N"), new Substitution("SIGLOS", "S") };
+            Dictionary<string, Substitution[]> substitutionsEsJsonKVP = new Dictionary<string, Substitution[]>
+            {
+                { "substitutions", substitutionsForEs }
+            };
+
+            using (StreamWriter fs = File.CreateText(SubstitutionSpanishFilePath))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(fs, substitutionsEsJsonKVP);
+            }
+
+            // French
+            Substitution[] substitutionsForFr = { new Substitution("UNE", "N"), new Substitution("WATT", "W"),
+                new Substitution("WATTS", "W"), new Substitution("SÉCU", "CQ") };
+            Dictionary<string, Substitution[]> substitutionsFrJsonKVP = new Dictionary<string, Substitution[]>
+            {
+                { "substitutions", substitutionsForFr }
+            };
+
+            using (StreamWriter fs = File.CreateText(SubstitutionFrenchFilePath))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(fs, substitutionsFrJsonKVP);
             }
         }
 
         [TestCleanup]
-        public void DeleteEnglishSubstitutionFile()
+        public void DeleteSubstitutionFile()
         {
-            this.DeleteSubstitutionFileForEnglish();
+            this.DeleteEnglishSubstitutionFile();
+            this.DeleteSpanishSubstitutionFile();
+            this.DeleteFrenchSubstitutionFile();
         }
 
         [TestMethod]
         public void MilitaryCodeTest()
         {
-            var groups = new List<SerialNumberTextGroup>();
-            var g1 = new SerialNumberTextGroup
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
             {
                 AcceptsDigits = false,
                 AcceptsAlphabet = true,
@@ -47,7 +83,7 @@ namespace SpeechSerialNumberTests
             groups.Add(g1);
 
             var input = "ABC, as in Charlie Z as in Zeta.";
-            var pattern = new SerialNumberPattern(groups.AsReadOnly());
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
             var result = pattern.Inference(input);
             Assert.AreEqual("ABCZ", result[0]);
 
@@ -70,8 +106,8 @@ namespace SpeechSerialNumberTests
         [TestMethod]
         public void ReplacementAndInvalidTest()
         {
-            var groups = new List<SerialNumberTextGroup>();
-            var g1 = new SerialNumberTextGroup
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
             {
                 AcceptsDigits = false,
                 AcceptsAlphabet = true,
@@ -79,7 +115,7 @@ namespace SpeechSerialNumberTests
             };
             groups.Add(g1);
 
-            var g2 = new SerialNumberTextGroup
+            var g2 = new AlphaNumericTextGroup
             {
                 AcceptsAlphabet = true,
                 AcceptsDigits = true,
@@ -88,7 +124,7 @@ namespace SpeechSerialNumberTests
             groups.Add(g2);
 
             // 8 replaced as A
-            var pattern = new SerialNumberPattern(groups.AsReadOnly());
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
             var result = pattern.Inference("8E1LO98");
             Assert.IsTrue(result.Length == 2);
 
@@ -100,7 +136,7 @@ namespace SpeechSerialNumberTests
         [TestMethod]
         public void IntializeWithRegexTest()
         {
-            var pattern = new SerialNumberPattern("([a-zA-Z]{2})([0-9a-zA-Z][^125AEIOULNSZ]{5})");
+            var pattern = new AlphaNumericSequencePostProcessor("([a-zA-Z]{2})([0-9a-zA-Z][^125AEIOULNSZ]{5})");
             var result = pattern.Inference("8E1B098");
 
             // The last character could be 8 or A
@@ -116,8 +152,8 @@ namespace SpeechSerialNumberTests
         [TestMethod]
         public void HPSerialNumberTest()
         {
-            var groups = new List<SerialNumberTextGroup>();
-            var g1 = new SerialNumberTextGroup
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
             {
                 AcceptsDigits = true,
                 AcceptsAlphabet = true,
@@ -125,7 +161,7 @@ namespace SpeechSerialNumberTests
             };
             groups.Add(g1);
 
-            var pattern = new SerialNumberPattern(groups.AsReadOnly());
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
             var result = pattern.Inference("A as in Apple 123456789");
             Assert.IsTrue(result.Length == 2);
             Assert.AreEqual(result[0], "A1234567A9");
@@ -139,8 +175,8 @@ namespace SpeechSerialNumberTests
         [TestMethod]
         public void BatchingTest()
         {
-            var groups = new List<SerialNumberTextGroup>();
-            var g1 = new SerialNumberTextGroup
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
             {
                 AcceptsDigits = true,
                 AcceptsAlphabet = true,
@@ -150,7 +186,7 @@ namespace SpeechSerialNumberTests
 
             // Inference should return result even if length is less than pattern length
             // when batching is set to true
-            var pattern = new SerialNumberPattern(groups.AsReadOnly(), true);
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), true);
             var result = pattern.Inference("A as in");
             Assert.IsTrue(result.Length == 1);
             Assert.AreEqual(result[0], "A as in");
@@ -163,8 +199,8 @@ namespace SpeechSerialNumberTests
         [TestMethod]
         public void HPSerialNumberTest_fr()
         {
-            var groups = new List<SerialNumberTextGroup>();
-            var g1 = new SerialNumberTextGroup
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
             {
                 AcceptsDigits = true,
                 AcceptsAlphabet = true,
@@ -172,7 +208,7 @@ namespace SpeechSerialNumberTests
             };
             groups.Add(g1);
 
-            var pattern = new SerialNumberPattern(groups.AsReadOnly(), false, "fr");
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "fr");
             var result = pattern.Inference("UN CR 14 1 L 8 C UN.");
             Assert.AreEqual(result.Length, 1);
             Assert.AreEqual(result[0], "1CR141L8C1");
@@ -185,10 +221,10 @@ namespace SpeechSerialNumberTests
         [TestMethod]
         public void HPSerialNumberTestWithoutCustomSubstitutionFile()
         {
-            this.DeleteSubstitutionFileForEnglish();
+            this.DeleteEnglishSubstitutionFile();
 
-            var groups = new List<SerialNumberTextGroup>();
-            var g1 = new SerialNumberTextGroup
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
             {
                 AcceptsDigits = true,
                 AcceptsAlphabet = true,
@@ -196,7 +232,7 @@ namespace SpeechSerialNumberTests
             };
             groups.Add(g1);
 
-            var pattern = new SerialNumberPattern(groups.AsReadOnly());
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
             var result = pattern.Inference("A as in Apple 123456789");
             Assert.IsTrue(result.Length == 2);
             Assert.AreEqual(result[0], "A1234567A9");
@@ -210,8 +246,8 @@ namespace SpeechSerialNumberTests
         [TestMethod]
         public void EnglishCustomSubstitutionWithDigitWordReplacement()
         {
-            var groups = new List<SerialNumberTextGroup>();
-            var g1 = new SerialNumberTextGroup
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
             {
                 AcceptsDigits = true,
                 AcceptsAlphabet = true,
@@ -219,7 +255,7 @@ namespace SpeechSerialNumberTests
             };
             groups.Add(g1);
 
-            var pattern = new SerialNumberPattern(groups.AsReadOnly());
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
 
             var result = pattern.Inference("ONE DENIED ONE 4 FIVE 6 SEE 1 SEE");
             Assert.IsTrue(result.Length == 1);
@@ -229,8 +265,8 @@ namespace SpeechSerialNumberTests
         [TestMethod]
         public void EnglishCustomSubstitutionWithMilitaryCode()
         {
-            var groups = new List<SerialNumberTextGroup>();
-            var g1 = new SerialNumberTextGroup
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
             {
                 AcceptsDigits = true,
                 AcceptsAlphabet = true,
@@ -238,7 +274,7 @@ namespace SpeechSerialNumberTests
             };
             groups.Add(g1);
 
-            var pattern = new SerialNumberPattern(groups.AsReadOnly());
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
 
             var result = pattern.Inference("ONE DENIED A AS IN APPLE 4 FIVE 6 SEE 1 SEE");
             Assert.IsTrue(result.Length == 1);
@@ -248,8 +284,8 @@ namespace SpeechSerialNumberTests
         [TestMethod]
         public void EnglishCustomSubstitutionWitAmbiguousInput()
         {
-            var groups = new List<SerialNumberTextGroup>();
-            var g1 = new SerialNumberTextGroup
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
             {
                 AcceptsDigits = true,
                 AcceptsAlphabet = true,
@@ -257,7 +293,7 @@ namespace SpeechSerialNumberTests
             };
             groups.Add(g1);
 
-            var pattern = new SerialNumberPattern(groups.AsReadOnly());
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
 
             var result = pattern.Inference("ONE DENIED A 4 FIVE 8 SEE 1 SEE"); // 8 is ambiguous input
             Assert.IsTrue(result.Length == 2);
@@ -268,8 +304,8 @@ namespace SpeechSerialNumberTests
         [TestMethod]
         public void EnglishCustomSubstitutionWithAlphabetWordMapping()
         {
-            var groups = new List<SerialNumberTextGroup>();
-            var g1 = new SerialNumberTextGroup
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
             {
                 AcceptsDigits = true,
                 AcceptsAlphabet = true,
@@ -277,7 +313,7 @@ namespace SpeechSerialNumberTests
             };
             groups.Add(g1);
 
-            var pattern = new SerialNumberPattern(groups.AsReadOnly());
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
 
             var result = pattern.Inference("ONE DENIED KATIE FIVE 8 SEE 1 SEE"); // 8 is ambiguous input
             Assert.IsTrue(result.Length == 2);
@@ -288,8 +324,8 @@ namespace SpeechSerialNumberTests
         [TestMethod]
         public void PostProcessedOutputShouldBeTruncatedToPatternLength()
         {
-            var groups = new List<SerialNumberTextGroup>();
-            var g1 = new SerialNumberTextGroup
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
             {
                 AcceptsDigits = true,
                 AcceptsAlphabet = true,
@@ -297,18 +333,34 @@ namespace SpeechSerialNumberTests
             };
             groups.Add(g1);
 
-            var pattern = new SerialNumberPattern(groups.AsReadOnly());
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
 
             var result = pattern.Inference("ONE DENIED A 4 FIVE 6 SEE 1 DENIED"); // 9 at the end should be truncated
             Assert.IsTrue(result.Length == 1);
             Assert.AreEqual(result[0], "1D9A456C1D");
         }
 
-        private void DeleteSubstitutionFileForEnglish()
+        private void DeleteEnglishSubstitutionFile()
         {
             if (File.Exists(SubstitutionEnglishFilePath))
             {
                 File.Delete(SubstitutionEnglishFilePath);
+            }
+        }
+
+        private void DeleteSpanishSubstitutionFile()
+        {
+            if (File.Exists(SubstitutionSpanishFilePath))
+            {
+                File.Delete(SubstitutionSpanishFilePath);
+            }
+        }
+
+        private void DeleteFrenchSubstitutionFile()
+        {
+            if (File.Exists(SubstitutionFrenchFilePath))
+            {
+                File.Delete(SubstitutionFrenchFilePath);
             }
         }
     }

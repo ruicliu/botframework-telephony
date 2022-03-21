@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpeechSerialNumber\SpeechSerialNumber.csproj" />
+    <ProjectReference Include="..\SpeechAlphanumericPostProcessing\SpeechAlphanumericPostProcessing.csproj" />
   </ItemGroup>
 
 </Project>

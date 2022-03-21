@@ -5,9 +5,9 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkillSample", "SkillSample\SkillSample.csproj", "{2AD96F61-B9BA-4DB5-9BA5-5A11D5C56C12}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeechSerialNumber", "SpeechSerialNumber\SpeechSerialNumber.csproj", "{5DF719D2-33EB-4632-9C8A-BE2E3EA8D4A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeechAlphanumericPostProcessing", "SpeechAlphanumericPostProcessing\SpeechAlphanumericPostProcessing.csproj", "{5DF719D2-33EB-4632-9C8A-BE2E3EA8D4A5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeechSerialNumberTests", "SpeechSerialNumberTests\SpeechSerialNumberTests.csproj", "{B7B93D09-17C8-4968-BDDF-7D47A97205C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeechAlphanumericPostProcessingTests", "SpeechAlphanumericPostProcessingTests\SpeechAlphanumericPostProcessingTests.csproj", "{B7B93D09-17C8-4968-BDDF-7D47A97205C8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Bot.Components.SerialNumberTelephony", "SerialNumberTelephony\Microsoft.Bot.Components.SerialNumberTelephony.csproj", "{E83FC67D-6A02-49F6-9DFA-F5120F6AC25D}"
 EndProject

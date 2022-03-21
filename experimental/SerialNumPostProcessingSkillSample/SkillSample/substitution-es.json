@@ -1,0 +1,44 @@
+{
+  "substitutions": [
+    {
+      "substring": "SE",
+      "replacement": "C"
+    },
+    {
+      "substring": "EL",
+      "replacement": "L"
+    },
+    {
+      "substring": "EN",
+      "replacement": "N"
+    },
+    {
+      "substring": "VOLTIOS",
+      "replacement": "V"
+    },
+    {
+      "substring": "VATIO",
+      "replacement": "W"
+    },
+    {
+      "substring": "VATIOS",
+      "replacement": "W"
+    },
+    {
+      "substring": "SIGLO",
+      "replacement": "S"
+    },
+    {
+      "substring": "SIGLOS",
+      "replacement": "S"
+    },
+    {
+      "substring": "ZEROZEROZERO",
+      "replacement": "000"
+    },
+    {
+      "substring": "CERODOSBÉ",
+      "replacement": "02B"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using Newtonsoft.Json;
 
-namespace SpeechSerialNumber
+namespace SpeechAlphanumericPostProcessing
 {
     [JsonObject]
     public class Substitution
