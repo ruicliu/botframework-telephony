@@ -10,12 +10,12 @@ Prompting end users for serial numbers via speech enabled bots has proven to be 
 Speech server team is aware of these issues and are planning a set of features to address the issues, 
 among them are custom display post processing and prebuilt types. However these features will not be available until later this year.
 
-SerialNumberInput and SerialNumberPattern are created to address most of the speech-to-text translation issues from 
+SerialNumberInput and AlphaNumericSequencePostProcessor are created to address most of the speech-to-text translation issues from 
 specifying serial numbers.  
 
 ## SerialNumberInput
 SerialNumberInput is a Dialog class for prompting serial number inputs.  
-It aggregates input until it matches a [SerialNumberPattern](#serialnumberpattern) and then stores the result in an output property.
+It aggregates input until input after post processing matches with the RegexPattern and then stores the result in an output property.
 
 Notable Parameters:
 - RegexPattern: serial number pattern
@@ -48,14 +48,14 @@ In the following example, a serial number is valid when it has alphanumeric char
 
 
 
-## SerialNumberPattern
+## AlphaNumericSequencePostProcessor
 
-SerialNumberPattern class is initialized with a list of text groups or a simplified regex expression which represents the text groups.
+AlphaNumericSequencePostProcessor class is initialized with a list of text groups or a simplified regex expression which represents the text groups.
 A text group represents a fixed length set of letters or numbers.  The more specific the definition of each text group, the more accurate the result of the post processing. 
 In a group of alphabet only set, '8' could be auto corrected to 'A'.  
 If one or more results are returned, there are ambiguous choices and user should be prompted to confirm the right sequence.
 
-SerialNumberPattern class supports inputting letters with military code, ie "A as in Alpha", "B as in Beta", etc.  User could use any word after the "as in" phrase.
+AlphaNumericSequencePostProcessor class supports inputting letters with military code, ie "A as in Alpha", "B as in Beta", etc.  User could use any word after the "as in" phrase.
 
 Sample usage:
 
@@ -80,7 +80,7 @@ Sample usage:
     
     // Test the pattern with valid input with military code
     var input = "ABC, as in Charlie Z as in Zeta.";
-    var pattern = new SerialNumberPattern(groups.AsReadOnly());
+    var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
     var result = pattern.Inference(input);
     
     // result[0] should be "ABCZ"

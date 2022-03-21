@@ -1,0 +1,52 @@
+{
+  "substitutions": [
+    {
+      "substring": "DENIED",
+      "replacement": "D9"
+    },
+    {
+      "substring": "DENY",
+      "replacement": "D9"
+    },
+    {
+      "substring": "SEE",
+      "replacement": "C"
+    },
+    {
+      "substring": "SEA",
+      "replacement": "C"
+    },
+    {
+      "substring": "SEEN",
+      "replacement": "CN"
+    },
+    {
+      "substring": "8",
+      "replacement": "A"
+    },
+    {
+      "substring": "ARTIE",
+      "replacement": "RT"
+    },
+    {
+      "substring": "BEE",
+      "replacement": "B"
+    },
+    {
+      "substring": "BEFORE",
+      "replacement": "B4"
+    },
+    {
+      "substring": "CUTIE",
+      "replacement": "QT"
+    },
+    {
+      "substring": "KATIE",
+      "replacement": "KT"
+    },
+    {
+      "substring": "EMPTY",
+      "replacement": "MT"
+    }
+  ]
+}

@@ -6,15 +6,15 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace SpeechSerialNumber
+namespace SpeechAlphanumericPostProcessing
 {
-    public class SerialNumberTextGroup
+    public class AlphaNumericTextGroup
     {
-        public SerialNumberTextGroup()
+        public AlphaNumericTextGroup()
         {
         }
 
-        public SerialNumberTextGroup(string regex)
+        public AlphaNumericTextGroup(string regex)
         {
             if ((regex.IndexOf('(') < 0) || (regex.IndexOf('(') < 0) ||
                 (regex.IndexOf('[') < 0) || (regex.IndexOf(']') < 0) ||
