@@ -22,7 +22,8 @@
     },
     {
       "substring": "8",
-      "replacement": "A"
+      "replacement": "A",
+      "isAmbiguous" :  true
     },
     {
       "substring": "ARTIE",

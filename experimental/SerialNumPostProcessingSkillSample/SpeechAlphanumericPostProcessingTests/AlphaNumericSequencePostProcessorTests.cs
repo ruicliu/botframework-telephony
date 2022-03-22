@@ -23,7 +23,7 @@ namespace SpeechAlphanumericPostProcessingTests
             Substitution[] substitutionsForEn = {
                 new Substitution("DENIED", "D9"),
                 new Substitution("SEE", "C"),
-                new Substitution("8", "A"),
+                new Substitution("8", "A", true),
                 new Substitution("KATIE", "KT"),
                 new Substitution("BEE", "B"),
                 new Substitution("BEFORE", "B4"),

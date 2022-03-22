@@ -7,16 +7,20 @@ namespace SpeechAlphanumericPostProcessing
     [JsonObject]
     public class Substitution
     {
-        [JsonProperty("substring")]
+        [JsonProperty("substring", Required = Required.Always)]
         public string Substring { get; } = string.Empty;
 
-        [JsonProperty("replacement")]
+        [JsonProperty("replacement", Required = Required.Always)]
         public string Replacement { get; } = string.Empty;
 
-        public Substitution(string substring, string replacement)
+        [JsonProperty("isAmbiguous", Required = Required.Default)]
+        public bool IsAmbiguous { get; } = false;
+
+        public Substitution(string substring, string replacement, bool isAmbiguous = false)
         {
             this.Substring = substring;
             this.Replacement = replacement;
+            this.IsAmbiguous = isAmbiguous;
         }
     }
 }

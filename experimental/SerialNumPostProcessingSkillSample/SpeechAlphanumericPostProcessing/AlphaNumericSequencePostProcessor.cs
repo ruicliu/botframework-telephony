@@ -22,14 +22,6 @@ namespace SpeechAlphanumericPostProcessing
             { "fr", Path.Combine(".", "substitution-fr.json") }
         };
 
-        private static readonly Dictionary<string, HashSet<char>> AmbiguousTable =
-            new Dictionary<string, HashSet<char>>
-            {
-                { "en", new HashSet<char> { '8' } },
-                { "es", new HashSet<char>() },
-                { "fr", new HashSet<char>() }
-            };
-
         private static readonly Dictionary<string, Dictionary<char, char>> DigitReplacementsTable =
             new Dictionary<string, Dictionary<char, char>>
             {
@@ -94,8 +86,8 @@ namespace SpeechAlphanumericPostProcessing
 
         private static readonly char[] TrimChars = new char[] { '.', ',' };
 
-        private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, string>> SubstitutionMapping =
-            new ConcurrentDictionary<string, ConcurrentDictionary<string, string>>();
+        private static readonly Dictionary<string, Dictionary<string, Substitution>> SubstitutionMapping =
+            new Dictionary<string, Dictionary<string, Substitution>>();
 
         public AlphaNumericSequencePostProcessor(IReadOnlyCollection<AlphaNumericTextGroup> textGroups, bool allowBatching = false, string language = "en")
         {
@@ -245,19 +237,16 @@ namespace SpeechAlphanumericPostProcessing
             return Token.Invalid;
         }
 
-        public (char First, char Second) AmbiguousOptions(string inputString, int inputIndex)
+        public (string First, string Second) AmbiguousOptions(string inputString, int inputIndex)
         {
-            (char, char) result = ('*', '*');
+            (string, string) result = ("*", "*");
             char input = inputString[inputIndex];
-
-            switch (input)
+            if (SubstitutionMapping[Language].TryGetValue(input.ToString(), out var substitution))
             {
-                case '8':
-                    result = ('A', input);
-                    break;
-                default:
-                    Debug.Assert(false, "No ambiguous input is found");
-                    break;
+                if (substitution.IsAmbiguous)
+                {
+                    result = (substitution.Replacement, input.ToString());
+                }
             }
 
             return result;
@@ -354,10 +343,10 @@ namespace SpeechAlphanumericPostProcessing
         public string TryCustomSubstitutionFixup(string inputString, int inputIndex, ref int newOffset)
         {
             // 8 -> A case
-            if (SubstitutionMapping[Language].TryGetValue(inputString[inputIndex].ToString(), out string replacement))
+            if (SubstitutionMapping[Language].TryGetValue(inputString[inputIndex].ToString(), out var substitution))
             {
-                newOffset = replacement.Length;
-                return replacement;
+                newOffset = substitution.Replacement.Length;
+                return substitution.Replacement;
             }
 
             // Assuming that we have already checked that SubstitutionMapping consists of the substring
@@ -370,7 +359,7 @@ namespace SpeechAlphanumericPostProcessing
                 if (SubstitutionMapping[Language].ContainsKey(token))
                 {
                     newOffset = firstToken.Length;
-                    return SubstitutionMapping[Language][token];
+                    return SubstitutionMapping[Language][token].Replacement;
                 }
             }
 
@@ -493,8 +482,8 @@ namespace SpeechAlphanumericPostProcessing
 #pragma warning disable IDE0042 // Deconstruct variable declaration
                 var options = AmbiguousOptions(inputString, ambiguousInputIndexes.FirstOrDefault());
 #pragma warning restore IDE0042 // Deconstruct variable declaration
-                results.Add(fixedUpString.Replace('*', options.First));
-                results.Add(fixedUpString.Replace('*', options.Second));
+                results.Add(fixedUpString.Replace("*", options.First));
+                results.Add(fixedUpString.Replace("*", options.Second));
             }
             else
             {
@@ -510,11 +499,10 @@ namespace SpeechAlphanumericPostProcessing
             char input = InputString[inputIndex];
             match.Ch = input;
 
-            if (AmbiguousTable.ContainsKey(Language) &&
-                AmbiguousTable[Language].Contains(input))
+            if (SubstitutionMapping.ContainsKey(Language) &&
+                SubstitutionMapping[Language].TryGetValue(input.ToString(), out var substitution))
             {
-                match.IsAmbiguous = true;
-                return match;
+                match.IsAmbiguous = substitution.IsAmbiguous;
             }
 
             return match;
@@ -658,7 +646,7 @@ namespace SpeechAlphanumericPostProcessing
             {
                 if (!SubstitutionMapping.ContainsKey(language))
                 {
-                    SubstitutionMapping.TryAdd(language, new ConcurrentDictionary<string, string>());
+                    SubstitutionMapping.TryAdd(language, new Dictionary<string, Substitution>());
                 }
 
                 string path = SubstitutionFilePath[language];
@@ -680,7 +668,7 @@ namespace SpeechAlphanumericPostProcessing
 
                         foreach (var substitution in substitutions)
                         {
-                            SubstitutionMapping[language].TryAdd(substitution.Substring, substitution.Replacement);
+                            SubstitutionMapping[language].TryAdd(substitution.Substring, substitution);
                         }
                     }
                 }
