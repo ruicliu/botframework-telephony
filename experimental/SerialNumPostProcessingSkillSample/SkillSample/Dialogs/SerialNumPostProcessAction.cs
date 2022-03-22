@@ -125,7 +125,7 @@ namespace SkillSample.Dialogs
                     return new DialogTurnResult(DialogTurnStatus.Waiting);
                 }
             }
-            else if (results.Length >= 2)
+            else if (results.Length >= 2 && results[0].Length == snp.PatternLength && results[1].Length == snp.PatternLength)
             {
                 dc.ActiveDialog.State["this.ambiguousChoices"] = results;
                 string promptMsg = "Say or type 1 for " + results[0] + " or 2 for " + results[1];
