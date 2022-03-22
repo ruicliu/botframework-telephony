@@ -92,7 +92,7 @@ namespace SpeechAlphanumericPostProcessing
                 }
             };
 
-        private static readonly char[] TrimChars = new char[] { '.' };
+        private static readonly char[] TrimChars = new char[] { '.', ',' };
 
         private static readonly ConcurrentDictionary<string, ConcurrentDictionary<string, string>> SubstitutionMapping =
             new ConcurrentDictionary<string, ConcurrentDictionary<string, string>>();
@@ -364,8 +364,17 @@ namespace SpeechAlphanumericPostProcessing
             string restOfInput = inputString.Substring(inputIndex);
             string firstToken = restOfInput.Split(' ').FirstOrDefault();
 
-            newOffset = firstToken.Length;
-            return SubstitutionMapping[Language][firstToken];
+            if (!string.IsNullOrWhiteSpace(firstToken))
+            {
+                string token = firstToken.Trim(TrimChars);
+                if (SubstitutionMapping[Language].ContainsKey(token))
+                {
+                    newOffset = firstToken.Length;
+                    return SubstitutionMapping[Language][token];
+                }
+            }
+
+            return inputString[inputIndex].ToString();
         }
 
         public FixupType DetectCustomSubstitutionFixup(string inputString, int inputIndex)
@@ -381,8 +390,11 @@ namespace SpeechAlphanumericPostProcessing
                 // DENIED -> D9
                 string restOfInput = inputString.Substring(inputIndex);
                 string firstToken = restOfInput.Split(' ').FirstOrDefault();
-
-                return SubstitutionMapping[Language].ContainsKey(firstToken) ? FixupType.Custom : FixupType.None;
+                if (!string.IsNullOrWhiteSpace(firstToken))
+                {
+                    string token = firstToken.Trim(TrimChars); 
+                    return SubstitutionMapping[Language].ContainsKey(token) ? FixupType.Custom : FixupType.None;
+                }
             }
 
             return FixupType.None;
