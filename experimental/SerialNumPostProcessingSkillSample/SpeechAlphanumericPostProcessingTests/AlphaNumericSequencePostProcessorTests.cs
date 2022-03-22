@@ -20,8 +20,16 @@ namespace SpeechAlphanumericPostProcessingTests
         public void CreateSubstitutionFiles()
         {
             // English
-            Substitution[] substitutionsForEn = { new Substitution("DENIED", "D9"), new Substitution("SEE", "C"),
-                new Substitution("8", "A"), new Substitution("KATIE", "KT") };
+            Substitution[] substitutionsForEn = {
+                new Substitution("DENIED", "D9"),
+                new Substitution("SEE", "C"),
+                new Substitution("8", "A"),
+                new Substitution("KATIE", "KT"),
+                new Substitution("BEE", "B"),
+                new Substitution("BEFORE", "B4"),
+                new Substitution("EMPTY", "MT"),
+                new Substitution("CUTIE", "QT"),
+            };
             Dictionary<string, Substitution[]> substitutionsEnJsonKVP = new Dictionary<string, Substitution[]>
             {
                 { "substitutions", substitutionsForEn }
@@ -34,8 +42,15 @@ namespace SpeechAlphanumericPostProcessingTests
             }
 
             // Spanish
-            Substitution[] substitutionsForEs = { new Substitution("SE", "C"), new Substitution("EL", "L"),
-                new Substitution("EN", "N"), new Substitution("SIGLOS", "S") };
+            Substitution[] substitutionsForEs =
+            {
+                new Substitution("SE", "C"),
+                new Substitution("EL", "L"),
+                new Substitution("EN", "N"),
+                new Substitution("SIGLOS", "S"),
+                new Substitution("UN", "1"),
+            };
+
             Dictionary<string, Substitution[]> substitutionsEsJsonKVP = new Dictionary<string, Substitution[]>
             {
                 { "substitutions", substitutionsForEs }
@@ -197,7 +212,26 @@ namespace SpeechAlphanumericPostProcessingTests
         }
 
         [TestMethod]
-        public void HPSerialNumberTest_fr()
+        public void Spanish_HPSerialNumberTest()
+        {
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
+            {
+                AcceptsDigits = true,
+                AcceptsAlphabet = true,
+                LengthInChars = 10,
+            };
+            groups.Add(g1);
+
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "es");
+            var result = pattern.Inference("UN SE, R 1240 GSC.");
+            Assert.AreEqual(result.Length, 1);
+            Assert.AreEqual(result[0], "1CR1240GSC");
+
+        }
+
+        [TestMethod]
+        public void French_HPSerialNumberTest()
         {
             var groups = new List<AlphaNumericTextGroup>();
             var g1 = new AlphaNumericTextGroup
@@ -216,6 +250,24 @@ namespace SpeechAlphanumericPostProcessingTests
             result = pattern.Inference("1CZ 00100 WATTS W.");
             Assert.AreEqual(result.Length, 1);
             Assert.AreEqual(result[0], "1CZ00100WW");
+        }
+
+        [TestMethod]
+        public void KatieVariationsTest()
+        {
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
+            {
+                AcceptsDigits = true,
+                AcceptsAlphabet = true,
+                LengthInChars = 10,
+            };
+            groups.Add(g1);
+
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "en");
+            var result = pattern.Inference("KATIE BEE BEFORE 4 EMPTY CUTIE");
+            Assert.AreEqual(result.Length, 1);
+            Assert.AreEqual(result[0], "KTBB44MTQT");
         }
 
         [TestMethod]
