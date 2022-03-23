@@ -429,6 +429,16 @@ namespace SpeechAlphanumericPostProcessingTests
             Assert.AreEqual(result[0], "5ABB412");
         }
 
+        [TestMethod]
+        public void WhenSubstitutionWithAmbiguousInputMatchesSpecifiedPatternOutputShouldBeCorrect()
+        {
+            var pattern = new AlphaNumericSequencePostProcessor("([0-9]{1})([a-zA-Z]{3})([0-9]{3})");
+
+            var result = pattern.Inference("8 8 BEE C 123");
+            Assert.IsTrue(result.Length == 1);
+            Assert.AreEqual(result[0], "8ABC123");
+        }
+
         private void DeleteEnglishSubstitutionFile()
         {
             if (File.Exists(SubstitutionEnglishFilePath))

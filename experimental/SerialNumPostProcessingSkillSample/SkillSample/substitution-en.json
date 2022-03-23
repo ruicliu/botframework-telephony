@@ -22,11 +22,11 @@
       "replacement": "QT"
     },
     {
-      "substring": "DENY",
+      "substring": "DENIED",
       "replacement": "D9"
     },
     {
-      "substring": "DENIED",
+      "substring": "DENY",
       "replacement": "D9"
     },
     {
