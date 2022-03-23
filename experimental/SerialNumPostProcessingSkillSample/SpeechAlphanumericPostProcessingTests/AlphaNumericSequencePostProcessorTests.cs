@@ -392,6 +392,43 @@ namespace SpeechAlphanumericPostProcessingTests
             Assert.AreEqual(result[0], "1D9A456C1D");
         }
 
+        [TestMethod]
+        public void WhenPatternIsAllDigitsOutputShouldBeEmptyWithSubstitution()
+        {
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
+            {
+                AcceptsDigits = true,
+                AcceptsAlphabet = false,
+                LengthInChars = 4,
+            };
+            groups.Add(g1);
+
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
+
+            var result = pattern.Inference("ONE BEFORE BEE");
+            Assert.IsTrue(result.Length == 0);
+        }
+
+        [TestMethod]
+        public void WhenSubstitutionMismatchesSpecifiedPatternOutputShouldBeEmpty()
+        {
+            var pattern = new AlphaNumericSequencePostProcessor("([a-zA-Z]{2})([0-9]{3})");
+
+            var result = pattern.Inference("BEFORE ONE TWO THREE"); // BEFORE -> B4 is invalid since the first 2 chars shouldn't have letters per regex
+            Assert.IsTrue(result.Length == 0);
+        }
+
+        [TestMethod]
+        public void WhenSubstitutionMatchesSpecifiedPatternOutputShouldBeCorrect()
+        {
+            var pattern = new AlphaNumericSequencePostProcessor("([0-9]{1})([a-zA-Z]{3})([0-9]{3})");
+
+            var result = pattern.Inference("FIVE A AS IN APPLE BEE BEFORE ONE TWO");
+            Assert.IsTrue(result.Length == 1);
+            Assert.AreEqual(result[0], "5ABB412");
+        }
+
         private void DeleteEnglishSubstitutionFile()
         {
             if (File.Exists(SubstitutionEnglishFilePath))

@@ -194,15 +194,15 @@ namespace SpeechAlphanumericPostProcessing
             }
         }
 
-        public string Language { get; set; } = "en";
-
         public IReadOnlyCollection<AlphaNumericTextGroup> Groups { get; set; }
 
-        public int PatternLength { get; set; }
+        public int PatternLength { get; }
 
-        public string InputString { get; private set; } = string.Empty;
+        internal string InputString { get; private set; } = string.Empty;
 
-        public bool AllowBatching { get; set; }
+        private string Language { get; } = "en";
+
+        private bool AllowBatching { get; }
 
         public Token PatternAt(int patternIndex, out HashSet<char> invalidChars)
         {

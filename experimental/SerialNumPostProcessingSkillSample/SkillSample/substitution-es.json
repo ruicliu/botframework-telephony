@@ -1,8 +1,8 @@
 {
   "substitutions": [
     {
-      "substring": "SE",
-      "replacement": "C"
+      "substring": "CERODOSBÉ",
+      "replacement": "02B"
     },
     {
       "substring": "EL",
@@ -13,16 +13,8 @@
       "replacement": "N"
     },
     {
-      "substring": "VOLTIOS",
-      "replacement": "V"
-    },
-    {
-      "substring": "VATIO",
-      "replacement": "W"
-    },
-    {
-      "substring": "VATIOS",
-      "replacement": "W"
+      "substring": "SE",
+      "replacement": "C"
     },
     {
       "substring": "SIGLO",
@@ -33,12 +25,20 @@
       "replacement": "S"
     },
     {
-      "substring": "ZEROZEROZERO",
-      "replacement": "000"
+      "substring": "VATIO",
+      "replacement": "W"
     },
     {
-      "substring": "CERODOSBÉ",
-      "replacement": "02B"
+      "substring": "VATIOS",
+      "replacement": "W"
+    },
+    {
+      "substring": "VOLTIOS",
+      "replacement": "V"
+    },
+    {
+      "substring": "ZEROZEROZERO",
+      "replacement": "000"
     }
   ]
 }
