@@ -7,6 +7,13 @@ namespace SpeechAlphanumericPostProcessing
     [JsonObject]
     public class Substitution
     {
+        public Substitution(string substring, string replacement, bool isAmbiguous = false)
+        {
+            this.Substring = substring;
+            this.Replacement = replacement;
+            this.IsAmbiguous = isAmbiguous;
+        }
+
         [JsonProperty("substring", Required = Required.Always)]
         public string Substring { get; } = string.Empty;
 
@@ -15,12 +22,5 @@ namespace SpeechAlphanumericPostProcessing
 
         [JsonProperty("isAmbiguous", Required = Required.Default)]
         public bool IsAmbiguous { get; } = false;
-
-        public Substitution(string substring, string replacement, bool isAmbiguous = false)
-        {
-            this.Substring = substring;
-            this.Replacement = replacement;
-            this.IsAmbiguous = isAmbiguous;
-        }
     }
 }

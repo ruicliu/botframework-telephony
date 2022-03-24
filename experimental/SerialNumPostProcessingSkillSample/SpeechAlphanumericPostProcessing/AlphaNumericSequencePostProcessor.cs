@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace SpeechAlphanumericPostProcessing
 {
@@ -251,7 +250,6 @@ namespace SpeechAlphanumericPostProcessing
 
             return result;
         }
-
         public bool DetectDigitFixup(string inputString, int inputIndex)
         {
             char ch = inputString[inputIndex];
@@ -381,7 +379,7 @@ namespace SpeechAlphanumericPostProcessing
                 string firstToken = restOfInput.Split(' ').FirstOrDefault();
                 if (!string.IsNullOrWhiteSpace(firstToken))
                 {
-                    string token = firstToken.Trim(TrimChars); 
+                    string token = firstToken.Trim(TrimChars);
                     return SubstitutionMapping[Language].ContainsKey(token) ? FixupType.Custom : FixupType.None;
                 }
             }
@@ -396,13 +394,10 @@ namespace SpeechAlphanumericPostProcessing
             InputString = inputString;
 
             List<string> results = new List<string>();
-            Console.WriteLine($"Original text      : '{inputString}'");
-            Console.WriteLine($"Regular Expression : '{Regexp}'");
 
             // Trivial Length check - must be at least pattern length (most likely longer).
             if (inputString.Length < PatternLength && !AllowBatching)
             {
-                Console.WriteLine($"Input string is too short!  Must be at least {PatternLength} characters/digits.");
                 return results.ToArray();
             }
 
@@ -435,9 +430,8 @@ namespace SpeechAlphanumericPostProcessing
                     continue;
                 }
 
+                var inferResult = InferMatch(inputIndex, elementType, invalidChars, ref patternIndex);
                 patternIndex++;  // Bump to next element in pattern.
-
-                var inferResult = InferMatch(inputIndex, elementType, invalidChars);
 
                 if (inferResult.IsAmbiguous)
                 {
@@ -457,7 +451,6 @@ namespace SpeechAlphanumericPostProcessing
 
                 if (inferResult.IsNoMatch)
                 {
-                    Console.WriteLine("ERROR: No match");
                     isMatch = false;
                     break;
                 }
@@ -473,7 +466,7 @@ namespace SpeechAlphanumericPostProcessing
 
             if (!isMatch)
             {
-                return results.ToArray();
+                return AllowBatching ? new string[1] { inputString } : results.ToArray();
             }
 
             // Handle ambiguous issues.
@@ -530,11 +523,58 @@ namespace SpeechAlphanumericPostProcessing
             return result;
         }
 
-        private InferResult InferMatch(int inputIndex, Token elementType, HashSet<char> invalidChars)
+        private InferResult InferMatch(
+            int inputIndex, Token elementType, HashSet<char> invalidChars, ref int patternIndex)
         {
             InferResult result = new InferResult();
             char currentInputChar = InputString[inputIndex];
             result.Value = currentInputChar.ToString();
+
+            // try custom substitution first
+            if (DetectCustomSubstitutionFixup(InputString, inputIndex) == FixupType.Custom)
+            {
+                if (elementType == Token.Both)
+                {
+                    AmbiguousResult ambiguousResult = CheckAmbiguous(ref inputIndex);
+                    result.Value = ambiguousResult.Ch.ToString();
+                    if (ambiguousResult.IsAmbiguous)
+                    {
+                        result.IsAmbiguous = true;
+                        return result;
+                    }
+                }
+
+                int offset = 0;
+                string substitutionResult = TryCustomSubstitutionFixup(InputString, inputIndex, ref offset);
+
+                int i = 0;
+                while (true)
+                {
+                    char ch = substitutionResult[i++];
+                    if (invalidChars.Contains(ch) ||
+                        (char.IsDigit(ch) && elementType == Token.Alpha) ||
+                        (char.IsLetter(ch) && elementType == Token.Digit))
+                    {
+                        result.IsNoMatch = true;
+                        return result;
+                    }
+
+                    if (i < substitutionResult.Length & (patternIndex + 1) < PatternLength)
+                    {
+                        patternIndex++;
+                        elementType = PatternAt(patternIndex, out invalidChars);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                result.Value = substitutionResult;
+                result.NewOffset = offset;
+                result.IsFixedUp = true;
+                return result;
+            }
 
             switch (elementType)
             {
@@ -542,42 +582,14 @@ namespace SpeechAlphanumericPostProcessing
                     TryFixupDigit(inputIndex, currentInputChar, elementType, result, invalidChars);
                     break;
                 case Token.Alpha:
-                    if (DetectCustomSubstitutionFixup(InputString, inputIndex) == FixupType.Custom)
-                    {
-                        int offset = 0;
-                        result.Value = TryCustomSubstitutionFixup(InputString, inputIndex, ref offset);
-                        result.NewOffset = offset;
-                        result.IsFixedUp = true;
-                        break;
-                    }
-
                     TryFixupAlpha(inputIndex, currentInputChar, elementType, result, invalidChars);
                     break;
                 case Token.Both:
-                    AmbiguousResult ambiguousResult = CheckAmbiguous(ref inputIndex);
-                    result.Value = ambiguousResult.Ch.ToString();
-                    if (ambiguousResult.IsAmbiguous)
+                    TryFixupDigit(inputIndex, currentInputChar, elementType, result, invalidChars);
+                    if (!result.IsFixedUp)
                     {
-                        result.IsAmbiguous = true;
+                        TryFixupAlpha(inputIndex, currentInputChar, elementType, result, invalidChars);
                     }
-                    else
-                    {
-                        TryFixupDigit(inputIndex, currentInputChar, elementType, result, invalidChars);
-                        if (!result.IsFixedUp)
-                        {
-                            if (DetectCustomSubstitutionFixup(InputString, inputIndex) == FixupType.Custom)
-                            {
-                                int offset = 0;
-                                result.Value = TryCustomSubstitutionFixup(InputString, inputIndex, ref offset);
-                                result.NewOffset = offset;
-                                result.IsFixedUp = true;
-                                break;
-                            }
-
-                            TryFixupAlpha(inputIndex, currentInputChar, elementType, result, invalidChars);
-                        }
-                    }
-
                     break;
                 default:
                     break;
