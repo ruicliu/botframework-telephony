@@ -20,10 +20,11 @@ namespace SpeechAlphanumericPostProcessingTests
         public void CreateSubstitutionFiles()
         {
             // English
-            Substitution[] substitutionsForEn = {
+            Substitution[] substitutionsForEn =
+            {
                 new Substitution("DENIED", "D9"),
                 new Substitution("SEE", "C"),
-                new Substitution("8", "A"),
+                new Substitution("8", "A", true),
                 new Substitution("KATIE", "KT"),
                 new Substitution("BEE", "B"),
                 new Substitution("BEFORE", "B4"),
@@ -49,6 +50,7 @@ namespace SpeechAlphanumericPostProcessingTests
                 new Substitution("EN", "N"),
                 new Substitution("SIGLOS", "S"),
                 new Substitution("UN", "1"),
+                new Substitution("ZEROZEROZERO", "000")
             };
 
             Dictionary<string, Substitution[]> substitutionsEsJsonKVP = new Dictionary<string, Substitution[]>
@@ -63,8 +65,11 @@ namespace SpeechAlphanumericPostProcessingTests
             }
 
             // French
-            Substitution[] substitutionsForFr = { new Substitution("UNE", "N"), new Substitution("WATT", "W"),
-                new Substitution("WATTS", "W"), new Substitution("SÉCU", "CQ") };
+            Substitution[] substitutionsForFr =
+            {
+                new Substitution("UNE", "N"), new Substitution("WATT", "W"),
+                new Substitution("WATTS", "W"), new Substitution("SÉCU", "CQ")
+            };
             Dictionary<string, Substitution[]> substitutionsFrJsonKVP = new Dictionary<string, Substitution[]>
             {
                 { "substitutions", substitutionsForFr }
@@ -209,6 +214,28 @@ namespace SpeechAlphanumericPostProcessingTests
             result = pattern.Inference("A as in Apple ONE CR 00703 F");
             Assert.IsTrue(result.Length == 1);
             Assert.AreEqual(result[0], "A1CR00703F");
+
+            // alphabet only with 5 characters in length
+            g1 = new AlphaNumericTextGroup
+            {
+                AcceptsDigits = false,
+                AcceptsAlphabet = true,
+                LengthInChars = 5,
+            };
+            groups.Clear();
+            groups.Add(g1);
+
+            // Inference should return result even if length is less than pattern length
+            // when batching is set to true
+            pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), true);
+            result = pattern.Inference("BEFORE DENIED");
+            Assert.IsTrue(result.Length == 1);
+            Assert.AreEqual(result[0], "BEFORE DENIED");
+
+            // Inference should return no result if batching is false and input is invalid
+            pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "en");
+            result = pattern.Inference("BEFORE DENIED N");
+            Assert.IsTrue(result.Length == 0);
         }
 
         [TestMethod]
@@ -227,7 +254,6 @@ namespace SpeechAlphanumericPostProcessingTests
             var result = pattern.Inference("UN SE, R 1240 GSC.");
             Assert.AreEqual(result.Length, 1);
             Assert.AreEqual(result[0], "1CR1240GSC");
-
         }
 
         [TestMethod]
@@ -268,6 +294,45 @@ namespace SpeechAlphanumericPostProcessingTests
             var result = pattern.Inference("KATIE BEE BEFORE 4 EMPTY CUTIE");
             Assert.AreEqual(result.Length, 1);
             Assert.AreEqual(result[0], "KTBB44MTQT");
+        }
+
+        [TestMethod]
+        public void CustomSubstitutionPatternValidationTest()
+        {
+            var groups = new List<AlphaNumericTextGroup>();
+            var g1 = new AlphaNumericTextGroup
+            {
+                AcceptsDigits = false,
+                AcceptsAlphabet = true,
+                LengthInChars = 3,
+            };
+            groups.Add(g1);
+
+            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "es");
+            var result = pattern.Inference("ZEROZEROZERO");
+
+            // invalid input since ZEROZEROZERO == 000 but pattern is alphabet only
+            Assert.AreEqual(result.Length, 0);
+
+            pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "en");
+            result = pattern.Inference("DENIED BEE");
+
+            // invalid input since DENIED == D9 but pattern is alphabet only
+            Assert.AreEqual(result.Length, 0);
+
+            groups.Clear();
+            g1 = new AlphaNumericTextGroup
+            {
+                AcceptsDigits = true,
+                AcceptsAlphabet = true,
+                LengthInChars = 4,
+            };
+            groups.Add(g1);
+
+            pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "en");
+            result = pattern.Inference("BEFORE DENIED");
+            Assert.IsTrue(result.Length == 1);
+            Assert.AreEqual("B4D9", result[0]);
         }
 
         [TestMethod]
