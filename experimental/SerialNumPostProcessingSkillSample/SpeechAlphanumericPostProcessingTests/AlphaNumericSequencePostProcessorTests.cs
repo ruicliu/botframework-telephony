@@ -231,6 +231,11 @@ namespace SpeechAlphanumericPostProcessingTests
             result = pattern.Inference("BEFORE DENIED");
             Assert.IsTrue(result.Length == 1);
             Assert.AreEqual(result[0], "BEFORE DENIED");
+
+            // Inference should return no result if batching is false and input is invalid
+            pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "en");
+            result = pattern.Inference("BEFORE DENIED N");
+            Assert.IsTrue(result.Length == 0);
         }
 
         [TestMethod]
@@ -308,6 +313,26 @@ namespace SpeechAlphanumericPostProcessingTests
 
             // invalid input since ZEROZEROZERO == 000 but pattern is alphabet only
             Assert.AreEqual(result.Length, 0);
+
+            pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "en");
+            result = pattern.Inference("DENIED BEE");
+
+            // invalid input since DENIED == D9 but pattern is alphabet only
+            Assert.AreEqual(result.Length, 0);
+
+            groups.Clear();
+            g1 = new AlphaNumericTextGroup
+            {
+                AcceptsDigits = true,
+                AcceptsAlphabet = true,
+                LengthInChars = 4,
+            };
+            groups.Add(g1);
+
+            pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "en");
+            result = pattern.Inference("BEFORE DENIED");
+            Assert.IsTrue(result.Length == 1);
+            Assert.AreEqual("B4D9", result[0]);
         }
 
         [TestMethod]
