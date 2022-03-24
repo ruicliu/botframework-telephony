@@ -531,7 +531,8 @@ namespace SpeechAlphanumericPostProcessing
             result.Value = currentInputChar.ToString();
 
             // try custom substitution first
-            if (DetectCustomSubstitutionFixup(InputString, inputIndex) == FixupType.Custom)
+            if ((elementType != Token.Digit || !char.IsDigit(currentInputChar)) &&
+                DetectCustomSubstitutionFixup(InputString, inputIndex) == FixupType.Custom)
             {
                 if (elementType == Token.Both)
                 {
