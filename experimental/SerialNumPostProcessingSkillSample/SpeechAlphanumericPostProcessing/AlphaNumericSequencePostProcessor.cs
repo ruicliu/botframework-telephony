@@ -104,11 +104,6 @@ namespace SpeechAlphanumericPostProcessing
             None = 0,
 
             /// <summary>
-            /// Character replacement.
-            /// </summary>
-            AlphaMapping = 1,
-
-            /// <summary>
             /// As in replacement.
             /// </summary>
             AsIn = 2,
