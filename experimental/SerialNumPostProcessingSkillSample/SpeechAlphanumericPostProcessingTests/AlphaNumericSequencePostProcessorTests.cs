@@ -22,14 +22,17 @@ namespace SpeechAlphanumericPostProcessingTests
             // English
             Substitution[] substitutionsForEn =
             {
-                new Substitution("DENIED", "D9"),
-                new Substitution("SEE", "C"),
                 new Substitution("8", "A", true),
-                new Substitution("KATIE", "KT"),
                 new Substitution("BEE", "B"),
                 new Substitution("BEFORE", "B4"),
                 new Substitution("EMPTY", "MT"),
+                new Substitution("FIVE", "5"),
                 new Substitution("CUTIE", "QT"),
+                new Substitution("DENIED", "D9"),
+                new Substitution("KATIE", "KT"),
+                new Substitution("ONE", "1"),
+                new Substitution("SEE", "C"),
+
             };
             Dictionary<string, Substitution[]> substitutionsEnJsonKVP = new Dictionary<string, Substitution[]>
             {
@@ -45,9 +48,9 @@ namespace SpeechAlphanumericPostProcessingTests
             // Spanish
             Substitution[] substitutionsForEs =
             {
-                new Substitution("SE", "C"),
                 new Substitution("EL", "L"),
                 new Substitution("EN", "N"),
+                new Substitution("SE", "C"),
                 new Substitution("SIGLOS", "S"),
                 new Substitution("UN", "1"),
                 new Substitution("ZEROZEROZERO", "000")
@@ -67,8 +70,11 @@ namespace SpeechAlphanumericPostProcessingTests
             // French
             Substitution[] substitutionsForFr =
             {
-                new Substitution("UNE", "N"), new Substitution("WATT", "W"),
-                new Substitution("WATTS", "W"), new Substitution("SÉCU", "CQ")
+                new Substitution("SÉCU", "CQ"),
+                new Substitution("UNE", "N"),
+                new Substitution("UN", "1"),
+                new Substitution("WATT", "W"),
+                new Substitution("WATTS", "W")
             };
             Dictionary<string, Substitution[]> substitutionsFrJsonKVP = new Dictionary<string, Substitution[]>
             {
@@ -94,12 +100,8 @@ namespace SpeechAlphanumericPostProcessingTests
         public void MilitaryCodeTest()
         {
             var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = false,
-                AcceptsAlphabet = true,
-                LengthInChars = 4,
-            };
+            var g1 = new AlphaNumericTextGroup(true, false, 4);
+
             groups.Add(g1);
 
             var input = "ABC, as in Charlie Z as in Zeta.";
@@ -127,20 +129,11 @@ namespace SpeechAlphanumericPostProcessingTests
         public void ReplacementAndInvalidTest()
         {
             var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = false,
-                AcceptsAlphabet = true,
-                LengthInChars = 2,
-            };
+            var g1 = new AlphaNumericTextGroup(true, false, 2);
             groups.Add(g1);
 
-            var g2 = new AlphaNumericTextGroup
-            {
-                AcceptsAlphabet = true,
-                AcceptsDigits = true,
-                LengthInChars = 5,
-            };
+            var g2 = new AlphaNumericTextGroup(true, true, 5);
+
             groups.Add(g2);
 
             // 8 replaced as A
@@ -173,12 +166,7 @@ namespace SpeechAlphanumericPostProcessingTests
         public void HPSerialNumberTest()
         {
             var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = true,
-                AcceptsAlphabet = true,
-                LengthInChars = 10,
-            };
+            var g1 = new AlphaNumericTextGroup(true, true, 10);
             groups.Add(g1);
 
             var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
@@ -196,12 +184,7 @@ namespace SpeechAlphanumericPostProcessingTests
         public void BatchingTest()
         {
             var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = true,
-                AcceptsAlphabet = true,
-                LengthInChars = 10,
-            };
+            var g1 = new AlphaNumericTextGroup(true, true, 10);
             groups.Add(g1);
 
             // Inference should return result even if length is less than pattern length
@@ -216,12 +199,7 @@ namespace SpeechAlphanumericPostProcessingTests
             Assert.AreEqual(result[0], "A1CR00703F");
 
             // alphabet only with 5 characters in length
-            g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = false,
-                AcceptsAlphabet = true,
-                LengthInChars = 5,
-            };
+            g1 = new AlphaNumericTextGroup(false, true, 5);
             groups.Clear();
             groups.Add(g1);
 
@@ -242,12 +220,7 @@ namespace SpeechAlphanumericPostProcessingTests
         public void Spanish_HPSerialNumberTest()
         {
             var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = true,
-                AcceptsAlphabet = true,
-                LengthInChars = 10,
-            };
+            var g1 = new AlphaNumericTextGroup(true, true, 10);
             groups.Add(g1);
 
             var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "es");
@@ -260,12 +233,7 @@ namespace SpeechAlphanumericPostProcessingTests
         public void French_HPSerialNumberTest()
         {
             var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = true,
-                AcceptsAlphabet = true,
-                LengthInChars = 10,
-            };
+            var g1 = new AlphaNumericTextGroup(true, true, 10);
             groups.Add(g1);
 
             var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "fr");
@@ -282,12 +250,7 @@ namespace SpeechAlphanumericPostProcessingTests
         public void KatieVariationsTest()
         {
             var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = true,
-                AcceptsAlphabet = true,
-                LengthInChars = 10,
-            };
+            var g1 = new AlphaNumericTextGroup(true, true, 10);
             groups.Add(g1);
 
             var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "en");
@@ -300,12 +263,7 @@ namespace SpeechAlphanumericPostProcessingTests
         public void CustomSubstitutionPatternValidationTest()
         {
             var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = false,
-                AcceptsAlphabet = true,
-                LengthInChars = 3,
-            };
+            var g1 = new AlphaNumericTextGroup(true, false, 3);
             groups.Add(g1);
 
             var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "es");
@@ -321,12 +279,7 @@ namespace SpeechAlphanumericPostProcessingTests
             Assert.AreEqual(result.Length, 0);
 
             groups.Clear();
-            g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = true,
-                AcceptsAlphabet = true,
-                LengthInChars = 4,
-            };
+            g1 = new AlphaNumericTextGroup(true, true, 4);
             groups.Add(g1);
 
             pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), false, "en");
@@ -341,35 +294,20 @@ namespace SpeechAlphanumericPostProcessingTests
             this.DeleteEnglishSubstitutionFile();
 
             var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = true,
-                AcceptsAlphabet = true,
-                LengthInChars = 10,
-            };
+            var g1 = new AlphaNumericTextGroup(true, true, 10);
             groups.Add(g1);
 
             var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
-            var result = pattern.Inference("A as in Apple 123456789");
-            Assert.IsTrue(result.Length == 2);
-            Assert.AreEqual(result[0], "A1234567A9");
-            Assert.AreEqual(result[1], "A123456789");
-
-            result = pattern.Inference("ONE CR 00703 F 3.");
+            var result = pattern.Inference("A as in Apple 123456789"); // will not substituion 8 with A
             Assert.IsTrue(result.Length == 1);
-            Assert.AreEqual(result[0], "1CR00703F3");
+            Assert.AreEqual(result[0], "A123456789");
         }
 
         [TestMethod]
         public void EnglishCustomSubstitutionWithDigitWordReplacement()
         {
             var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = true,
-                AcceptsAlphabet = true,
-                LengthInChars = 10,
-            };
+            var g1 = new AlphaNumericTextGroup(true, true, 10);
             groups.Add(g1);
 
             var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
@@ -383,12 +321,7 @@ namespace SpeechAlphanumericPostProcessingTests
         public void EnglishCustomSubstitutionWithMilitaryCode()
         {
             var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = true,
-                AcceptsAlphabet = true,
-                LengthInChars = 10,
-            };
+            var g1 = new AlphaNumericTextGroup(true, true, 10);
             groups.Add(g1);
 
             var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
@@ -402,12 +335,7 @@ namespace SpeechAlphanumericPostProcessingTests
         public void EnglishCustomSubstitutionWitAmbiguousInput()
         {
             var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = true,
-                AcceptsAlphabet = true,
-                LengthInChars = 10,
-            };
+            var g1 = new AlphaNumericTextGroup(true, true, 10);
             groups.Add(g1);
 
             var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
@@ -419,35 +347,10 @@ namespace SpeechAlphanumericPostProcessingTests
         }
 
         [TestMethod]
-        public void EnglishCustomSubstitutionWithAlphabetWordMapping()
-        {
-            var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = true,
-                AcceptsAlphabet = true,
-                LengthInChars = 10,
-            };
-            groups.Add(g1);
-
-            var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
-
-            var result = pattern.Inference("ONE DENIED KATIE FIVE 8 SEE 1 SEE"); // 8 is ambiguous input
-            Assert.IsTrue(result.Length == 2);
-            Assert.AreEqual(result[0], "1D9KT5AC1C");
-            Assert.AreEqual(result[1], "1D9KT58C1C");
-        }
-
-        [TestMethod]
         public void PostProcessedOutputShouldBeTruncatedToPatternLength()
         {
             var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = true,
-                AcceptsAlphabet = true,
-                LengthInChars = 10,
-            };
+            var g1 = new AlphaNumericTextGroup(true, true, 10);
             groups.Add(g1);
 
             var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
@@ -461,12 +364,7 @@ namespace SpeechAlphanumericPostProcessingTests
         public void WhenPatternIsAllDigitsOutputShouldBeEmptyWithSubstitution()
         {
             var groups = new List<AlphaNumericTextGroup>();
-            var g1 = new AlphaNumericTextGroup
-            {
-                AcceptsDigits = true,
-                AcceptsAlphabet = false,
-                LengthInChars = 4,
-            };
+            var g1 = new AlphaNumericTextGroup(false, true, 4);
             groups.Add(g1);
 
             var pattern = new AlphaNumericSequencePostProcessor(groups.AsReadOnly());
@@ -489,9 +387,9 @@ namespace SpeechAlphanumericPostProcessingTests
         {
             var pattern = new AlphaNumericSequencePostProcessor("([0-9]{1})([a-zA-Z]{3})([0-9]{3})");
 
-            var result = pattern.Inference("FIVE A AS IN APPLE BEE BEFORE ONE TWO");
+            var result = pattern.Inference("FIVE A AS IN APPLE BEE BEFORE ONE FIVE");
             Assert.IsTrue(result.Length == 1);
-            Assert.AreEqual(result[0], "5ABB412");
+            Assert.AreEqual(result[0], "5ABB415");
         }
 
         [TestMethod]

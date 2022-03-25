@@ -21,71 +21,9 @@ namespace SpeechAlphanumericPostProcessing
             { "fr", Path.Combine(".", "substitution-fr.json") }
         };
 
-        private static readonly Dictionary<string, Dictionary<char, char>> DigitReplacementsTable =
-            new Dictionary<string, Dictionary<char, char>>
-            {
-                { "en", new Dictionary<char, char>() },
-                { "es", new Dictionary<char, char>() },
-                { "fr", new Dictionary<char, char>() }
-            };
-
-        private static readonly Dictionary<string, Dictionary<string, char>> DigitWordReplacementsTable =
-            new Dictionary<string, Dictionary<string, char>>
-            {
-                {
-                    "en", new Dictionary<string, char>
-                    {
-                        { "ZER0", '0' },
-                        { "ONE", '1' },
-                        { "TWO", '2' },
-                        { "THREE", '3' },
-                        { "FOR", '4' },
-                        { "FOUR", '4' },
-                        { "FIVE", '5' },
-                        { "SIX", '6' },
-                        { "SEVEN", '7' },
-                        { "EIGHT", '8' },
-                        { "NINE", '9' }
-                    }
-                },
-                {
-                    "es", new Dictionary<string, char>
-                    {
-                        { "CERO", '0' },
-                        { "ZERO", '0' },
-                        { "UN", '1' },
-                        { "UNA", '1' },
-                        { "UNO", '1' },
-                        { "DOS", '2' },
-                        { "CUATRO", '4' },
-                        { "SIN CO", '5' }
-                    }
-                },
-                {
-                    "fr", new Dictionary<string, char>
-                    {
-                        { "ZÉRO", '0' },
-                        { "UN", '1' },
-                        { "DEUX", '2' },
-                        { "TROIS", '3' },
-                        { "QUATRE", '4' },
-                        { "CINQ", '5' },
-                        { "SI", '6' },
-                        { "SIX", '6' },
-                        { "CETTE", '7' },
-                        { "SEPT", '7' },
-                        { "LUI", '8' },
-                        { "OUI", '8' },
-                        { "OEUF", '9' },
-                        { "NEUFS", '9' },
-                        { "ŒUF", '9' },
-                    }
-                }
-            };
-
         private static readonly char[] TrimChars = new char[] { '.', ',' };
 
-        private static readonly Dictionary<string, Dictionary<string, Substitution>> SubstitutionMapping =
+        private Dictionary<string, Dictionary<string, Substitution>> substitutionMapping =
             new Dictionary<string, Dictionary<string, Substitution>>();
 
         public AlphaNumericSequencePostProcessor(IReadOnlyCollection<AlphaNumericTextGroup> textGroups, bool allowBatching = false, string language = "en")
@@ -122,10 +60,12 @@ namespace SpeechAlphanumericPostProcessing
             TryParseCustomSubstitutionsFromFile(language);
         }
 
+        public int PatternLength { get; }
+
         /// <summary>
         /// Enum representing valid token type specified in pattern.
         /// </summary>
-        public enum Token
+        private enum Token
         {
             /// <summary>
             /// Invalid token.
@@ -179,31 +119,15 @@ namespace SpeechAlphanumericPostProcessing
             Custom = 2,
         }
 
-        public string Regexp
-        {
-            get
-            {
-                string result = string.Empty;
-                foreach (AlphaNumericTextGroup group in Groups)
-                {
-                    result += group.RegexString;
-                }
+        private IReadOnlyCollection<AlphaNumericTextGroup> Groups { get; set; }
 
-                return result;
-            }
-        }
-
-        public IReadOnlyCollection<AlphaNumericTextGroup> Groups { get; set; }
-
-        public int PatternLength { get; }
-
-        internal string InputString { get; private set; } = string.Empty;
+        private string InputString { get; set; } = string.Empty;
 
         private string Language { get; } = "en";
 
         private bool AllowBatching { get; }
 
-        public Token PatternAt(int patternIndex, out HashSet<char> invalidChars)
+        private Token PatternAt(int patternIndex, out HashSet<char> invalidChars)
         {
             int cumulativeIndex = 0;
             int prevGroupCumulative = 0;
@@ -236,11 +160,11 @@ namespace SpeechAlphanumericPostProcessing
             return Token.Invalid;
         }
 
-        public (string First, string Second) AmbiguousOptions(string inputString, int inputIndex)
+        private (string First, string Second) AmbiguousOptions(string inputString, int inputIndex)
         {
             (string, string) result = ("*", "*");
             char input = inputString[inputIndex];
-            if (SubstitutionMapping[Language].TryGetValue(input.ToString(), out var substitution))
+            if (this.substitutionMapping[Language].TryGetValue(input.ToString(), out var substitution))
             {
                 if (substitution.IsAmbiguous)
                 {
@@ -250,54 +174,8 @@ namespace SpeechAlphanumericPostProcessing
 
             return result;
         }
-        public bool DetectDigitFixup(string inputString, int inputIndex)
-        {
-            char ch = inputString[inputIndex];
 
-            // Handle (One) = 1
-            string restOfInput = inputString.Substring(inputIndex);
-            string firstToken = restOfInput.Split(' ').FirstOrDefault().Trim(TrimChars);
-            if (!string.IsNullOrWhiteSpace(firstToken))
-            {
-                string token = firstToken;
-                if (DigitWordReplacementsTable[Language].ContainsKey(token))
-                {
-                    return true;
-                }
-            }
-
-            // Handle (A) = 8
-            return DigitReplacementsTable[Language].ContainsKey(ch);
-        }
-
-        public char DigitFixup(int inputIndex, ref int newOffset)
-        {
-            char ch = InputString[inputIndex];
-            char replacement = char.MinValue;
-
-            // Handle (One) = 1
-            string restOfInput = InputString.Substring(inputIndex);
-            string firstToken = restOfInput.Split(' ').FirstOrDefault().Trim(TrimChars);
-            if (!string.IsNullOrWhiteSpace(firstToken))
-            {
-                string token = firstToken;
-                if (DigitWordReplacementsTable[Language].ContainsKey(token))
-                {
-                    replacement = DigitWordReplacementsTable[Language][token];
-                    newOffset = token.Length;
-                }
-            }
-
-            // Handle (A) = 8
-            if (DigitReplacementsTable[Language].ContainsKey(ch))
-            {
-                replacement = DigitReplacementsTable[Language][ch];
-            }
-
-            return replacement;
-        }
-
-        public FixupType DetectAlphabetFixup(string inputString, int inputIndex)
+        private FixupType DetectAlphabetFixup(string inputString, int inputIndex)
         {
             char ch = inputString[inputIndex];
             string restOfInput = inputString.Substring(inputIndex);
@@ -314,7 +192,7 @@ namespace SpeechAlphanumericPostProcessing
             return FixupType.None;
         }
 
-        public string AlphabetFixup(int inputIndex, ref int offset)
+        private string AlphabetFixup(int inputIndex, ref int offset)
         {
             char ch = InputString[inputIndex];
             string restOfInput = InputString.Substring(inputIndex);
@@ -338,38 +216,45 @@ namespace SpeechAlphanumericPostProcessing
             return ch.ToString();
         }
 
-        public string TryCustomSubstitutionFixup(string inputString, int inputIndex, ref int newOffset)
+        private string TryCustomSubstitutionFixup(string inputString, int inputIndex, Token elementType, ref int newOffset)
         {
+            // 8/A case where we actually want 8 in this position, so we don't substitute
+            if (elementType == Token.Digit && char.IsDigit(inputString[inputIndex]))
+            {
+                newOffset = 1;
+                return inputString[inputIndex].ToString();
+            }
+
             // 8 -> A case
-            if (SubstitutionMapping[Language].TryGetValue(inputString[inputIndex].ToString(), out var substitution))
+            if (this.substitutionMapping[Language].TryGetValue(inputString[inputIndex].ToString(), out var substitution))
             {
                 newOffset = substitution.Replacement.Length;
                 return substitution.Replacement;
             }
 
-            // Assuming that we have already checked that SubstitutionMapping consists of the substring
+            // Assuming that we have already checked that this.substitutionMapping consists of the substring
             string restOfInput = inputString.Substring(inputIndex);
             string firstToken = restOfInput.Split(' ').FirstOrDefault();
 
             if (!string.IsNullOrWhiteSpace(firstToken))
             {
                 string token = firstToken.Trim(TrimChars);
-                if (SubstitutionMapping[Language].ContainsKey(token))
+                if (this.substitutionMapping[Language].ContainsKey(token))
                 {
                     newOffset = firstToken.Length;
-                    return SubstitutionMapping[Language][token].Replacement;
+                    return this.substitutionMapping[Language][token].Replacement;
                 }
             }
 
             return inputString[inputIndex].ToString();
         }
 
-        public FixupType DetectCustomSubstitutionFixup(string inputString, int inputIndex)
+        private FixupType DetectCustomSubstitutionFixup(string inputString, int inputIndex)
         {
-            if (SubstitutionMapping.ContainsKey(Language))
+            if (this.substitutionMapping.ContainsKey(Language))
             {
                 // 8 -> A
-                if (SubstitutionMapping[Language].ContainsKey(inputString[inputIndex].ToString()))
+                if (this.substitutionMapping[Language].ContainsKey(inputString[inputIndex].ToString()))
                 {
                     return FixupType.Custom;
                 }
@@ -380,7 +265,7 @@ namespace SpeechAlphanumericPostProcessing
                 if (!string.IsNullOrWhiteSpace(firstToken))
                 {
                     string token = firstToken.Trim(TrimChars);
-                    return SubstitutionMapping[Language].ContainsKey(token) ? FixupType.Custom : FixupType.None;
+                    return this.substitutionMapping[Language].ContainsKey(token) ? FixupType.Custom : FixupType.None;
                 }
             }
 
@@ -492,8 +377,8 @@ namespace SpeechAlphanumericPostProcessing
             char input = InputString[inputIndex];
             match.Ch = input;
 
-            if (SubstitutionMapping.ContainsKey(Language) &&
-                SubstitutionMapping[Language].TryGetValue(input.ToString(), out var substitution))
+            if (this.substitutionMapping.ContainsKey(Language) &&
+                this.substitutionMapping[Language].TryGetValue(input.ToString(), out var substitution))
             {
                 match.IsAmbiguous = substitution.IsAmbiguous;
             }
@@ -531,8 +416,7 @@ namespace SpeechAlphanumericPostProcessing
             result.Value = currentInputChar.ToString();
 
             // try custom substitution first
-            if ((elementType != Token.Digit || !char.IsDigit(currentInputChar)) &&
-                DetectCustomSubstitutionFixup(InputString, inputIndex) == FixupType.Custom)
+            if (DetectCustomSubstitutionFixup(InputString, inputIndex) == FixupType.Custom)
             {
                 if (elementType == Token.Both)
                 {
@@ -546,7 +430,7 @@ namespace SpeechAlphanumericPostProcessing
                 }
 
                 int offset = 0;
-                string substitutionResult = TryCustomSubstitutionFixup(InputString, inputIndex, ref offset);
+                string substitutionResult = TryCustomSubstitutionFixup(InputString, inputIndex, elementType, ref offset);
 
                 int i = 0;
                 while (true)
@@ -577,25 +461,8 @@ namespace SpeechAlphanumericPostProcessing
                 return result;
             }
 
-            switch (elementType)
-            {
-                case Token.Digit:
-                    TryFixupDigit(inputIndex, currentInputChar, elementType, result, invalidChars);
-                    break;
-                case Token.Alpha:
-                    TryFixupAlpha(inputIndex, currentInputChar, elementType, result, invalidChars);
-                    break;
-                case Token.Both:
-                    TryFixupDigit(inputIndex, currentInputChar, elementType, result, invalidChars);
-                    if (!result.IsFixedUp)
-                    {
-                        TryFixupAlpha(inputIndex, currentInputChar, elementType, result, invalidChars);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
+            // Token.Digit should be handled by substitution mapping already
+            TryFixupAlpha(inputIndex, currentInputChar, elementType, result, invalidChars);
             return result;
         }
 
@@ -626,40 +493,13 @@ namespace SpeechAlphanumericPostProcessing
             }
         }
 
-        private void TryFixupDigit(int inputIndex, char currentInputChar, Token elementType, InferResult result, HashSet<char> invalidChars)
-        {
-            int newOffset = 1;
-            result.IsFixedUp = DetectDigitFixup(InputString, inputIndex);
-
-            if (char.IsDigit(currentInputChar) == false && !result.IsFixedUp)
-            {
-                if (elementType == Token.Digit)
-                {
-                    result.IsNoMatch = true;
-                }
-            }
-            else if (result.IsFixedUp)
-            {
-                char ch = DigitFixup(inputIndex, ref newOffset);
-                if (invalidChars.Contains(ch))
-                {
-                    result.IsNoMatch = true;
-                }
-                else
-                {
-                    result.Value = ch.ToString();
-                    result.NewOffset = newOffset;
-                }
-            }
-        }
-
         private void TryParseCustomSubstitutionsFromFile(string language)
         {
             if (SubstitutionFilePath.ContainsKey(language))
             {
-                if (!SubstitutionMapping.ContainsKey(language))
+                if (!this.substitutionMapping.ContainsKey(language))
                 {
-                    SubstitutionMapping.TryAdd(language, new Dictionary<string, Substitution>());
+                    this.substitutionMapping.TryAdd(language, new Dictionary<string, Substitution>());
                 }
 
                 string path = SubstitutionFilePath[language];
@@ -674,14 +514,14 @@ namespace SpeechAlphanumericPostProcessing
                     Dictionary<string, Substitution[]> substitutionKVP = JsonConvert.DeserializeObject<Dictionary<string, Substitution[]>>(json);
                     if (substitutionKVP.TryGetValue("substitutions", out var substitutions))
                     {
-                        if (substitutions.Length == SubstitutionMapping[language].Count)
+                        if (substitutions.Length == this.substitutionMapping[language].Count)
                         {
                             return;
                         }
 
                         foreach (var substitution in substitutions)
                         {
-                            SubstitutionMapping[language].TryAdd(substitution.Substring, substitution);
+                            this.substitutionMapping[language].TryAdd(substitution.Substring, substitution);
                         }
                     }
                 }

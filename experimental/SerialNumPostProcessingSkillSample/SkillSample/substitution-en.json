@@ -30,12 +30,32 @@
       "replacement": "D9"
     },
     {
+      "substring": "EIGHT",
+      "replacement": "8"
+    },
+    {
       "substring": "EMPTY",
       "replacement": "MT"
     },
     {
+      "substring": "FIVE",
+      "replacement": "5"
+    },
+    {
+      "substring": "FOUR",
+      "replacement": "4"
+    },
+    {
       "substring": "KATIE",
       "replacement": "KT"
+    },
+    {
+      "substring": "NINE",
+      "replacement": "9"
+    },
+    {
+      "substring": "ONE",
+      "replacement": "1"
     },
     {
       "substring": "SEA",
@@ -48,6 +68,26 @@
     {
       "substring": "SEEN",
       "replacement": "CN"
+    },
+    {
+      "substring": "SEVEN",
+      "replacement": "7"
+    },
+    {
+      "substring": "SIX",
+      "replacement": "6"
+    },
+    {
+      "substring": "THREE",
+      "replacement": "3"
+    },
+    {
+      "substring": "TWO",
+      "replacement": "2"
+    },
+    {
+      "substring": "ZERO",
+      "replacement": "0"
     }
   ]
 }

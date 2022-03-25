@@ -27,12 +27,7 @@ namespace SkillSample.Dialogs
     {
         protected const string AggregationDialogMemory = "aggregation";
 
-        private readonly AlphaNumericTextGroup g1 = new AlphaNumericTextGroup
-        {
-            AcceptsDigits = true,
-            AcceptsAlphabet = true,
-            LengthInChars = 10,
-        };
+        private readonly AlphaNumericTextGroup g1 = new AlphaNumericTextGroup(true, true, 10);
 
         private readonly List<AlphaNumericTextGroup> groups = new List<AlphaNumericTextGroup>();
 
@@ -53,14 +48,6 @@ namespace SkillSample.Dialogs
             InitialDialogId = nameof(SerialNumPostProcessAction);
             groups.Add(g1);
             snp = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), true);
-        }
-
-        public async Task<DialogTurnResult> PromptForSerialNumAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {
-            return await stepContext.PromptAsync(DialogIds.SerialNumPrompt, new PromptOptions
-            {
-                Prompt = MessageFactory.Text("What's your serial number?"),
-            }, cancellationToken);
         }
 
         public override async Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
@@ -149,6 +136,14 @@ namespace SkillSample.Dialogs
                 await dc.Context.SendActivityAsync("Sorry we could not process your input");
                 return await dc.EndDialogAsync(new PostProcessedSerialNumOutput("Sorry"), cancellationToken);
             }
+        }
+
+        private async Task<DialogTurnResult> PromptForSerialNumAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        {
+            return await stepContext.PromptAsync(DialogIds.SerialNumPrompt, new PromptOptions
+            {
+                Prompt = MessageFactory.Text("What's your serial number?"),
+            }, cancellationToken);
         }
 
         private static class DialogIds
