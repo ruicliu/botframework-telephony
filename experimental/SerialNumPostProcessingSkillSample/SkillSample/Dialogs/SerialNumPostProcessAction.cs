@@ -27,16 +27,11 @@ namespace SkillSample.Dialogs
     {
         protected const string AggregationDialogMemory = "aggregation";
 
-        private AlphaNumericTextGroup g1 = new AlphaNumericTextGroup
-        {
-            AcceptsDigits = true,
-            AcceptsAlphabet = true,
-            LengthInChars = 10,
-        };
+        private readonly AlphaNumericTextGroup g1 = new AlphaNumericTextGroup(true, true, 10);
 
-        private List<AlphaNumericTextGroup> groups = new List<AlphaNumericTextGroup>();
+        private readonly List<AlphaNumericTextGroup> groups = new List<AlphaNumericTextGroup>();
 
-        private AlphaNumericSequencePostProcessor snp;
+        private readonly AlphaNumericSequencePostProcessor snp;
 
         public SerialNumPostProcessAction(
             IServiceProvider serviceProvider)
@@ -53,14 +48,6 @@ namespace SkillSample.Dialogs
             InitialDialogId = nameof(SerialNumPostProcessAction);
             groups.Add(g1);
             snp = new AlphaNumericSequencePostProcessor(groups.AsReadOnly(), true);
-        }
-
-        public async Task<DialogTurnResult> PromptForSerialNumAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
-        {
-            return await stepContext.PromptAsync(DialogIds.SerialNumPrompt, new PromptOptions
-            {
-                Prompt = MessageFactory.Text("What's your serial number?"),
-            }, cancellationToken);
         }
 
         public override async Task<DialogTurnResult> ContinueDialogAsync(DialogContext dc, CancellationToken cancellationToken = default)
@@ -95,9 +82,8 @@ namespace SkillSample.Dialogs
                     }
                     else
                     {
-                        dc.ActiveDialog.State[AggregationDialogMemory] = result;
-                        await dc.Context.SendActivityAsync("Please continue with the next letter or digit");
-                        return new DialogTurnResult(DialogTurnStatus.Waiting);
+                        await dc.Context.SendActivityAsync("Sorry we could not process your input");
+                        return await dc.EndDialogAsync(new PostProcessedSerialNumOutput("Sorry"), cancellationToken);
                     }
                 }
             }
@@ -125,21 +111,39 @@ namespace SkillSample.Dialogs
                     return new DialogTurnResult(DialogTurnStatus.Waiting);
                 }
             }
-            else if (results.Length >= 2)
+            else if (results.Length == 2)
             {
-                dc.ActiveDialog.State["this.ambiguousChoices"] = results;
-                string promptMsg = "Say or type 1 for " + results[0] + " or 2 for " + results[1];
-                await dc.Context.SendActivityAsync(promptMsg, promptMsg).ConfigureAwait(false);
-                return new DialogTurnResult(DialogTurnStatus.Waiting);
+                if (results[0].Length == snp.PatternLength && results[1].Length == snp.PatternLength)
+                {
+                    dc.ActiveDialog.State["this.ambiguousChoices"] = results;
+                    string promptMsg = "Say or type 1 for " + results[0] + " or 2 for " + results[1];
+                    await dc.Context.SendActivityAsync(promptMsg, promptMsg).ConfigureAwait(false);
+                    return new DialogTurnResult(DialogTurnStatus.Waiting);
+                }
+                else
+                {
+                    // else, save the updated aggregation and end the turn
+                    // space is needed at the end to help us separate any substitutions from the input of the next turn
+                    dc.ActiveDialog.State[AggregationDialogMemory] = existingAggregation + " ";
+                    string promptMsg = "Please continue with next letter or digit";
+                    await dc.Context.SendActivityAsync(promptMsg, promptMsg).ConfigureAwait(false);
+                    return new DialogTurnResult(DialogTurnStatus.Waiting);
+                }
             }
             else
             {
-                // else, save the updated aggregation and end the turn
-                dc.ActiveDialog.State[AggregationDialogMemory] = existingAggregation;
-                string promptMsg = "Please continue with next letter or digit";
-                await dc.Context.SendActivityAsync(promptMsg, promptMsg).ConfigureAwait(false);
-                return new DialogTurnResult(DialogTurnStatus.Waiting);
+                // for the case where result is empty
+                await dc.Context.SendActivityAsync("Sorry we could not process your input");
+                return await dc.EndDialogAsync(new PostProcessedSerialNumOutput("Sorry"), cancellationToken);
             }
+        }
+
+        private async Task<DialogTurnResult> PromptForSerialNumAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
+        {
+            return await stepContext.PromptAsync(DialogIds.SerialNumPrompt, new PromptOptions
+            {
+                Prompt = MessageFactory.Text("What's your serial number?"),
+            }, cancellationToken);
         }
 
         private static class DialogIds

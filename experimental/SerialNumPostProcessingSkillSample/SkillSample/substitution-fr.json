@@ -5,24 +5,36 @@
       "replacement": "BB"
     },
     {
-      "substring": "C'EST",
-      "replacement": "C"
-    },
-    {
       "substring": "CÉGEPS",
       "replacement": "CG"
     },
     {
-      "substring": "CYBER",
-      "replacement": "6B"
+      "substring": "C'EST",
+      "replacement": "C"
+    },
+    {
+      "substring": "CETTE",
+      "replacement": "7"
+    },
+    {
+      "substring": "CINQ",
+      "replacement": "5"
     },
     {
       "substring": "CUL",
       "replacement": "Q"
     },
     {
+      "substring": "CYBER",
+      "replacement": "6B"
+    },
+    {
       "substring": "DE",
       "replacement": "D"
+    },
+    {
+      "substring": "DÉCÈS",
+      "replacement": "DC"
     },
     {
       "substring": "DES",
@@ -33,8 +45,8 @@
       "replacement": "D"
     },
     {
-      "substring": "DÉCÈS",
-      "replacement": "DC"
+      "substring": "DEUX",
+      "replacement": "2"
     },
     {
       "substring": "ÈMES",
@@ -49,16 +61,44 @@
       "replacement": "L"
     },
     {
-      "substring": "J'AI",
-      "replacement": "G"
-    },
-    {
       "substring": "HAINE",
       "replacement": "N"
     },
     {
+      "substring": "J'AI",
+      "replacement": "G"
+    },
+    {
+      "substring": "LUI",
+      "replacement": "8"
+    },
+    {
+      "substring": "NEUFS",
+      "replacement": "9"
+    },
+    {
+      "substring": "OEUF",
+      "replacement": "9"
+    },
+    {
+      "substring": "ŒUF",
+      "replacement": "9"
+    },
+    {
+      "substring": "OUI",
+      "replacement": "8"
+    },
+    {
       "substring": "PAIX",
       "replacement": "P"
+    },
+    {
+      "substring": "QUATRE",
+      "replacement": "4"
+    },
+    {
+      "substring": "SEPT",
+      "replacement": "9"
     },
     {
       "substring": "SICM",
@@ -71,6 +111,14 @@
     {
       "substring": "SÉCU",
       "replacement": "CQ"
+    },
+    {
+      "substring": "SI",
+      "replacement": "6"
+    },
+    {
+      "substring": "SIX",
+      "replacement": "6"
     },
     {
       "substring": "SIERRE",
@@ -91,6 +139,14 @@
     {
       "substring": "TÊT",
       "replacement": "T"
+    },
+    {
+      "substring": "TROIS",
+      "replacement": "3"
+    },
+    {
+      "substring": "UN",
+      "replacement": "1"
     },
     {
       "substring": "UNE",
@@ -119,6 +175,10 @@
     {
       "substring": "WHATSAPPS",
       "replacement": "WP"
+    },
+    {
+      "substring": "ZÉRO",
+      "replacement": "0"
     }
   ]
 }
