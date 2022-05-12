@@ -1,8 +1,20 @@
 {
   "substitutions": [
     {
-      "substring": "SE",
-      "replacement": "C"
+      "substring": "CERO",
+      "replacement": "0"
+    },
+    {
+      "substring": "CERODOSBï¿½",
+      "replacement": "02B"
+    },
+    {
+      "substring": "CUATRO",
+      "replacement": "4"
+    },
+    {
+      "substring": "DOS",
+      "replacement": "2"
     },
     {
       "substring": "EL",
@@ -13,16 +25,8 @@
       "replacement": "N"
     },
     {
-      "substring": "VOLTIOS",
-      "replacement": "V"
-    },
-    {
-      "substring": "VATIO",
-      "replacement": "W"
-    },
-    {
-      "substring": "VATIOS",
-      "replacement": "W"
+      "substring": "SE",
+      "replacement": "C"
     },
     {
       "substring": "SIGLO",
@@ -33,12 +37,40 @@
       "replacement": "S"
     },
     {
-      "substring": "ZEROZEROZERO",
-      "replacement": "000"
+      "substring": "SIN CO",
+      "replacement": "5"
     },
     {
-      "substring": "CERODOSBÉ",
-      "replacement": "02B"
+      "substring": "UN",
+      "replacement": "1"
+    },
+    {
+      "substring": "UNA",
+      "replacement": "1"
+    },
+    {
+      "substring": "UNO",
+      "replacement": "1"
+    },
+    {
+      "substring": "VATIO",
+      "replacement": "W"
+    },
+    {
+      "substring": "VATIOS",
+      "replacement": "W"
+    },
+    {
+      "substring": "VOLTIOS",
+      "replacement": "V"
+    },
+    {
+      "substring": "ZERO",
+      "replacement": "0"
+    },
+    {
+      "substring": "ZEROZEROZERO",
+      "replacement": "000"
     }
   ]
 }

@@ -49,36 +49,16 @@ Sample usage:
 
 ## Custom Substitution
 We now offer the ability for developers to define their own substitutions as a JSON file and AlphaNumericSequencePostProcessor will try to replace all matching input occurrences with the desired character(s).
-This is right now only available when developers have a skill that focuses on post-processing, and is using AlphaNumericSequencePostProcessor and AlphaNumericAlphaNumericTextGroup.
-To make this work, be sure to include all the substitutions for a particular language in a file name like this "substitution-<language code>.json" in the same directory as appsettings.json.
-For example, for substitutions in English, please make a file with the name: substitution-en.json, and have the content as below:
-{
-  "substitutions": [
-    {
-      "substring": "DENIED",
-      "replacement": "D9"
-    },
-    {
-      "substring": "DENY",
-      "replacement": "D9"
-    },
-    {
-      "substring": "SEE",
-      "replacement": "C"
-    },
-    {
-      "substring": "SEA",
-      "replacement": "C"
-    },
-    {
-      "substring": "SEEN",
-      "replacement": "CN"
-    }
-  ]
-}
+This is right now only available when developers have a skill that focuses on post-processing, and is using AlphaNumericSequencePostProcessor and AlphaNumericAlphaNumericTextGroup projects.
 
-The values in "substring" and "replacement" for English substitutions should all be in capital letters where appropriate.
+To make this work, be sure to include all the substitutions for a particular language in a file name like this "substitution-<language code>.json" in the same directory as appsettings.json in your skill project.
 
+Currently, the substitution files for English, Spanish, and French have been included in the [SkillSample](https://github.com/microsoft/botframework-telephony/tree/main/experimental/SerialNumPostProcessingSkillSample/SkillSample).
+
+If you would like to add more substitutions, please ensure to follow the same format and that the values in "substring" and "replacement" should all be in capital letters where appropriate.
+
+
+## Future Work
 Currently, post processing for English language is supported.  We are working to add support for Spanish and French.
 
 

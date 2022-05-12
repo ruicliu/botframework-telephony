@@ -1,43 +1,55 @@
 {
   "substitutions": [
     {
-      "substring": "BÉBÉ",
+      "substring": "Bï¿½Bï¿½",
       "replacement": "BB"
+    },
+    {
+      "substring": "Cï¿½GEPS",
+      "replacement": "CG"
     },
     {
       "substring": "C'EST",
       "replacement": "C"
     },
     {
-      "substring": "CÉGEPS",
-      "replacement": "CG"
+      "substring": "CETTE",
+      "replacement": "7"
     },
     {
-      "substring": "CYBER",
-      "replacement": "6B"
+      "substring": "CINQ",
+      "replacement": "5"
     },
     {
       "substring": "CUL",
       "replacement": "Q"
     },
     {
+      "substring": "CYBER",
+      "replacement": "6B"
+    },
+    {
       "substring": "DE",
       "replacement": "D"
+    },
+    {
+      "substring": "Dï¿½Cï¿½S",
+      "replacement": "DC"
     },
     {
       "substring": "DES",
       "replacement": "D"
     },
     {
-      "substring": "DÈS",
+      "substring": "Dï¿½S",
       "replacement": "D"
     },
     {
-      "substring": "DÉCÈS",
-      "replacement": "DC"
+      "substring": "DEUX",
+      "replacement": "2"
     },
     {
-      "substring": "ÈMES",
+      "substring": "ï¿½MES",
       "replacement": "M"
     },
     {
@@ -49,35 +61,71 @@
       "replacement": "L"
     },
     {
+      "substring": "HAINE",
+      "replacement": "N"
+    },
+    {
       "substring": "J'AI",
       "replacement": "G"
     },
     {
-      "substring": "HAINE",
-      "replacement": "N"
+      "substring": "LUI",
+      "replacement": "8"
+    },
+    {
+      "substring": "NEUFS",
+      "replacement": "9"
+    },
+    {
+      "substring": "OEUF",
+      "replacement": "9"
+    },
+    {
+      "substring": "ï¿½UF",
+      "replacement": "9"
+    },
+    {
+      "substring": "OUI",
+      "replacement": "8"
     },
     {
       "substring": "PAIX",
       "replacement": "P"
     },
     {
+      "substring": "QUATRE",
+      "replacement": "4"
+    },
+    {
+      "substring": "SEPT",
+      "replacement": "9"
+    },
+    {
       "substring": "SICM",
       "replacement": "6CM"
     },
     {
-      "substring": "SCÈNE",
+      "substring": "SCï¿½NE",
       "replacement": "CN"
     },
     {
-      "substring": "SÉCU",
+      "substring": "Sï¿½CU",
       "replacement": "CQ"
+    },
+    {
+      "substring": "SI",
+      "replacement": "6"
+    },
+    {
+      "substring": "SIX",
+      "replacement": "6"
     },
     {
       "substring": "SIERRE",
       "replacement": "6R"
     },
     {
-      "substring": "SIDÈ",
+      "substring": "SIDï¿½",
       "replacement": "6D"
     },
     {
@@ -89,8 +137,16 @@
       "replacement": "T"
     },
     {
-      "substring": "TÊT",
+      "substring": "Tï¿½T",
       "replacement": "T"
+    },
+    {
+      "substring": "TROIS",
+      "replacement": "3"
+    },
+    {
+      "substring": "UN",
+      "replacement": "1"
     },
     {
       "substring": "UNE",
@@ -101,7 +157,7 @@
       "replacement": "VN"
     },
     {
-      "substring": "VÉCU",
+      "substring": "Vï¿½CU",
       "replacement": "VQ"
     },
     {
@@ -119,6 +175,10 @@
     {
       "substring": "WHATSAPPS",
       "replacement": "WP"
+    },
+    {
+      "substring": "Zï¿½RO",
+      "replacement": "0"
     }
   ]
 }

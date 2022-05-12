@@ -10,8 +10,11 @@ namespace SpeechAlphanumericPostProcessing
 {
     public class AlphaNumericTextGroup
     {
-        public AlphaNumericTextGroup()
+        public AlphaNumericTextGroup(bool acceptsAlphabets, bool acceptsDigits, short lengthInChar)
         {
+            this.AcceptsAlphabet = acceptsAlphabets;
+            this.AcceptsDigits = acceptsDigits;
+            this.LengthInChars = lengthInChar;
         }
 
         public AlphaNumericTextGroup(string regex)
@@ -63,37 +66,15 @@ namespace SpeechAlphanumericPostProcessing
             this.LengthInChars = short.Parse(length, CultureInfo.InvariantCulture);
         }
 
-        public bool AcceptsAlphabet { get; set; } = false;
+        public bool AcceptsAlphabet { get; } = false;
 
-        public bool AcceptsDigits { get; set; } = false;
+        public bool AcceptsDigits { get; } = false;
 
 #pragma warning disable CA2227 // Collection properties should be read only
-        public HashSet<char> InvalidChars { get; set; } = new HashSet<char>();
+        public HashSet<char> InvalidChars { get; } = new HashSet<char>();
 #pragma warning restore CA2227 // Collection properties should be read only
 
-        public short LengthInChars { get; set; } = 0;
-
-        public string Regex { get; set; } = string.Empty;
-
-        public string RegexString
-        {
-            get
-            {
-                string result = "([";
-                if (AcceptsDigits)
-                {
-                    result += "0-9";
-                }
-
-                if (AcceptsAlphabet)
-                {
-                    result += "a-zA-Z";
-                }
-
-                result += "]{" + LengthInChars + "})";
-                return result;
-            }
-        }
+        public short LengthInChars { get; } = 0;
 
         public string GenerateGroupExampleText()
         {

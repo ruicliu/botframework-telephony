@@ -333,3 +333,4 @@ ASALocalRun/
 appsettings.json
 publish.cmd
 package-lock.json
+samples\csharp_dotnetcore\08.telephony-demo\Telephony_Package_IVR_Sample\Telephony_Package_IVR_Sample\settings\appsettings.json
